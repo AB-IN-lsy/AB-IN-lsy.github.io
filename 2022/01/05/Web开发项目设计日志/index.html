@@ -1,0 +1,616 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#54bcff"><link rel="manifest" href="/manifest.json?v=2.8.0"><link rel="icon" href="/assets/favicon-16x16.png?v=2.8.0" type="image/png" sizes="16x16"><link rel="icon" href="/assets/favicon-32x32.png?v=2.8.0" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="/assets/android-chrome-192x192.png?v=2.8.0" sizes="180x180"><link rel="mask-icon" href="/%5Bobject%20Object%5D?v=2.8.0" color="#54bcff"><meta name="msapplication-TileImage" content="/%5Bobject%20Object%5D"><meta name="msapplication-TileColor" content="#000000"><meta name="google-site-verification" content="e4vuRgT_ouTNSxZf23XDFDixeCsDJiaAvmUQaKT_njA"><meta name="msvalidate.01" content="A2EE4D0CCD36C0B0741FA44DBF05FF0D"><meta name="baidu-site-verification" content="code-OOQCT4Wx7W"><meta name="description" content="摘要Web 开发技术项目设计日志大三WEB课程结课作业，内容为计算机科学与技术专业的专业官网包含新闻，专业，教师，实验室等板块前端与后台齐全，前端可进行针对关键词的搜索，后端可进行对文章的增删改查">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web开发项目设计日志">
+<meta property="og:url" content="https://hexo.ab-in.cn/2022/01/05/Web%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE%E8%AE%BE%E8%AE%A1%E6%97%A5%E5%BF%97/index.html">
+<meta property="og:site_name" content="AB-IN&#39;s Blog">
+<meta property="og:description" content="摘要Web 开发技术项目设计日志大三WEB课程结课作业，内容为计算机科学与技术专业的专业官网包含新闻，专业，教师，实验室等板块前端与后台齐全，前端可进行针对关键词的搜索，后端可进行对文章的增删改查">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://oss.ab-in.cn/images/WEB.png">
+<meta property="article:published_time" content="2022-01-04T16:10:21.000Z">
+<meta property="article:modified_time" content="2023-05-04T11:35:07.892Z">
+<meta property="article:author" content="AB-IN">
+<meta property="article:tag" content="html">
+<meta property="article:tag" content="css">
+<meta property="article:tag" content="js">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://oss.ab-in.cn/images/WEB.png"><title>Web开发项目设计日志 | AB-IN's Blog</title><link ref="canonical" href="https://hexo.ab-in.cn/2022/01/05/Web%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE%E8%AE%BE%E8%AE%A1%E6%97%A5%E5%BF%97/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="//unpkg.com/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" type="text/css"><link rel="stylesheet" href="//unpkg.com/instantsearch.js@2.1.1/dist/instantsearch.min.css" type="text/css"><link rel="stylesheet" href="//unpkg.com/social-share.js@1.0.16/dist/css/share.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.8.0"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: {"appId":"DU3TAVNH2B","apiKey":"483f4ee8a687ed876e44dc2c27d52939","indexName":"hexo_BLOG","hits":{"per_page":10},"languages":{"inputPlaceholder":"搜索文章","hitsEmpty":"没有找到任何搜索结果：${query}","hitsStats":"找到 ${hits} 条搜索结果，耗时 ${time} 毫秒"}},
+  assistSearch: ["google","bing","baidu"],
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"ocean","wordWrap":true},
+  reward: true,
+  fancybox: true,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: {"avoidBanner":false},
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: {"switchPost":true},
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-newspaper"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-address-card"></i></span><span class="header-nav-menu-item__text">关于</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/author"><span class="header-nav-submenu-item__icon"><i class="fas fa-at"></i></span><span class="header-nav-submenu-item__text">作者</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/friends"><span class="header-nav-submenu-item__icon"><i class="fas fa-users"></i></span><span class="header-nav-submenu-item__text">友链</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/FAQ"><span class="header-nav-submenu-item__icon"><i class="fas fa-question"></i></span><span class="header-nav-submenu-item__text">FAQ</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="far fa-window-maximize"></i></span><span class="header-nav-menu-item__text">其余站点</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://www.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fab fa-safari"></i></span><span class="header-nav-submenu-item__text">主页</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://ssh.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fas fa-terminal"></i></span><span class="header-nav-submenu-item__text">终端</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://kod.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fas fa-cloud"></i></span><span class="header-nav-submenu-item__text">云盘</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://oneword.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fab fa-dailymotion"></i></span><span class="header-nav-submenu-item__text">一言</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://ab-in.blog.csdn.net"><span class="header-nav-submenu-item__icon"><i class="fas fa-copyright"></i></span><span class="header-nav-submenu-item__text">CSDN</span></a></div></div></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">Web开发项目设计日志</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-01-05</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2023-05-04</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">2.4k</span></span><span class="post-meta-item post-meta-item--readtime"><span class="post-meta-item__icon"><i class="far fa-clock"></i></span><span class="post-meta-item__info">阅读时长</span><span class="post-meta-item__value">14分</span></span><span class="post-meta-item post-meta-item--visitors"><span class="post-meta-item__icon"><i class="fas fa-eye"></i></span><span class="post-meta-item__info">阅读次数</span><span class="post-meta-item__value" id="busuanzi_value_page_pv"></span></span></div></header><div class="post-body"><div class="gallery"><img src="https://oss.ab-in.cn/images/WEB.png"></div><!-- With header, With icon -->
+
+    <div class="note-plugin info">
+      <span class="note-plugin__icon note-plugin__icon--info">
+              <i class="fas fa-info-circle"></i>
+            </span>
+      <p><strong>摘要</strong><br>Web 开发技术项目设计日志<br>大三WEB课程结课作业，内容为计算机科学与技术专业的专业官网<br>包含新闻，专业，教师，实验室等板块<br>前端与后台齐全，前端可进行针对关键词的搜索，后端可进行对文章的增删改查</p>
+    </div>
+  
+<span id="more"></span>
+
+<p><font color=#000000	size=3 face=楷体>Powered by:<strong>NEFU AB-IN</strong></font></p>
+
+        <h1 id="Web-开发技术项目设计"   >
+          <a href="#Web-开发技术项目设计" class="heading-link"><i class="fas fa-link"></i></a><a href="#Web-开发技术项目设计" class="headerlink" title="Web 开发技术项目设计"></a><font color=#6495ED size=6 >Web 开发技术项目设计</font></h1>
+      <p>@<a href="%E6%96%87%E7%AB%A0%E7%9B%AE%E5%BD%95">TOC</a>	</p>
+<blockquote>
+<p> <font color=#000000 size=4 face=粗体>服务器端部署</font></p>
+<p> 记录了项目部署服务器端遇到的问题</p>
+<p> <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45859188/article/details/121353247" >宝塔war包放入webapps无法访问_NEFU AB-IN’s Blog-CSDN博客</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p> <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45859188/article/details/122003369?spm=1001.2014.3001.5501" >this version of the Java Runtime only recognizes class file versions up to 52.0_NEFU AB-IN’s Blog-CSDN博客</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+</blockquote>
+<ul>
+<li>
+        <h3 id="关于"   >
+          <a href="#关于" class="heading-link"><i class="fas fa-link"></i></a><a href="#关于" class="headerlink" title="关于"></a><font color=#000000 size=4 face=粗体>关于</font></h3>
+      <p><strong>请用chrome或者360浏览器打开！！！！</strong><br><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://web.ab-in.cn/" >web.ab-in.cn</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p>（对于Edge的滑轮滚动Bug目前无法修复）</p>
+</li>
+<li>
+        <h3 id="项目时长"   >
+          <a href="#项目时长" class="heading-link"><i class="fas fa-link"></i></a><a href="#项目时长" class="headerlink" title="项目时长"></a><font color=#000000 size=4 face=粗体>项目时长</font></h3>
+      <p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://img-blog.csdnimg.cn/img_convert/8eff7d06a1d3bd699e9f385b02ca70ee.png"  alt="img1">
+      </p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://img-blog.csdnimg.cn/img_convert/0c5a629a0f1654b9245fc09bd7984cff.png"  alt="img2">
+      </p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://img-blog.csdnimg.cn/img_convert/a08b0c917270000a5a7a470334fb4390.png"  alt="img4">
+      </p>
+</li>
+<li>
+        <h3 id="项目日志"   >
+          <a href="#项目日志" class="heading-link"><i class="fas fa-link"></i></a><a href="#项目日志" class="headerlink" title="项目日志"></a><font color=#000000 size=4 face=粗体>项目日志</font></h3>
+      <ul>
+<li><p>2021.11.14 </p>
+<ul>
+<li><p>画好ER图</p>
+</li>
+<li><p>搭建好整体项目框架</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://img-blog.csdnimg.cn/img_convert/1e63af636066b803677bd372d005d932.png"  alt="img3">
+      </p>
+</li>
+</ul>
+</li>
+<li><p>2021.11.15 </p>
+<ul>
+<li>搭建好云服务器tomcat，配置了宝塔页面的tomcat</li>
+<li>上传了项目至github</li>
+<li>测试项目至老师部署平台</li>
+</ul>
+</li>
+<li><p>2021.11.16 </p>
+<ul>
+<li>解决了Java版本不同的问题</li>
+<li>尝试学习框架（放弃）</li>
+<li>复习web知识点</li>
+<li>构思主页面</li>
+</ul>
+</li>
+<li><p>2021.11.17 </p>
+<ul>
+<li>开始编写整体index.jsp的各个部分</li>
+<li>从footer开始编写</li>
+</ul>
+</li>
+<li><p>2021.11.18 </p>
+<ul>
+<li>先决定开始写数据库</li>
+<li>完成用户表，教师表，学科表，实验室表，实验室新闻表，新闻表的建立</li>
+</ul>
+</li>
+<li><p>2021.11.19</p>
+<ul>
+<li>写完lab模块，连同css与js，实现轮播图，实现按钮轮播图（未加入数据库）</li>
+<li>写完QRcode模块，并对接js</li>
+<li>写完major模块，实现滑动效果（未加入数据库）</li>
+<li>ps: 所有具体的js,css操作介绍均放在了对应的js,css文件中</li>
+</ul>
+</li>
+<li><p>2021.11.20</p>
+<ul>
+<li>写完teacher模块，和major一样模式（未加入数据库）</li>
+<li>写完news模块（未加入数据库）</li>
+</ul>
+</li>
+<li><p>2021.11.21</p>
+<ul>
+<li>完善前面写的js,css部分</li>
+<li>加入lab数据库更新（包括实体类，servlet，util，datasource，二级跳转，JSTL，EL）</li>
+<li>加入major数据库更新</li>
+</ul>
+</li>
+<li><p>2021.11.22</p>
+<ul>
+<li><p>加入teacher数据库更新</p>
+</li>
+<li><p>编写banner部分</p>
+<ul>
+<li>Expand: 可自定义加入多个图片 2021-11-22</li>
+<li>Method: 加入list item的同时，加下面的animated按钮，毕竟实现的方法就是每过一段时间就让animated新增状态为on，进而切换图片 2021-11-22</li>
+</ul>
+</li>
+<li><p>编写nav部分</p>
+</li>
+<li><p>加入news数据库更新</p>
+<ul>
+<li>加入右栏数据库更新</li>
+<li>加入左栏数据库更新</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>2021.11.23</p>
+<ul>
+<li>编写nav<ul>
+<li>制作了多个小图标 2021&#x2F;11&#x2F;23</li>
+<li>css样式圆圈拓展 2021&#x2F;11&#x2F;23</li>
+<li>quick menu的sub menu写好 2021&#x2F;11&#x2F;23</li>
+<li>写好了每个section的JavaScript: scroll() </li>
+<li>ps:因为偷懒所以没写第二界面 2021&#x2F;11&#x2F;23</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>2021.11.24</p>
+<ul>
+<li>加入nav数据库更新</li>
+<li>加入了从数据库中利用主码进行的查询，并打开详情页 2021&#x2F;11&#x2F;24</li>
+<li>编写header部分<ul>
+<li>加入开场动画</li>
+<li>找到图标，设计登录后台 2021&#x2F;11&#x2F;24</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>2021.11.25</p>
+<ul>
+<li>总体进行查缺补漏</li>
+<li>开始对index.jsp进行填充</li>
+<li>解决js, css失效的问题</li>
+</ul>
+</li>
+<li><p>2021.11.26</p>
+<ul>
+<li>开始备考</li>
+</ul>
+</li>
+<li><p>2021.11.27</p>
+<ul>
+<li>忍不住看一眼，发现制作的图标不够精良，回炉抢修</li>
+<li>添加logo</li>
+</ul>
+</li>
+<li><p>2021.12.3</p>
+<ul>
+<li>部署项目至服务器运行</li>
+</ul>
+</li>
+<li><p>2021.12.4</p>
+<ul>
+<li>部署项目至大电脑运行，发现@media并不佳，对着大电脑修改@media</li>
+<li>2021&#x2F;12&#x2F;4 星期六<br>刚实习完，老师布置了自己完成update的工作，<br>肝了十分钟就出来了，不就是…嘛<br>本身累得够呛，但一想到今天实习的内容<br>正是鸽了很久的后端，所以还是马不停蹄的从八点一直肝到十二点<br>完成了增，删，改<br>查应该明天讲，或者明天讲登录，总之快完成了</li>
+</ul>
+</li>
+<li><p>2021.12.5</p>
+<ul>
+<li>2021&#x2F;12&#x2F;5 星期日<br>完成了查的工作<br>运用了like模糊查询，效果显著，DEBUG了好长时间<br>不过效果很好，后端结束！</li>
+<li>发现nav冗余太大，更改了横导航栏的所有属性，将所有二级属性全部加入进去了，并加入了链接，减少了冗余的链接 2021&#x2F;12&#x2F;5</li>
+</ul>
+</li>
+<li><p>2021.12.7</p>
+<ul>
+<li>开始策划第二界面，基于主页面的模式进行修改，引入header, nav, footer不变的板块</li>
+</ul>
+</li>
+<li><p>2021.12.8</p>
+<ul>
+<li>完成所有第二板块的制作</li>
+<li>发现servlet冗余太多，建立持久层Dao，将部分冗余函数放入</li>
+<li>更改项目结构</li>
+</ul>
+</li>
+<li><p>$2021.12.9$</p>
+<ul>
+<li>完成所有第三板块的制作</li>
+<li>学习github release版本发布</li>
+<li><strong>完成收工前第一版 v1.0</strong></li>
+</ul>
+</li>
+<li><p>$2021.12.10$</p>
+<ul>
+<li>去除冗余链接，将没用的链接由#变成javascript:</li>
+<li>解决网页资源加载过慢<ul>
+<li>创建OSS</li>
+<li>配置OSS的CDN</li>
+<li>并上传文件</li>
+<li>更改项目中的url</li>
+</ul>
+</li>
+<li>增加header中搜索功能<ul>
+<li>模糊搜素，范围扩大到每个属性</li>
+<li>可选择模块进行搜索，搜索后自行跳转相应模块</li>
+</ul>
+</li>
+<li>完善持久层的结构调用</li>
+<li>更改了hearder的logo，新增矢量图</li>
+<li><strong>完成收工前第二版 v1.1</strong></li>
+</ul>
+</li>
+<li><p>$2021.12.11$</p>
+<ul>
+<li>更改密码，防止所有人都可以进后台</li>
+<li>更改login页面的返回按钮，可以返回主界面</li>
+<li>更改后端的整体配色</li>
+<li>添加了后端富文本提交<ul>
+<li>修改了文章内容的结构及样式</li>
+<li>只支持纯文本，不支持图片及视频</li>
+</ul>
+</li>
+<li>修改了input标签设置为disabled无法提交的bug，更改为readonly</li>
+<li>修改update和save的servlet的重定向</li>
+<li><strong>完成收工前第三版 v1.2</strong></li>
+</ul>
+</li>
+<li><p>$2021.12.16$</p>
+<ul>
+<li>修改主页url<ul>
+<li>将index.jsp提出来，并设置filter进行监听，这样就可以实现不用servlet跳转实现动态页面了</li>
+<li>修改其他板块访问主页的参数，全部改为’.’</li>
+</ul>
+</li>
+<li>修改新闻板块<ul>
+<li>重写了news类和其servlet，加入了title属性</li>
+<li>修改了news的save和update，并新增了一个富文本编辑器，用来提交简介</li>
+<li>更改了news的第三界面的布局，新增了图片</li>
+</ul>
+</li>
+<li>修改了header布局，让视窗width缩小时发生变化</li>
+<li>修改了teacher和major模块的按钮滑动<ul>
+<li>修改了固定width的bug，修改后js获取的width随窗口的变化而变化</li>
+<li>修改了滑动left的值，使不出现元素的漏边</li>
+</ul>
+</li>
+<li>修改了footer的布局，新增二维码在页面缩小时消失</li>
+<li>修改了教师模块的搜索框bug</li>
+<li><strong>完成收工前第四版 v1.3</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+        <h3 id="项目要求"   >
+          <a href="#项目要求" class="heading-link"><i class="fas fa-link"></i></a><a href="#项目要求" class="headerlink" title="项目要求"></a><font color=#000000 size=4 face=粗体>项目要求</font></h3>
+      <p>基于 HTML&#x2F;CSS&#x2F;JS&#x2F;Servlet&#x2F;JDBC 等技术完成以下设计内容 </p>
+<p>允许并鼓励使用 Bootstrap&#x2F;easy-ui&#x2F;flat-ui 等 UI 框架，及轮播&#x2F;动画&#x2F;图表&#x2F;全屏滚动等等插件 </p>
+<p>允许使用 vue&#x2F;react&#x2F;springboot 等技术，但需部署在学生个人服务器，提供访问网址 </p>
+<p>本设计占总成绩 40%，按功能完成设计状况评分 分组：每人 1 组，独立完成 </p>
+<p>截至时间：15 周(具体日期待定) </p>
+<p>提交&#x2F;部署方式：以 war 包上传到指定系统，项目统一部署在云服务器 </p>
+<p>部署环境：Docker Tomcat9+MySQL8 容器 </p>
+<p>项目展示：所有学生项目在公网公开展示</p>
+</li>
+<li>
+        <h3 id="设计内容"   >
+          <a href="#设计内容" class="heading-link"><i class="fas fa-link"></i></a><a href="#设计内容" class="headerlink" title="设计内容"></a><font color=#000000 size=4 face=粗体>设计内容</font></h3>
+      <p>计算机科学与技术专业网站 </p>
+<p>主要考核内容：网站整体设计，用户互交体验 </p>
+<p>包括：HTML 布局，HTML 标签的使用，应用 CSS 样式增强网站显示效果，使用 JS 动态改变 页面，Servlet 对数据的处理，JDBC 数据库访问等</p>
+</li>
+<li>
+        <h3 id="主要功能"   >
+          <a href="#主要功能" class="heading-link"><i class="fas fa-link"></i></a><a href="#主要功能" class="headerlink" title="主要功能"></a><font color=#000000 size=4 face=粗体>主要功能</font></h3>
+      <ul>
+<li>
+        <h4 id="前台网站"   >
+          <a href="#前台网站" class="heading-link"><i class="fas fa-link"></i></a><a href="#前台网站" class="headerlink" title="前台网站"></a><font color=#000000 size=4 face=粗体>前台网站</font></h4>
+      <p>主要板块内容：专业介绍，实验室，教师队伍，就业指南，新闻，公告等。 </p>
+<p>要求至少包含导航。 </p>
+<p>要求板块必须包含 2 级内容。例如，专业介绍：专业简介，方向简介等；实验室：923 创新 实验室，925 移动开发实验室，923 实验室等；并能跳转至 2 级详细内容。 </p>
+<hr>
+<p>教师队伍：教授，副教授，讲师等 </p>
+<p>例如，当点击副教授时，跳转至副教授列表，再次点击某教师时，跳转至教师详细介绍，内 容应尽可能包含文字&#x2F;图片多媒体等信息 </p>
+<hr>
+<p>新闻公告：主页列出最近 5 个新闻与公告，显示标题时间等，要求从数据库中获取，点击标 题跳转至信息的详细描述。</p>
+</li>
+<li>
+        <h4 id="后台系统"   >
+          <a href="#后台系统" class="heading-link"><i class="fas fa-link"></i></a><a href="#后台系统" class="headerlink" title="后台系统"></a><font color=#000000 size=4 face=粗体>后台系统</font></h4>
+      <p>需在前台网站显示提供后台关系系统入口链接，后台统一管理员登录用户名&#x2F;密码 admin </p>
+<p>管理员登录后，可在后台对新闻公告信息进行增加，增删改查全部完成有加分 </p>
+<p>过滤器，未登录状态无法访问进入后台管理系统 </p>
+<p>仅需实现发布基本文本信息，无需包含图片等附件，实现富文本提交有加分 信息无需分页 除新闻公告外，教师实验室介绍等可使用静态数据 所有介绍类内容应尽可能包含文字与图片 所有文字&#x2F;图片不必使用真实信息</p>
+<hr>
+<p>信息无需分页 </p>
+<p>除新闻公告外，教师实验室介绍等可使用静态数据 </p>
+<p>所有介绍类内容应尽可能包含文字与图片 </p>
+<p>所有文字&#x2F;图片不必使用真实信息</p>
+</li>
+</ul>
+</li>
+</ul>
+
+        <h1 id="License"   >
+          <a href="#License" class="heading-link"><i class="fas fa-link"></i></a><a href="#License" class="headerlink" title="License"></a>License</h1>
+      <p>Web-project is issued under GPLv3.   license.<span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://github.com/AB-IN-lsy/Web-project/blob/master/LICENSE" >License</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+
+        <h1 id="版权声明"   >
+          <a href="#版权声明" class="heading-link"><i class="fas fa-link"></i></a><a href="#版权声明" class="headerlink" title="版权声明"></a>版权声明</h1>
+      <p>Web-project 使用 GPL v3 协议.</p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://hexo.ab-in.cn">AB-IN</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://hexo.ab-in.cn/2022/01/05/Web%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE%E8%AE%BE%E8%AE%A1%E6%97%A5%E5%BF%97/">https://hexo.ab-in.cn/2022/01/05/Web%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE%E8%AE%BE%E8%AE%A1%E6%97%A5%E5%BF%97/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/html/">html</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/css/">css</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/js/">js</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/%E5%89%8D%E7%AB%AF/">前端</a></span></div><div class="post-share"><div class="social-share" data-sites="qzone, qq, weibo, wechat, douban, linkedin, facebook, twitter, google">Share to: </div></div><div class="post-reward reward"><div class="reward-button">请我喝杯咖啡~</div><div class="reward-qrcode"><span class="reward-qrcode-alipay"><img class="reward-qrcode-alipay__img" src="https://oss.ab-in.cn/Pay/alipay.png"><div class="reward-qrcode-alipay__text">支付宝打赏</div></span><span class="reward-qrcode-wechat"><img class="reward-qrcode-wechat__img" src="https://oss.ab-in.cn/Pay/weixin.png"><div class="reward-qrcode-wechat__text">微信打赏</div></span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2022/01/05/Windows_Vscode_C++20_%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">Windows Vscode C++17/20 配置教程</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2022/01/03/Trie%E6%A0%91/"><span class="paginator-prev__text">Trie树</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div><div class="comments" id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC81NTEzNS8zMTYwMw"></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Web-%E5%BC%80%E5%8F%91%E6%8A%80%E6%9C%AF%E9%A1%B9%E7%9B%AE%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.</span> <span class="toc-text">
+          Web 开发技术项目设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E"><span class="toc-number">1.0.1.</span> <span class="toc-text">
+          关于</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E6%97%B6%E9%95%BF"><span class="toc-number">1.0.2.</span> <span class="toc-text">
+          项目时长</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E6%97%A5%E5%BF%97"><span class="toc-number">1.0.3.</span> <span class="toc-text">
+          项目日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E8%A6%81%E6%B1%82"><span class="toc-number">1.0.4.</span> <span class="toc-text">
+          项目要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E5%86%85%E5%AE%B9"><span class="toc-number">1.0.5.</span> <span class="toc-text">
+          设计内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD"><span class="toc-number">1.0.6.</span> <span class="toc-text">
+          主要功能</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E5%8F%B0%E7%BD%91%E7%AB%99"><span class="toc-number">1.0.6.1.</span> <span class="toc-text">
+          前台网站</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.0.6.2.</span> <span class="toc-text">
+          后台系统</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#License"><span class="toc-number">2.</span> <span class="toc-text">
+          License</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E"><span class="toc-number">3.</span> <span class="toc-text">
+          版权声明</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://oss.ab-in.cn/images/AB-IN.jpg" alt="avatar"></div><p class="sidebar-ov-author__text">NEFU AB-IN</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/AB-IN-lsy" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/AB_IN_liusy" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="http://wpa.qq.com/msgrd?v=3&amp;uin=1719827581&amp;site=qq&amp;menu=yes" target="_blank" rel="noopener" data-popover="QQ" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-qq"></i></span></a><a class="sidebar-ov-social-item" href="mailto:liusy200708@gmail.com" target="_blank" rel="noopener" data-popover="Gmail" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a></div><div class="sidebar-ov-feed"></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">您已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2023</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>AB-IN All Rights Reserved</span><span class="footer__devider">|</span><span><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">鲁ICP备2021035431号</a></span></div><div class="busuanzi"><span class="busuanzi-siteuv"><span class="busuanzi-siteuv__icon"><i class="fas fa-user"></i></span><span class="busuanzi-siteuv__info">访问人数</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_uv"></span></span><span class="busuanzi-sitepv"><span class="busuanzi-siteuv__icon"><i class="fas fa-eye"></i></span><span class="busuanzi-siteuv__info">浏览总量</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_pv"></span></span></div><div><script type="text/javascript" src="https://oneword.ab-in.cn/oneword/oneword.php?format=js&charset=utf-8"></script> <div id="oneword"><script>oneword()</script></div></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"></div><div class="search-btns">使用搜索：<span class="search-btns-item search-btns-item--google"><i class="fab fa-google"></i>谷歌</span><span class="search-btns-item search-btns-item--bing"><i></i>必应</span><span class="search-btns-item search-btns-item--baidu"><i></i>百度</span></div><div class="search-results"><div id="algolia-hits"></div></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><script src="//unpkg.com/jquery@v3.4.1/dist/jquery.min.js"></script><script src="//unpkg.com/velocity-animate@1.5.2/velocity.min.js"></script><script src="//unpkg.com/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script><script src="//unpkg.com/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script src="//unpkg.com/social-share.js@1.0.16/dist/js/social-share.min.js"></script><script src="//unpkg.com/instantsearch.js@2.1.1/dist/instantsearch.min.js" defer></script><script>window.addEventListener('DOMContentLoaded', function () {
+  $('.header-nav-search').on('click', function (e) {
+    e.stopPropagation();
+
+    $('body').css('overflow', 'hidden');
+    $('.search-popup')
+      .velocity('stop')
+      .velocity('transition.expandIn', {
+        duration: 300,
+        complete: function () {
+          $('.search-popup input').focus();
+        }
+      });
+    $('.search-mask')
+      .velocity('stop')
+      .velocity('transition.fadeIn', {
+        duration: 300
+      });
+  });
+
+  function closeSearch () {
+    $('body').css({ overflow: 'auto' });
+    $('.search-popup').css({ display: 'none' });
+    $('.search-mask').css({ display: 'none' });
+  }
+
+  $('.search-mask, .search-close').on('click', function () {
+    closeSearch();
+  });
+
+  $(document).on('keydown', function (e) {
+    // Escape <=> 27
+    if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+      closeSearch();
+    }
+  });
+
+  var algolia = CONFIG.algolia;
+  if (!algolia && !(algolia.appId && algolia.apiKey && algolia.indexName)) {
+    return console.error('Algolia setting is invalid.');
+  }
+
+  var search = instantsearch({
+    appId: algolia.appId,
+    apiKey: algolia.apiKey,
+    indexName: algolia.indexName,
+    searchParameters: {
+      hitsPerPage: algolia.hits.per_page || 10
+    },
+    searchFunction: function (helper) {
+      var searchInput = $('.search-input').find('input');
+
+      if (searchInput.val()) {
+        helper.search();
+      }
+    }
+  });
+
+  search.addWidget(
+    instantsearch.widgets.searchBox({
+      container: '.search-input',
+      reset: false,
+      magnifier: false,
+      placeholder: algolia.languages.inputPlaceholder
+    })
+  );
+
+  // The hits of search results.
+  search.addWidget(
+    instantsearch.widgets.hits({
+      container: '#algolia-hits',
+      templates: {
+        item: function (data) {
+          var link = data.permalink ? data.permalink : CONFIG.root + data.path;
+          return (
+            '<a href="' + link + '" class="algolia-hit-item-link">' +
+              data._highlightResult.title.value +
+            '</a>'
+          );
+        },
+        empty: function (data) {
+          return (
+            '<div id="algolia-hits-empty">' +
+              algolia.languages.hitsEmpty.replace(/\$\{query}/, data.query) +
+            '</div>'
+          );
+        }
+      },
+      cssClasses: {
+        item: 'algolia-hit-item'
+      }
+    })
+  );
+
+  // The stats of search results.
+  if ($('#algolia-stats')[0]) {
+    search.addWidget(
+      instantsearch.widgets.stats({
+        container: '#algolia-stats',
+        templates: {
+          body: function (data) {
+            var stats = algolia.languages.hitsStats
+              .replace(/\$\{hits}/, data.nbHits)
+              .replace(/\$\{time}/, data.processingTimeMS);
+            return (
+              stats +
+              '<span class="algolia-logo pull-right">' +
+                '<img src="' + CONFIG.root +
+                `${CONFIG.sourcePath.images}/algolia.svg" alt="Algolia" />` +
+              '</span>'
+            );
+          }
+        }
+      })
+    );
+  }
+
+  // The pagination of the results.
+  search.addWidget(
+    instantsearch.widgets.pagination({
+      container: '#algolia-pagination',
+      scrollTo: false,
+      showFirstLast: false,
+      labels: {
+        first: '<i class="fa fa-angle-double-left"></i>',
+        last: '<i class="fa fa-angle-double-right"></i>',
+        previous: '<i class="fa fa-angle-left"></i>',
+        next: '<i class="fa fa-angle-right"></i>'
+      },
+      cssClasses: {
+        root: 'pagination',
+        item: 'pagination-item',
+        link: 'page-number',
+        active: 'current',
+        disabled: 'disabled-item'
+      }
+    })
+  );
+
+  search.start();
+});</script><script src="//unpkg.com/pjax@latest/pjax.min.js"></script><script>window.addEventListener('DOMContentLoaded', function () {
+  var pjax = new Pjax({"selectors":["head title","#main",".pjax-reload",".header-inner"],"history":true,"scrollTo":false,"scrollRestoration":false,"cacheBust":false,"debug":false,"currentUrlFullReload":false,"timeout":0});
+  // 加载进度条的计时器
+  var loadingTimer = null;
+
+  // 重置页面 Y 方向上的滚动偏移量
+  document.addEventListener('pjax:send', function () {
+    $('.header-nav-menu').removeClass('show');
+    if (CONFIG.pjax && CONFIG.pjax.avoidBanner) {
+      $('html').velocity('scroll', {
+        duration: 500,
+        offset: $('#header').height(),
+        easing: 'easeInOutCubic'
+      });
+    }
+
+    var loadingBarWidth = 20;
+    var MAX_LOADING_WIDTH = 95;
+
+    $('.loading-bar').addClass('loading');
+    $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    clearInterval(loadingTimer);
+    loadingTimer = setInterval(function () {
+      loadingBarWidth += 3;
+      if (loadingBarWidth > MAX_LOADING_WIDTH) {
+        loadingBarWidth = MAX_LOADING_WIDTH;
+      }
+      $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    }, 500);
+  }, false);
+
+  window.addEventListener('pjax:complete', function () {
+    clearInterval(loadingTimer);
+    $('.loading-bar__progress').css('width', '100%');
+    $('.loading-bar').removeClass('loading');
+    setTimeout(function () {
+      $('.loading-bar__progress').css('width', '0');
+    }, 400);
+    $('link[rel=prefetch], script[data-pjax-rm]').each(function () {
+      $(this).remove();
+    });
+    $('script[data-pjax], #pjax-reload script').each(function () {
+      $(this).parent().append($(this).remove());
+    });
+
+    if (Stun.utils.pjaxReloadBoot) {
+      Stun.utils.pjaxReloadBoot();
+    }
+    if (Stun.utils.pjaxReloadScroll) {
+      Stun.utils.pjaxReloadScroll();
+    }
+    if (Stun.utils.pjaxReloadSidebar) {
+      Stun.utils.pjaxReloadSidebar();
+    }
+    if (true) {
+      if (Stun.utils.pjaxReloadHeader) {
+        Stun.utils.pjaxReloadHeader();
+      }
+      if (Stun.utils.pjaxReloadScrollIcon) {
+        Stun.utils.pjaxReloadScrollIcon();
+      }
+      if (Stun.utils.pjaxReloadLocalSearch) {
+        Stun.utils.pjaxReloadLocalSearch();
+      }
+    }
+  }, false);
+}, false);</script><div id="pjax-reload"><link href="https://unpkg.com/katex@0.10.2/dist/katex.min.css" rel="stylesheet" type="text/css"><link href="https://unpkg.com/katex@0.10.2/dist/contrib/copy-tex.css" rel="stylesheet" type="text/css"><script src="https://unpkg.com/katex@0.10.2/dist/contrib/copy-tex.min.js"></script><script src="//unpkg.com/quicklink@latest/dist/quicklink.umd.js"></script><script>function initQuicklink() {
+  quicklink({
+    timeout: '10000',
+    priority: true,
+    ignores: [uri => uri.includes('#'), uri => uri === 'https://hexo.ab-in.cn/2022/01/05/Web%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE%E8%AE%BE%E8%AE%A1%E6%97%A5%E5%BF%97/', /\/api\/?/,uri => uri.includes('.xml'),uri => uri.includes('.zip'),(uri, el) => el.hasAttribute('nofollow'),(uri, el) => el.hasAttribute('noprefetch')]
+  });
+}
+
+if (true || false) {
+  initQuicklink();
+} else {
+  window.addEventListener('DOMContentLoaded', initQuicklink, false);
+}</script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script></div><script data-pjax="">function loadLivere () {
+  var d = document, s = d.createElement('script');
+
+  if (!d.getElementById('lv-container')) {
+    return;
+  }
+  if (typeof LivereTower === 'function') {
+    return;
+  }
+  s.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+  if (true) {
+    s.setAttribute('data-pjax-rm', '');
+  }
+  (d.head || d.body).appendChild(s);
+}
+
+if (true) {
+  loadLivere();
+} else {
+  window.addEventListener('DOMContentLoaded', loadLivere, false);
+}</script><script src="/js/utils.js?v=2.8.0"></script><script src="/js/stun-boot.js?v=2.8.0"></script><script src="/js/scroll.js?v=2.8.0"></script><script src="/js/header.js?v=2.8.0"></script><script src="/js/sidebar.js?v=2.8.0"></script><script type="application/json" src="/search.json"></script></body></html>

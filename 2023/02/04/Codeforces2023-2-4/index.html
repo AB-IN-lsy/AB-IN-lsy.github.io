@@ -1,0 +1,518 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#54bcff"><link rel="manifest" href="/manifest.json?v=2.8.0"><link rel="icon" href="/assets/favicon-16x16.png?v=2.8.0" type="image/png" sizes="16x16"><link rel="icon" href="/assets/favicon-32x32.png?v=2.8.0" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="/assets/android-chrome-192x192.png?v=2.8.0" sizes="180x180"><link rel="mask-icon" href="/%5Bobject%20Object%5D?v=2.8.0" color="#54bcff"><meta name="msapplication-TileImage" content="/%5Bobject%20Object%5D"><meta name="msapplication-TileColor" content="#000000"><meta name="google-site-verification" content="e4vuRgT_ouTNSxZf23XDFDixeCsDJiaAvmUQaKT_njA"><meta name="msvalidate.01" content="A2EE4D0CCD36C0B0741FA44DBF05FF0D"><meta name="baidu-site-verification" content="code-OOQCT4Wx7W"><meta name="description" content="摘要Title: Codeforces Round 799 (Div. 4)Tag: set，dpProblem: A, B, C, D, E, F, G1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Codeforces Round 849 (Div. 4)">
+<meta property="og:url" content="https://hexo.ab-in.cn/2023/02/04/Codeforces2023-2-4/index.html">
+<meta property="og:site_name" content="AB-IN&#39;s Blog">
+<meta property="og:description" content="摘要Title: Codeforces Round 799 (Div. 4)Tag: set，dpProblem: A, B, C, D, E, F, G1">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-02-04T05:58:37.000Z">
+<meta property="article:modified_time" content="2023-05-04T11:35:07.820Z">
+<meta property="article:author" content="AB-IN">
+<meta property="article:tag" content="dp">
+<meta property="article:tag" content="Codeforces">
+<meta property="article:tag" content="set">
+<meta name="twitter:card" content="summary"><title>Codeforces Round 849 (Div. 4) | AB-IN's Blog</title><link ref="canonical" href="https://hexo.ab-in.cn/2023/02/04/Codeforces2023-2-4/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="//unpkg.com/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" type="text/css"><link rel="stylesheet" href="//unpkg.com/instantsearch.js@2.1.1/dist/instantsearch.min.css" type="text/css"><link rel="stylesheet" href="//unpkg.com/social-share.js@1.0.16/dist/css/share.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.8.0"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: {"appId":"DU3TAVNH2B","apiKey":"483f4ee8a687ed876e44dc2c27d52939","indexName":"hexo_BLOG","hits":{"per_page":10},"languages":{"inputPlaceholder":"搜索文章","hitsEmpty":"没有找到任何搜索结果：${query}","hitsStats":"找到 ${hits} 条搜索结果，耗时 ${time} 毫秒"}},
+  assistSearch: ["google","bing","baidu"],
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"ocean","wordWrap":true},
+  reward: true,
+  fancybox: true,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: {"avoidBanner":false},
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: {"switchPost":true},
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-newspaper"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-address-card"></i></span><span class="header-nav-menu-item__text">关于</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/author"><span class="header-nav-submenu-item__icon"><i class="fas fa-at"></i></span><span class="header-nav-submenu-item__text">作者</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/friends"><span class="header-nav-submenu-item__icon"><i class="fas fa-users"></i></span><span class="header-nav-submenu-item__text">友链</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/FAQ"><span class="header-nav-submenu-item__icon"><i class="fas fa-question"></i></span><span class="header-nav-submenu-item__text">FAQ</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="far fa-window-maximize"></i></span><span class="header-nav-menu-item__text">其余站点</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://www.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fab fa-safari"></i></span><span class="header-nav-submenu-item__text">主页</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://ssh.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fas fa-terminal"></i></span><span class="header-nav-submenu-item__text">终端</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://kod.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fas fa-cloud"></i></span><span class="header-nav-submenu-item__text">云盘</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://oneword.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fab fa-dailymotion"></i></span><span class="header-nav-submenu-item__text">一言</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://ab-in.blog.csdn.net"><span class="header-nav-submenu-item__icon"><i class="fas fa-copyright"></i></span><span class="header-nav-submenu-item__text">CSDN</span></a></div></div></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">Codeforces Round 849 (Div. 4)</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2023-02-04</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2023-05-04</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">2.9k</span></span><span class="post-meta-item post-meta-item--readtime"><span class="post-meta-item__icon"><i class="far fa-clock"></i></span><span class="post-meta-item__info">阅读时长</span><span class="post-meta-item__value">29分</span></span><span class="post-meta-item post-meta-item--visitors"><span class="post-meta-item__icon"><i class="fas fa-eye"></i></span><span class="post-meta-item__info">阅读次数</span><span class="post-meta-item__value" id="busuanzi_value_page_pv"></span></span></div></header><div class="post-body">
+    <div class="note-plugin info">
+      <span class="note-plugin__icon note-plugin__icon--info">
+              <i class="fas fa-info-circle"></i>
+            </span>
+      <p><strong>摘要</strong><br>Title: Codeforces Round 799 (Div. 4)<br>Tag: set，dp<br>Problem: A, B, C, D, E, F, G1</p>
+    </div>
+  
+<span id="more"></span>
+
+<p><font size=3 face=楷体>Powered by:<strong>NEFU AB-IN</strong></font></p>
+<p><font color=#FFA500 size=5 face=楷体><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://codeforces.com/contest/1791" >Link</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></font></p>
+<p>@<a href="%E6%96%87%E7%AB%A0%E7%9B%AE%E5%BD%95">TOC</a></p>
+
+        <h1 id="Codeforces-Round-849-Div-4"   >
+          <a href="#Codeforces-Round-849-Div-4" class="heading-link"><i class="fas fa-link"></i></a><a href="#Codeforces-Round-849-Div-4" class="headerlink" title="Codeforces Round 849 (Div. 4) "></a><font color=#6495ED size=6 >Codeforces Round 849 (Div. 4) </font></h1>
+      <ul>
+<li>
+        <h2 id="ACodeforces-Checking"   >
+          <a href="#ACodeforces-Checking" class="heading-link"><i class="fas fa-link"></i></a><a href="#ACodeforces-Checking" class="headerlink" title="A	Codeforces Checking"></a><font color=#FFA500 size=5>A	Codeforces Checking</font></h2>
+      <ul>
+<li>
+        <h3 id="题意"   >
+          <a href="#题意" class="heading-link"><i class="fas fa-link"></i></a><a href="#题意" class="headerlink" title="题意"></a><font size=4 face=粗体>题意</font></h3>
+      <blockquote>
+<p>Given a lowercase Latin character (letter), check if it appears in the string codeforces codeforces .</p>
+</blockquote>
+</li>
+<li>
+        <h3 id="思路"   >
+          <a href="#思路" class="heading-link"><i class="fas fa-link"></i></a><a href="#思路" class="headerlink" title="思路"></a><font size=4 face=粗体>思路</font></h3>
+      <p>模拟</p>
+</li>
+<li>
+        <h3 id="代码"   >
+          <a href="#代码" class="heading-link"><i class="fas fa-link"></i></a><a href="#代码" class="headerlink" title="代码"></a><font size=4 face=粗体>代码</font></h3>
+      <figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">undef</span> int</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SZ(X) ((int)(X).size())</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ALL(X) (X).begin(), (X).end()</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IOS                                                                                                            \</span></span><br><span class="line"><span class="meta">    ios::sync_with_stdio(false);                                                                                       \</span></span><br><span class="line"><span class="meta">    cin.tie(nullptr);                                                                                                  \</span></span><br><span class="line"><span class="meta">    cout.tie(nullptr)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DEBUG(X) cout &lt;&lt; #X &lt;&lt; <span class="string">&quot;: &quot;</span> &lt;&lt; X &lt;&lt; <span class="string">&#x27;\n&#x27;</span></span></span><br><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt; PII;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1e5</span> + <span class="number">10</span>, INF = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> a;</span><br><span class="line">    cin &gt;&gt; a;</span><br><span class="line">    string s = <span class="string">&quot;codeforces&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> x : s)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (x == a)</span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;YES\n&quot;</span>;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;NO\n&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    IOS;</span><br><span class="line">    <span class="type">int</span> T;</span><br><span class="line">    cin &gt;&gt; T;</span><br><span class="line">    <span class="keyword">while</span> (T--)</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure></li>
+</ul>
+</li>
+<li>
+        <h2 id="B-Following-Directions"   >
+          <a href="#B-Following-Directions" class="heading-link"><i class="fas fa-link"></i></a><a href="#B-Following-Directions" class="headerlink" title="B. Following Directions"></a><font color=#FFA500 size=5>B. Following Directions</font></h2>
+      <ul>
+<li>
+        <h3 id="题意-1"   >
+          <a href="#题意-1" class="heading-link"><i class="fas fa-link"></i></a><a href="#题意-1" class="headerlink" title="题意"></a><font size=4 face=粗体>题意</font></h3>
+      <blockquote>
+<p>略</p>
+</blockquote>
+</li>
+<li>
+        <h3 id="思路-1"   >
+          <a href="#思路-1" class="heading-link"><i class="fas fa-link"></i></a><a href="#思路-1" class="headerlink" title="思路"></a><font size=4 face=粗体>思路</font></h3>
+      <p>模拟</p>
+</li>
+<li>
+        <h3 id="代码-1"   >
+          <a href="#代码-1" class="heading-link"><i class="fas fa-link"></i></a><a href="#代码-1" class="headerlink" title="代码"></a><font size=4 face=粗体>代码</font></h3>
+      <figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* @Author: NEFU AB-IN</span></span><br><span class="line"><span class="comment">* @Date: 2023-02-03 22:35:26</span></span><br><span class="line"><span class="comment">* @FilePath: \CF\1791\b\b.cpp</span></span><br><span class="line"><span class="comment">* @LastEditTime: 2023-02-03 22:40:58</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">undef</span> int</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SZ(X) ((int)(X).size())</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ALL(X) (X).begin(), (X).end()</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IOS                                                                                                            \</span></span><br><span class="line"><span class="meta">    ios::sync_with_stdio(false);                                                                                       \</span></span><br><span class="line"><span class="meta">    cin.tie(nullptr);                                                                                                  \</span></span><br><span class="line"><span class="meta">    cout.tie(nullptr)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DEBUG(X) cout &lt;&lt; #X &lt;&lt; <span class="string">&quot;: &quot;</span> &lt;&lt; X &lt;&lt; <span class="string">&#x27;\n&#x27;</span></span></span><br><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt; PII;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1e5</span> + <span class="number">10</span>, INF = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    string s;</span><br><span class="line">    cin &gt;&gt; s;</span><br><span class="line">    <span class="type">int</span> xs = <span class="number">0</span>, ys = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> x : s)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (x == <span class="string">&#x27;U&#x27;</span>)</span><br><span class="line">            ys++;</span><br><span class="line">        <span class="keyword">if</span> (x == <span class="string">&#x27;D&#x27;</span>)</span><br><span class="line">            ys--;</span><br><span class="line">        <span class="keyword">if</span> (x == <span class="string">&#x27;L&#x27;</span>)</span><br><span class="line">            xs--;</span><br><span class="line">        <span class="keyword">if</span> (x == <span class="string">&#x27;R&#x27;</span>)</span><br><span class="line">            xs++;</span><br><span class="line">        <span class="keyword">if</span> (ys == <span class="number">1</span> &amp;&amp; xs == <span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;YES\n&quot;</span>;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;NO\n&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    IOS;</span><br><span class="line">    <span class="type">int</span> T;</span><br><span class="line">    cin &gt;&gt; T;</span><br><span class="line">    <span class="keyword">while</span> (T--)</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure></li>
+</ul>
+</li>
+<li>
+        <h2 id="C-Prepend-and-Append"   >
+          <a href="#C-Prepend-and-Append" class="heading-link"><i class="fas fa-link"></i></a><a href="#C-Prepend-and-Append" class="headerlink" title="C. Prepend and Append"></a><font color=#FFA500 size=5>C. Prepend and Append</font></h2>
+      <ul>
+<li>
+        <h3 id="题意-2"   >
+          <a href="#题意-2" class="heading-link"><i class="fas fa-link"></i></a><a href="#题意-2" class="headerlink" title="题意"></a><font size=4 face=粗体>题意</font></h3>
+      <blockquote>
+<p>Timur initially had a binary string† s(possibly of length 0). He performed the following operation several (possibly zero) times:<br>Add 0to one end of the string and 1to the other end of the string. For example, starting from the string 1011, you can obtain either 010111or 110110.<br>You are given Timur’s final string. What is the length of the shortest possible string he could have started with?†A binary string is a string (possibly the empty string) whose characters are either 0or 1.</p>
+</blockquote>
+</li>
+<li>
+        <h3 id="思路-2"   >
+          <a href="#思路-2" class="heading-link"><i class="fas fa-link"></i></a><a href="#思路-2" class="headerlink" title="思路"></a><font size=4 face=粗体>思路</font></h3>
+      <p>模拟即可，两种选择，删到不能再删为止</p>
+</li>
+<li>
+        <h3 id="代码-2"   >
+          <a href="#代码-2" class="heading-link"><i class="fas fa-link"></i></a><a href="#代码-2" class="headerlink" title="代码"></a><font size=4 face=粗体>代码</font></h3>
+      <figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* @Author: NEFU AB-IN</span></span><br><span class="line"><span class="comment">* @Date: 2023-02-03 22:35:26</span></span><br><span class="line"><span class="comment">* @FilePath: \CF\1791\c\c.cpp</span></span><br><span class="line"><span class="comment">* @LastEditTime: 2023-02-03 22:46:12</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">undef</span> int</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SZ(X) ((int)(X).size())</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ALL(X) (X).begin(), (X).end()</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IOS                                                                                                            \</span></span><br><span class="line"><span class="meta">    ios::sync_with_stdio(false);                                                                                       \</span></span><br><span class="line"><span class="meta">    cin.tie(nullptr);                                                                                                  \</span></span><br><span class="line"><span class="meta">    cout.tie(nullptr)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DEBUG(X) cout &lt;&lt; #X &lt;&lt; <span class="string">&quot;: &quot;</span> &lt;&lt; X &lt;&lt; <span class="string">&#x27;\n&#x27;</span></span></span><br><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt; PII;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1e5</span> + <span class="number">10</span>, INF = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    string s;</span><br><span class="line">    cin &gt;&gt; s;</span><br><span class="line">    <span class="type">int</span> ans = n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">SZ</span>(s); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (ans == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">if</span> (s[i] == <span class="string">&#x27;0&#x27;</span> &amp;&amp; s[<span class="built_in">SZ</span>(s) - i - <span class="number">1</span>] == <span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">            ans -= <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (s[i] == <span class="string">&#x27;1&#x27;</span> &amp;&amp; s[<span class="built_in">SZ</span>(s) - i - <span class="number">1</span>] == <span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">            ans -= <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; ans &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    IOS;</span><br><span class="line">    <span class="type">int</span> T;</span><br><span class="line">    cin &gt;&gt; T;</span><br><span class="line">    <span class="keyword">while</span> (T--)</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></div></figure></li>
+</ul>
+</li>
+<li>
+        <h2 id="D-Distinct-Split"   >
+          <a href="#D-Distinct-Split" class="heading-link"><i class="fas fa-link"></i></a><a href="#D-Distinct-Split" class="headerlink" title="D. Distinct Split"></a><font color=#FFA500 size=5>D. Distinct Split</font></h2>
+      <ul>
+<li>
+        <h3 id="题意-3"   >
+          <a href="#题意-3" class="heading-link"><i class="fas fa-link"></i></a><a href="#题意-3" class="headerlink" title="题意"></a><font size=4 face=粗体>题意</font></h3>
+      <blockquote>
+<p>Let’s denote the f(x)function for a string xas the number of distinct characters that the string contains. For example f(abc)&#x3D;3, f(bbbbb)&#x3D;1, and f(babacaba)&#x3D;3.<br>Given a string s, split it into two non-empty strings aand bsuch that f(a)+f(b)is the maximum possible. In other words, find the maximum possible value of f(a)+f(b)such that a+b&#x3D;s(the concatenation of string aand string bis equal to string s).</p>
+</blockquote>
+</li>
+<li>
+        <h3 id="思路-3"   >
+          <a href="#思路-3" class="heading-link"><i class="fas fa-link"></i></a><a href="#思路-3" class="headerlink" title="思路"></a><font size=4 face=粗体>思路</font></h3>
+      <p>注意这里分字符串，是两者必须连着，也就是两个<strong>子串</strong><br>所以可以预处理到每个点的元素种类，从前往后，从后往前，都处理一遍，最后遍历求最值即可</p>
+</li>
+<li>
+        <h3 id="代码-3"   >
+          <a href="#代码-3" class="heading-link"><i class="fas fa-link"></i></a><a href="#代码-3" class="headerlink" title="代码"></a><font size=4 face=粗体>代码</font></h3>
+      <figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">undef</span> int</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SZ(X) ((int)(X).size())</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ALL(X) (X).begin(), (X).end()</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IOS                                                                                                            \</span></span><br><span class="line"><span class="meta">    ios::sync_with_stdio(false);                                                                                       \</span></span><br><span class="line"><span class="meta">    cin.tie(nullptr);                                                                                                  \</span></span><br><span class="line"><span class="meta">    cout.tie(nullptr)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DEBUG(X) cout &lt;&lt; #X &lt;&lt; <span class="string">&quot;: &quot;</span> &lt;&lt; X &lt;&lt; <span class="string">&#x27;\n&#x27;</span></span></span><br><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt; PII;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1e5</span> + <span class="number">10</span>, INF = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    string s;</span><br><span class="line">    cin &gt;&gt; s;</span><br><span class="line"></span><br><span class="line">    s = <span class="string">&#x27;0&#x27;</span> + s;</span><br><span class="line">    unordered_map&lt;<span class="type">char</span>, <span class="type">int</span>&gt; st;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">a</span><span class="params">(n + <span class="number">10</span>)</span>, <span class="title">b</span><span class="params">(n + <span class="number">10</span>)</span></span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; <span class="built_in">SZ</span>(s); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (!st.<span class="built_in">count</span>(s[i]))</span><br><span class="line">            a[i]++;</span><br><span class="line">        st[s[i]]++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; <span class="built_in">SZ</span>(s); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        a[i] += a[i - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    st.<span class="built_in">clear</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="built_in">SZ</span>(s) - <span class="number">1</span>; i &gt;= <span class="number">1</span>; --i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (!st.<span class="built_in">count</span>(s[i]))</span><br><span class="line">            b[i]++;</span><br><span class="line">        st[s[i]]++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="built_in">SZ</span>(s) - <span class="number">1</span>; i &gt;= <span class="number">1</span>; --i)</span><br><span class="line">    &#123;</span><br><span class="line">        b[i] += b[i + <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> mx = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i + <span class="number">1</span> &lt; <span class="built_in">SZ</span>(s); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> ans = a[i] + b[i + <span class="number">1</span>];</span><br><span class="line">        mx = <span class="built_in">max</span>(ans, mx);</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; mx &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    IOS;</span><br><span class="line">    <span class="type">int</span> T;</span><br><span class="line">    cin &gt;&gt; T;</span><br><span class="line">    <span class="keyword">while</span> (T--)</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure></li>
+</ul>
+</li>
+<li>
+        <h2 id="E-Negatives-and-Positives"   >
+          <a href="#E-Negatives-and-Positives" class="heading-link"><i class="fas fa-link"></i></a><a href="#E-Negatives-and-Positives" class="headerlink" title="E. Negatives and Positives"></a><font color=#FFA500 size=5>E. Negatives and Positives</font></h2>
+      <ul>
+<li>
+        <h3 id="题意-4"   >
+          <a href="#题意-4" class="heading-link"><i class="fas fa-link"></i></a><a href="#题意-4" class="headerlink" title="题意"></a><font size=4 face=粗体>题意</font></h3>
+      <blockquote>
+<p>翻译：可以翻转相邻的两个元素的正负，也就是index isuch that 1≤i≤n−1 and assign a[i]&#x3D;−a[i] and a[i+1]&#x3D;−a[i+1]<br>问数组最大值</p>
+</blockquote>
+</li>
+<li>
+        <h3 id="思路-4"   >
+          <a href="#思路-4" class="heading-link"><i class="fas fa-link"></i></a><a href="#思路-4" class="headerlink" title="思路"></a><font size=4 face=粗体>思路</font></h3>
+      <p>两种思路</p>
+<ul>
+<li><p><strong>思维</strong><br>性质：可以发现，翻转<strong>相邻</strong>两元素正负，如果不限制次数，其实也就相当于，数组中两个<strong>任意元素</strong>翻转正负<br>那么就考虑<strong>非正数</strong>个数的奇偶性即可</p>
+<ul>
+<li>如果是偶数，那么内部消化</li>
+<li>如果是奇数，绝对值最小的那个负数不翻转即可</li>
+</ul>
+</li>
+<li><p><strong>线性dp</strong><br>如果没发现我上面说的<strong>性质</strong>的话，可以采用dp直接推<br>我们这里规定：<strong>从下标为2开始，i和i-1同时翻转</strong></p>
+<ul>
+<li><p><strong>状态表示</strong>：</p>
+<ul>
+<li><code>dp[i][0]</code>代表到i处的最大值，此时i和i-1不翻转</li>
+<li><code>dp[i][1]</code>代表到i处的最大值，此时i和i-1翻转</li>
+<li><strong>此时i和i-1都必须具有可主动翻转的能力！！</strong>，也就是i-1也可策动i-2翻转，所以，<strong>i必须大于2</strong></li>
+<li>所以我们需要预处理<code>i=1</code>和<code>i=2</code>的情况</li>
+</ul>
+</li>
+<li><p><strong>状态方程</strong></p>
+<ul>
+<li>$$<br>dp[i][0] &#x3D; a[i] + max(dp[i - 1][0], dp[i - 1][1]);<br>$$</li>
+<li>$$<br>dp[i][1] &#x3D; -a[i] + max(dp[i - 1][0] - 2 * a[i - 1], dp[i - 1][1] + 2 * a[i - 1]);<br>$$</li>
+<li>第二个方程解释一下，就是这个是a[i]翻的情况，那么由于dp[i-1][0]的情况是a[i-1]不翻的最大值，那么此时a[i]翻了，就会策动a[i-1]翻，所以要**减去两倍的a[i-1]**，后面同理</li>
+</ul>
+</li>
+<li><p>最后输出变或不变的最大值即可</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+        <h3 id="代码-4"   >
+          <a href="#代码-4" class="heading-link"><i class="fas fa-link"></i></a><a href="#代码-4" class="headerlink" title="代码"></a><font size=4 face=粗体>代码</font></h3>
+      <p><strong>思维</strong></p>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* @Author: NEFU AB-IN</span></span><br><span class="line"><span class="comment">* @Date: 2023-02-04 14:02:33</span></span><br><span class="line"><span class="comment">* @FilePath: \CF\1791\e\e1.cpp</span></span><br><span class="line"><span class="comment">* @LastEditTime: 2023-02-04 14:28:27</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SZ(X) ((int)(X).size())</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ALL(X) (X).begin(), (X).end()</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IOS                                                                                                            \</span></span><br><span class="line"><span class="meta">    ios::sync_with_stdio(false);                                                                                       \</span></span><br><span class="line"><span class="meta">    cin.tie(nullptr);                                                                                                  \</span></span><br><span class="line"><span class="meta">    cout.tie(nullptr)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DEBUG(X) cout &lt;&lt; #X &lt;&lt; <span class="string">&quot;: &quot;</span> &lt;&lt; X &lt;&lt; <span class="string">&#x27;\n&#x27;</span></span></span><br><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt; PII;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">2e5</span> + <span class="number">10</span>, INF = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n, sum = <span class="number">0</span>, neg = <span class="number">0</span>;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">a</span><span class="params">(n)</span></span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        cin &gt;&gt; a[i];</span><br><span class="line">        <span class="keyword">if</span> (a[i] &lt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            neg++;</span><br><span class="line">            a[i] = -a[i];</span><br><span class="line">        &#125;</span><br><span class="line">        sum += a[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (neg % <span class="number">2</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> mn = *<span class="built_in">min_element</span>(<span class="built_in">ALL</span>(a));</span><br><span class="line">        sum -= <span class="number">2</span> * mn;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; sum &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    IOS;</span><br><span class="line">    <span class="type">int</span> T;</span><br><span class="line">    cin &gt;&gt; T;</span><br><span class="line">    <span class="keyword">while</span> (T--)</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<hr>
+<p><strong>线性dp</strong></p>
+<figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* @Author: NEFU AB-IN</span></span><br><span class="line"><span class="comment">* @Date: 2023-02-03 22:35:26</span></span><br><span class="line"><span class="comment">* @FilePath: \CF\1791\e\e.cpp</span></span><br><span class="line"><span class="comment">* @LastEditTime: 2023-02-04 11:07:18</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SZ(X) ((int)(X).size())</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ALL(X) (X).begin(), (X).end()</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IOS                                                                                                            \</span></span><br><span class="line"><span class="meta">    ios::sync_with_stdio(false);                                                                                       \</span></span><br><span class="line"><span class="meta">    cin.tie(nullptr);                                                                                                  \</span></span><br><span class="line"><span class="meta">    cout.tie(nullptr)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DEBUG(X) cout &lt;&lt; #X &lt;&lt; <span class="string">&quot;: &quot;</span> &lt;&lt; X &lt;&lt; <span class="string">&#x27;\n&#x27;</span></span></span><br><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt; PII;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">2e5</span> + <span class="number">10</span>, INF = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> dp[N][<span class="number">2</span>], a[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(a, <span class="number">0</span>, <span class="keyword">sizeof</span> a);</span><br><span class="line">    <span class="built_in">memset</span>(dp, <span class="number">0</span>, <span class="keyword">sizeof</span> dp);</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        cin &gt;&gt; a[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    dp[<span class="number">1</span>][<span class="number">0</span>] = a[<span class="number">1</span>], dp[<span class="number">1</span>][<span class="number">1</span>] = -a[<span class="number">1</span>];</span><br><span class="line">    dp[<span class="number">2</span>][<span class="number">0</span>] = a[<span class="number">1</span>] + a[<span class="number">2</span>], dp[<span class="number">2</span>][<span class="number">1</span>] = -a[<span class="number">1</span>] - a[<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">3</span>; i &lt;= n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        dp[i][<span class="number">0</span>] = a[i] + <span class="built_in">max</span>(dp[i - <span class="number">1</span>][<span class="number">0</span>], dp[i - <span class="number">1</span>][<span class="number">1</span>]);</span><br><span class="line">        dp[i][<span class="number">1</span>] = -a[i] + <span class="built_in">max</span>(dp[i - <span class="number">1</span>][<span class="number">0</span>] - <span class="number">2</span> * a[i - <span class="number">1</span>], dp[i - <span class="number">1</span>][<span class="number">1</span>] + <span class="number">2</span> * a[i - <span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; <span class="built_in">max</span>(dp[n][<span class="number">0</span>], dp[n][<span class="number">1</span>]) &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    IOS;</span><br><span class="line">    <span class="type">int</span> T;</span><br><span class="line">    cin &gt;&gt; T;</span><br><span class="line">    <span class="keyword">while</span> (T--)</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure></li>
+</ul>
+</li>
+<li>
+        <h2 id="F-Range-Update-Point-Query"   >
+          <a href="#F-Range-Update-Point-Query" class="heading-link"><i class="fas fa-link"></i></a><a href="#F-Range-Update-Point-Query" class="headerlink" title="F. Range Update Point Query"></a><font color=#FFA500 size=5>F. Range Update Point Query</font></h2>
+      <ul>
+<li>
+        <h3 id="题意-5"   >
+          <a href="#题意-5" class="heading-link"><i class="fas fa-link"></i></a><a href="#题意-5" class="headerlink" title="题意"></a><font size=4 face=粗体>题意</font></h3>
+      <blockquote>
+<p>题意：有一个长度为n的数组a, f函数操作为将a[i] 转换为 a[i]每一位的数的和<br>1 l r: 代表数组中[l, r]中的所有数都进行一次f操作<br>2 x  : 代表输出a[x]</p>
+</blockquote>
+</li>
+<li>
+        <h3 id="思路-5"   >
+          <a href="#思路-5" class="heading-link"><i class="fas fa-link"></i></a><a href="#思路-5" class="headerlink" title="思路"></a><font size=4 face=粗体>思路</font></h3>
+      <p>此题是好题，可以好好记录一下，和<strong>2023牛客寒假训练营第一场的G</strong>一样的思路<br>可以采用DSU，线段树等，这里介绍一个set做法</p>
+<p>其实可以观察到这个f函数，梯度下降很快，由于数值最大只有1e9，最大的数就是 99999999-&gt;72-&gt;9，所以最多变两次，之后变成定值，就不会再变了<br>那么思路就是</p>
+<ul>
+<li>现将所有<strong>不是定值</strong>的数的<strong>下标</strong>加入set</li>
+<li>当出现1操作，即修改时，首先二分找到比l大于等于的第一个下标 (因为可能[l, r]中已经有数是定值，被移出set了)，将其进行f操作并更新回原数组，如果它已经是定值了，则将其移出set。继续根据这个的下标往后找，直到下标超过r，就break</li>
+<li>当出现2操作，直接输出a中的值即可</li>
+</ul>
+</li>
+<li>
+        <h3 id="代码-5"   >
+          <a href="#代码-5" class="heading-link"><i class="fas fa-link"></i></a><a href="#代码-5" class="headerlink" title="代码"></a><font size=4 face=粗体>代码</font></h3>
+      <figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">undef</span> int</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SZ(X) ((int)(X).size())</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ALL(X) (X).begin(), (X).end()</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IOS                                                                                                            \</span></span><br><span class="line"><span class="meta">    ios::sync_with_stdio(false);                                                                                       \</span></span><br><span class="line"><span class="meta">    cin.tie(nullptr);                                                                                                  \</span></span><br><span class="line"><span class="meta">    cout.tie(nullptr)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DEBUG(X) cout &lt;&lt; #X &lt;&lt; <span class="string">&quot;: &quot;</span> &lt;&lt; X &lt;&lt; <span class="string">&#x27;\n&#x27;</span></span></span><br><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt; PII;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">2e5</span> + <span class="number">10</span>, INF = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">f</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (x)</span><br><span class="line">    &#123;</span><br><span class="line">        ans += x % <span class="number">10</span>;</span><br><span class="line">        x /= <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> a[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n, m;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    set&lt;<span class="type">int</span>&gt; st;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin &gt;&gt; a[i];</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">f</span>(a[i]) != a[i])</span><br><span class="line">            st.<span class="built_in">insert</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">    st.<span class="built_in">insert</span>(n + <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= m; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> op;</span><br><span class="line">        cin &gt;&gt; op;</span><br><span class="line">        <span class="keyword">if</span> (op == <span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> l, r;</span><br><span class="line">            cin &gt;&gt; l &gt;&gt; r;</span><br><span class="line">            <span class="type">int</span> val = l;</span><br><span class="line">            <span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">auto</span> t1 = st.<span class="built_in">lower_bound</span>(val);</span><br><span class="line">                <span class="type">int</span> pos = *t1;</span><br><span class="line">                <span class="keyword">if</span> (pos &gt; r)</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                a[pos] = <span class="built_in">f</span>(a[pos]);</span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">f</span>(a[pos]) == a[pos])</span><br><span class="line">                    st.<span class="built_in">erase</span>(pos);</span><br><span class="line">                val = pos + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> pos;</span><br><span class="line">            cin &gt;&gt; pos;</span><br><span class="line">            cout &lt;&lt; a[pos] &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    IOS;</span><br><span class="line">    <span class="type">int</span> T;</span><br><span class="line">    cin &gt;&gt; T;</span><br><span class="line">    <span class="keyword">while</span> (T--)</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure></li>
+</ul>
+</li>
+<li>
+        <h2 id="G1-Teleporters-Easy-Version"   >
+          <a href="#G1-Teleporters-Easy-Version" class="heading-link"><i class="fas fa-link"></i></a><a href="#G1-Teleporters-Easy-Version" class="headerlink" title="G1. Teleporters (Easy Version)"></a><font color=#FFA500 size=5>G1. Teleporters (Easy Version)</font></h2>
+      <ul>
+<li>
+        <h3 id="题意-6"   >
+          <a href="#题意-6" class="heading-link"><i class="fas fa-link"></i></a><a href="#题意-6" class="headerlink" title="题意"></a><font size=4 face=粗体>题意</font></h3>
+      <blockquote>
+<p>题意：有0,1,…n个地点，其中1到n处有传送门，现在有m个金币，往左往右走会耗费一个金币，走到第i个传送门，如果该处的传送门还存在的话，那么就可以做这个传送门回0（即原点）并花费此处的金币，这个传送门就不可以再用了<br>求用传送门的最多次数</p>
+</blockquote>
+</li>
+<li>
+        <h3 id="思路-6"   >
+          <a href="#思路-6" class="heading-link"><i class="fas fa-link"></i></a><a href="#思路-6" class="headerlink" title="思路"></a><font size=4 face=粗体>思路</font></h3>
+      <p>其实就是个典型的贪心，类似于背包，总体积为m，物体体积为<strong>金币+下标</strong>，价值为<strong>1</strong><br>由于价值都是一样的，所以<strong>一定是体积越小越好</strong>，所以直接贪即可</p>
+<p>之前一直想的是01背包，还写了01背包的逆过程，结果就是浪费时间…</p>
+</li>
+<li>
+        <h3 id="代码-6"   >
+          <a href="#代码-6" class="heading-link"><i class="fas fa-link"></i></a><a href="#代码-6" class="headerlink" title="代码"></a><font size=4 face=粗体>代码</font></h3>
+      <figure class="highlight cpp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SZ(X) ((int)(X).size())</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ALL(X) (X).begin(), (X).end()</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IOS                                                                                                            \</span></span><br><span class="line"><span class="meta">    ios::sync_with_stdio(false);                                                                                       \</span></span><br><span class="line"><span class="meta">    cin.tie(nullptr);                                                                                                  \</span></span><br><span class="line"><span class="meta">    cout.tie(nullptr)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DEBUG(X) cout &lt;&lt; #X &lt;&lt; <span class="string">&quot;: &quot;</span> &lt;&lt; X &lt;&lt; <span class="string">&#x27;\n&#x27;</span></span></span><br><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt; PII;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">2e5</span> + <span class="number">10</span>, INF = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> dp[N], v[N], V;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; V;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        cin &gt;&gt; v[i];</span><br><span class="line">        v[i] += i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">sort</span>(v + <span class="number">1</span>, v + n + <span class="number">1</span>);</span><br><span class="line">    <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (V &gt;= v[i])</span><br><span class="line">        &#123;</span><br><span class="line">            V -= v[i];</span><br><span class="line">            ans++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    IOS;</span><br><span class="line">    <span class="type">int</span> T;</span><br><span class="line">    cin &gt;&gt; T;</span><br><span class="line">    <span class="keyword">while</span> (T--)</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure></li>
+</ul>
+</li>
+</ul>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://hexo.ab-in.cn">AB-IN</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://hexo.ab-in.cn/2023/02/04/Codeforces2023-2-4/">https://hexo.ab-in.cn/2023/02/04/Codeforces2023-2-4/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/dp/">dp</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/Codeforces/">Codeforces</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/set/">set</a></span></div><div class="post-share"><div class="social-share" data-sites="qzone, qq, weibo, wechat, douban, linkedin, facebook, twitter, google">Share to: </div></div><div class="post-reward reward"><div class="reward-button">请我喝杯咖啡~</div><div class="reward-qrcode"><span class="reward-qrcode-alipay"><img class="reward-qrcode-alipay__img" src="https://oss.ab-in.cn/Pay/alipay.png"><div class="reward-qrcode-alipay__text">支付宝打赏</div></span><span class="reward-qrcode-wechat"><img class="reward-qrcode-wechat__img" src="https://oss.ab-in.cn/Pay/weixin.png"><div class="reward-qrcode-wechat__text">微信打赏</div></span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2023/02/10/Article2023-2-10/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">2023最新版！宝塔面板Docker自建Bitwarden密码管理</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2023/02/02/Acwing2023-2-2/"><span class="paginator-prev__text">Acwing 第 85 场周赛</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div><div class="comments" id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC81NTEzNS8zMTYwMw"></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Codeforces-Round-849-Div-4"><span class="toc-number">1.</span> <span class="toc-text">
+          Codeforces Round 849 (Div. 4) </span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ACodeforces-Checking"><span class="toc-number">1.1.</span> <span class="toc-text">
+          A	Codeforces Checking</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E6%84%8F"><span class="toc-number">1.1.1.</span> <span class="toc-text">
+          题意</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF"><span class="toc-number">1.1.2.</span> <span class="toc-text">
+          思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">1.1.3.</span> <span class="toc-text">
+          代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#B-Following-Directions"><span class="toc-number">1.2.</span> <span class="toc-text">
+          B. Following Directions</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E6%84%8F-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">
+          题意</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">
+          思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="toc-number">1.2.3.</span> <span class="toc-text">
+          代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-Prepend-and-Append"><span class="toc-number">1.3.</span> <span class="toc-text">
+          C. Prepend and Append</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E6%84%8F-2"><span class="toc-number">1.3.1.</span> <span class="toc-text">
+          题意</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF-2"><span class="toc-number">1.3.2.</span> <span class="toc-text">
+          思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81-2"><span class="toc-number">1.3.3.</span> <span class="toc-text">
+          代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#D-Distinct-Split"><span class="toc-number">1.4.</span> <span class="toc-text">
+          D. Distinct Split</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E6%84%8F-3"><span class="toc-number">1.4.1.</span> <span class="toc-text">
+          题意</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF-3"><span class="toc-number">1.4.2.</span> <span class="toc-text">
+          思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81-3"><span class="toc-number">1.4.3.</span> <span class="toc-text">
+          代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#E-Negatives-and-Positives"><span class="toc-number">1.5.</span> <span class="toc-text">
+          E. Negatives and Positives</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E6%84%8F-4"><span class="toc-number">1.5.1.</span> <span class="toc-text">
+          题意</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF-4"><span class="toc-number">1.5.2.</span> <span class="toc-text">
+          思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81-4"><span class="toc-number">1.5.3.</span> <span class="toc-text">
+          代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#F-Range-Update-Point-Query"><span class="toc-number">1.6.</span> <span class="toc-text">
+          F. Range Update Point Query</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E6%84%8F-5"><span class="toc-number">1.6.1.</span> <span class="toc-text">
+          题意</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF-5"><span class="toc-number">1.6.2.</span> <span class="toc-text">
+          思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81-5"><span class="toc-number">1.6.3.</span> <span class="toc-text">
+          代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#G1-Teleporters-Easy-Version"><span class="toc-number">1.7.</span> <span class="toc-text">
+          G1. Teleporters (Easy Version)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E6%84%8F-6"><span class="toc-number">1.7.1.</span> <span class="toc-text">
+          题意</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF-6"><span class="toc-number">1.7.2.</span> <span class="toc-text">
+          思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81-6"><span class="toc-number">1.7.3.</span> <span class="toc-text">
+          代码</span></a></li></ol></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://oss.ab-in.cn/images/AB-IN.jpg" alt="avatar"></div><p class="sidebar-ov-author__text">NEFU AB-IN</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/AB-IN-lsy" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/AB_IN_liusy" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="http://wpa.qq.com/msgrd?v=3&amp;uin=1719827581&amp;site=qq&amp;menu=yes" target="_blank" rel="noopener" data-popover="QQ" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-qq"></i></span></a><a class="sidebar-ov-social-item" href="mailto:liusy200708@gmail.com" target="_blank" rel="noopener" data-popover="Gmail" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a></div><div class="sidebar-ov-feed"></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">您已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2023</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>AB-IN All Rights Reserved</span><span class="footer__devider">|</span><span><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">鲁ICP备2021035431号</a></span></div><div class="busuanzi"><span class="busuanzi-siteuv"><span class="busuanzi-siteuv__icon"><i class="fas fa-user"></i></span><span class="busuanzi-siteuv__info">访问人数</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_uv"></span></span><span class="busuanzi-sitepv"><span class="busuanzi-siteuv__icon"><i class="fas fa-eye"></i></span><span class="busuanzi-siteuv__info">浏览总量</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_pv"></span></span></div><div><script type="text/javascript" src="https://oneword.ab-in.cn/oneword/oneword.php?format=js&charset=utf-8"></script> <div id="oneword"><script>oneword()</script></div></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"></div><div class="search-btns">使用搜索：<span class="search-btns-item search-btns-item--google"><i class="fab fa-google"></i>谷歌</span><span class="search-btns-item search-btns-item--bing"><i></i>必应</span><span class="search-btns-item search-btns-item--baidu"><i></i>百度</span></div><div class="search-results"><div id="algolia-hits"></div></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><script src="//unpkg.com/jquery@v3.4.1/dist/jquery.min.js"></script><script src="//unpkg.com/velocity-animate@1.5.2/velocity.min.js"></script><script src="//unpkg.com/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script><script src="//unpkg.com/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script src="//unpkg.com/social-share.js@1.0.16/dist/js/social-share.min.js"></script><script src="//unpkg.com/instantsearch.js@2.1.1/dist/instantsearch.min.js" defer></script><script>window.addEventListener('DOMContentLoaded', function () {
+  $('.header-nav-search').on('click', function (e) {
+    e.stopPropagation();
+
+    $('body').css('overflow', 'hidden');
+    $('.search-popup')
+      .velocity('stop')
+      .velocity('transition.expandIn', {
+        duration: 300,
+        complete: function () {
+          $('.search-popup input').focus();
+        }
+      });
+    $('.search-mask')
+      .velocity('stop')
+      .velocity('transition.fadeIn', {
+        duration: 300
+      });
+  });
+
+  function closeSearch () {
+    $('body').css({ overflow: 'auto' });
+    $('.search-popup').css({ display: 'none' });
+    $('.search-mask').css({ display: 'none' });
+  }
+
+  $('.search-mask, .search-close').on('click', function () {
+    closeSearch();
+  });
+
+  $(document).on('keydown', function (e) {
+    // Escape <=> 27
+    if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+      closeSearch();
+    }
+  });
+
+  var algolia = CONFIG.algolia;
+  if (!algolia && !(algolia.appId && algolia.apiKey && algolia.indexName)) {
+    return console.error('Algolia setting is invalid.');
+  }
+
+  var search = instantsearch({
+    appId: algolia.appId,
+    apiKey: algolia.apiKey,
+    indexName: algolia.indexName,
+    searchParameters: {
+      hitsPerPage: algolia.hits.per_page || 10
+    },
+    searchFunction: function (helper) {
+      var searchInput = $('.search-input').find('input');
+
+      if (searchInput.val()) {
+        helper.search();
+      }
+    }
+  });
+
+  search.addWidget(
+    instantsearch.widgets.searchBox({
+      container: '.search-input',
+      reset: false,
+      magnifier: false,
+      placeholder: algolia.languages.inputPlaceholder
+    })
+  );
+
+  // The hits of search results.
+  search.addWidget(
+    instantsearch.widgets.hits({
+      container: '#algolia-hits',
+      templates: {
+        item: function (data) {
+          var link = data.permalink ? data.permalink : CONFIG.root + data.path;
+          return (
+            '<a href="' + link + '" class="algolia-hit-item-link">' +
+              data._highlightResult.title.value +
+            '</a>'
+          );
+        },
+        empty: function (data) {
+          return (
+            '<div id="algolia-hits-empty">' +
+              algolia.languages.hitsEmpty.replace(/\$\{query}/, data.query) +
+            '</div>'
+          );
+        }
+      },
+      cssClasses: {
+        item: 'algolia-hit-item'
+      }
+    })
+  );
+
+  // The stats of search results.
+  if ($('#algolia-stats')[0]) {
+    search.addWidget(
+      instantsearch.widgets.stats({
+        container: '#algolia-stats',
+        templates: {
+          body: function (data) {
+            var stats = algolia.languages.hitsStats
+              .replace(/\$\{hits}/, data.nbHits)
+              .replace(/\$\{time}/, data.processingTimeMS);
+            return (
+              stats +
+              '<span class="algolia-logo pull-right">' +
+                '<img src="' + CONFIG.root +
+                `${CONFIG.sourcePath.images}/algolia.svg" alt="Algolia" />` +
+              '</span>'
+            );
+          }
+        }
+      })
+    );
+  }
+
+  // The pagination of the results.
+  search.addWidget(
+    instantsearch.widgets.pagination({
+      container: '#algolia-pagination',
+      scrollTo: false,
+      showFirstLast: false,
+      labels: {
+        first: '<i class="fa fa-angle-double-left"></i>',
+        last: '<i class="fa fa-angle-double-right"></i>',
+        previous: '<i class="fa fa-angle-left"></i>',
+        next: '<i class="fa fa-angle-right"></i>'
+      },
+      cssClasses: {
+        root: 'pagination',
+        item: 'pagination-item',
+        link: 'page-number',
+        active: 'current',
+        disabled: 'disabled-item'
+      }
+    })
+  );
+
+  search.start();
+});</script><script src="//unpkg.com/pjax@latest/pjax.min.js"></script><script>window.addEventListener('DOMContentLoaded', function () {
+  var pjax = new Pjax({"selectors":["head title","#main",".pjax-reload",".header-inner"],"history":true,"scrollTo":false,"scrollRestoration":false,"cacheBust":false,"debug":false,"currentUrlFullReload":false,"timeout":0});
+  // 加载进度条的计时器
+  var loadingTimer = null;
+
+  // 重置页面 Y 方向上的滚动偏移量
+  document.addEventListener('pjax:send', function () {
+    $('.header-nav-menu').removeClass('show');
+    if (CONFIG.pjax && CONFIG.pjax.avoidBanner) {
+      $('html').velocity('scroll', {
+        duration: 500,
+        offset: $('#header').height(),
+        easing: 'easeInOutCubic'
+      });
+    }
+
+    var loadingBarWidth = 20;
+    var MAX_LOADING_WIDTH = 95;
+
+    $('.loading-bar').addClass('loading');
+    $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    clearInterval(loadingTimer);
+    loadingTimer = setInterval(function () {
+      loadingBarWidth += 3;
+      if (loadingBarWidth > MAX_LOADING_WIDTH) {
+        loadingBarWidth = MAX_LOADING_WIDTH;
+      }
+      $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    }, 500);
+  }, false);
+
+  window.addEventListener('pjax:complete', function () {
+    clearInterval(loadingTimer);
+    $('.loading-bar__progress').css('width', '100%');
+    $('.loading-bar').removeClass('loading');
+    setTimeout(function () {
+      $('.loading-bar__progress').css('width', '0');
+    }, 400);
+    $('link[rel=prefetch], script[data-pjax-rm]').each(function () {
+      $(this).remove();
+    });
+    $('script[data-pjax], #pjax-reload script').each(function () {
+      $(this).parent().append($(this).remove());
+    });
+
+    if (Stun.utils.pjaxReloadBoot) {
+      Stun.utils.pjaxReloadBoot();
+    }
+    if (Stun.utils.pjaxReloadScroll) {
+      Stun.utils.pjaxReloadScroll();
+    }
+    if (Stun.utils.pjaxReloadSidebar) {
+      Stun.utils.pjaxReloadSidebar();
+    }
+    if (true) {
+      if (Stun.utils.pjaxReloadHeader) {
+        Stun.utils.pjaxReloadHeader();
+      }
+      if (Stun.utils.pjaxReloadScrollIcon) {
+        Stun.utils.pjaxReloadScrollIcon();
+      }
+      if (Stun.utils.pjaxReloadLocalSearch) {
+        Stun.utils.pjaxReloadLocalSearch();
+      }
+    }
+  }, false);
+}, false);</script><div id="pjax-reload"><link href="https://unpkg.com/katex@0.10.2/dist/katex.min.css" rel="stylesheet" type="text/css"><link href="https://unpkg.com/katex@0.10.2/dist/contrib/copy-tex.css" rel="stylesheet" type="text/css"><script src="https://unpkg.com/katex@0.10.2/dist/contrib/copy-tex.min.js"></script><script src="//unpkg.com/quicklink@latest/dist/quicklink.umd.js"></script><script>function initQuicklink() {
+  quicklink({
+    timeout: '10000',
+    priority: true,
+    ignores: [uri => uri.includes('#'), uri => uri === 'https://hexo.ab-in.cn/2023/02/04/Codeforces2023-2-4/', /\/api\/?/,uri => uri.includes('.xml'),uri => uri.includes('.zip'),(uri, el) => el.hasAttribute('nofollow'),(uri, el) => el.hasAttribute('noprefetch')]
+  });
+}
+
+if (true || false) {
+  initQuicklink();
+} else {
+  window.addEventListener('DOMContentLoaded', initQuicklink, false);
+}</script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script></div><script data-pjax="">function loadLivere () {
+  var d = document, s = d.createElement('script');
+
+  if (!d.getElementById('lv-container')) {
+    return;
+  }
+  if (typeof LivereTower === 'function') {
+    return;
+  }
+  s.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+  if (true) {
+    s.setAttribute('data-pjax-rm', '');
+  }
+  (d.head || d.body).appendChild(s);
+}
+
+if (true) {
+  loadLivere();
+} else {
+  window.addEventListener('DOMContentLoaded', loadLivere, false);
+}</script><script src="/js/utils.js?v=2.8.0"></script><script src="/js/stun-boot.js?v=2.8.0"></script><script src="/js/scroll.js?v=2.8.0"></script><script src="/js/header.js?v=2.8.0"></script><script src="/js/sidebar.js?v=2.8.0"></script><script type="application/json" src="/search.json"></script></body></html>

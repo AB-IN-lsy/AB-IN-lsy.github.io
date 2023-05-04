@@ -1,0 +1,456 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#54bcff"><link rel="manifest" href="/manifest.json?v=2.8.0"><link rel="icon" href="/assets/favicon-16x16.png?v=2.8.0" type="image/png" sizes="16x16"><link rel="icon" href="/assets/favicon-32x32.png?v=2.8.0" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="/assets/android-chrome-192x192.png?v=2.8.0" sizes="180x180"><link rel="mask-icon" href="/%5Bobject%20Object%5D?v=2.8.0" color="#54bcff"><meta name="msapplication-TileImage" content="/%5Bobject%20Object%5D"><meta name="msapplication-TileColor" content="#000000"><meta name="google-site-verification" content="e4vuRgT_ouTNSxZf23XDFDixeCsDJiaAvmUQaKT_njA"><meta name="msvalidate.01" content="A2EE4D0CCD36C0B0741FA44DBF05FF0D"><meta name="baidu-site-verification" content="code-OOQCT4Wx7W"><meta name="description" content="摘要JSTL ,EL, servlet, JSP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebExperiment-06">
+<meta property="og:url" content="https://hexo.ab-in.cn/2022/01/06/WebExperiment-06/index.html">
+<meta property="og:site_name" content="AB-IN&#39;s Blog">
+<meta property="og:description" content="摘要JSTL ,EL, servlet, JSP">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/bwhyman/web-course/raw/master/web-experiments/experiment-06/asserts/exp06-01.png">
+<meta property="og:image" content="https://github.com/bwhyman/web-course/raw/master/web-experiments/experiment-06/asserts/exp06-02.png">
+<meta property="og:image" content="c:\Users\liusy\AppData\Roaming\Typora\typora-user-images\image-20211104184238187.png">
+<meta property="article:published_time" content="2022-01-06T11:37:21.000Z">
+<meta property="article:modified_time" content="2023-05-04T11:35:07.889Z">
+<meta property="article:author" content="AB-IN">
+<meta property="article:tag" content="html">
+<meta property="article:tag" content="css">
+<meta property="article:tag" content="js">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/bwhyman/web-course/raw/master/web-experiments/experiment-06/asserts/exp06-01.png"><title>WebExperiment-06 | AB-IN's Blog</title><link ref="canonical" href="https://hexo.ab-in.cn/2022/01/06/WebExperiment-06/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="//unpkg.com/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" type="text/css"><link rel="stylesheet" href="//unpkg.com/instantsearch.js@2.1.1/dist/instantsearch.min.css" type="text/css"><link rel="stylesheet" href="//unpkg.com/social-share.js@1.0.16/dist/css/share.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.8.0"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: {"appId":"DU3TAVNH2B","apiKey":"483f4ee8a687ed876e44dc2c27d52939","indexName":"hexo_BLOG","hits":{"per_page":10},"languages":{"inputPlaceholder":"搜索文章","hitsEmpty":"没有找到任何搜索结果：${query}","hitsStats":"找到 ${hits} 条搜索结果，耗时 ${time} 毫秒"}},
+  assistSearch: ["google","bing","baidu"],
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"ocean","wordWrap":true},
+  reward: true,
+  fancybox: true,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: {"avoidBanner":false},
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: {"switchPost":true},
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-newspaper"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-address-card"></i></span><span class="header-nav-menu-item__text">关于</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/author"><span class="header-nav-submenu-item__icon"><i class="fas fa-at"></i></span><span class="header-nav-submenu-item__text">作者</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/friends"><span class="header-nav-submenu-item__icon"><i class="fas fa-users"></i></span><span class="header-nav-submenu-item__text">友链</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/FAQ"><span class="header-nav-submenu-item__icon"><i class="fas fa-question"></i></span><span class="header-nav-submenu-item__text">FAQ</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="far fa-window-maximize"></i></span><span class="header-nav-menu-item__text">其余站点</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://www.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fab fa-safari"></i></span><span class="header-nav-submenu-item__text">主页</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://ssh.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fas fa-terminal"></i></span><span class="header-nav-submenu-item__text">终端</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://kod.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fas fa-cloud"></i></span><span class="header-nav-submenu-item__text">云盘</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://oneword.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fab fa-dailymotion"></i></span><span class="header-nav-submenu-item__text">一言</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://ab-in.blog.csdn.net"><span class="header-nav-submenu-item__icon"><i class="fas fa-copyright"></i></span><span class="header-nav-submenu-item__text">CSDN</span></a></div></div></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">WebExperiment-06</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-01-06</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2023-05-04</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">3.2k</span></span><span class="post-meta-item post-meta-item--readtime"><span class="post-meta-item__icon"><i class="far fa-clock"></i></span><span class="post-meta-item__info">阅读时长</span><span class="post-meta-item__value">27分</span></span><span class="post-meta-item post-meta-item--visitors"><span class="post-meta-item__icon"><i class="fas fa-eye"></i></span><span class="post-meta-item__info">阅读次数</span><span class="post-meta-item__value" id="busuanzi_value_page_pv"></span></span></div></header><div class="post-body">
+    <div class="note-plugin info">
+      <span class="note-plugin__icon note-plugin__icon--info">
+              <i class="fas fa-info-circle"></i>
+            </span>
+      <p><strong>摘要</strong><br>JSTL ,EL, servlet, JSP</p>
+    </div>
+  
+<span id="more"></span>
+
+<p><font color=#000000	size=3 face=楷体>Powered by:<strong>NEFU AB-IN</strong></font></p>
+<p><font color=#FFA500 size=5 face=楷体><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://github.com/bwhyman/web-course/tree/master/web-experiments/experiment-06" >Link</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></font></p>
+<p>@<a href="%E6%96%87%E7%AB%A0%E7%9B%AE%E5%BD%95">TOC</a>	</p>
+
+        <h1 id="WebExperiment-06"   >
+          <a href="#WebExperiment-06" class="heading-link"><i class="fas fa-link"></i></a><a href="#WebExperiment-06" class="headerlink" title="WebExperiment-06"></a><font color=#6495ED size=6 >WebExperiment-06</font></h1>
+      <ul>
+<li>
+        <h3 id="需求"   >
+          <a href="#需求" class="heading-link"><i class="fas fa-link"></i></a><a href="#需求" class="headerlink" title="需求"></a><font color=#000000 size=4 face=粗体>需求</font></h3>
+      <blockquote>
+<p><strong>实验内容</strong></p>
+<p>创建maven Web项目及模块，experiment-07 声明项目打包类型，声明java版本，添加Servlet依赖，添加JSTL依赖<br>创建webapp目录，创建WEB-INF安全目录，创建jsp目录<br>entity下的实体类，以及util下的模拟数据类DatabaseUtils可直接复制使用，无需编写。</p>
+<p><strong>需求+1</strong><br>以表格形式显示所有注册教师姓名及注册时间<br>且教师姓名为可点击的超链接，点击后跳转至教师详细信息页面<br>在详细页面以表单形式，基于教师注册过的信息，加载初始化页面<br>提交表单后，在控制台打印显示修改后的数据</p>
+<p><strong>解决方案</strong><br>项目结构规范：所有控制层组件servlet，置于com.controller包下；所有视图文档，置于&#x2F;WEB-INF&#x2F;jsp&#x2F;目录下<br>创建加载显示全部教师的listteachers.jsp页面， 在文档顶部引入JSTL标签库，通过EL表达式与JSTL标签，动态生成表格，动态生成超链接的地址及参数数据<br>创建处理对应请求的ListTeachersServlet，调用DatabaseUtils中的相应方法，获取全部教师对象并转发至视图页面<br>创建updateteacher.jsp页面以及表单，在表单标签中加载教师详细信息， 在页面引入核心及格式化标签库，按以下样式加载基本数据，基于逻辑判断， 按教师原注册的职称及课程数据，渲染初始化页面<br>创建处理对应请求的UpdateTeacherServlet，获取教师ID参数，调用DatabaseUtils中的相应方法， 将：指定教师&#x2F;全部职称&#x2F;全部课程对象，转发至页面<br>由UpdateTeacherServlet，同时处理提交修改post请求，获取请求参数并打印显示</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://github.com/bwhyman/web-course/raw/master/web-experiments/experiment-06/asserts/exp06-01.png"  alt="img">
+      </p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://github.com/bwhyman/web-course/raw/master/web-experiments/experiment-06/asserts/exp06-02.png"  alt="img">
+      </p>
+</blockquote>
+</li>
+<li>
+        <h3 id="项目结构"   >
+          <a href="#项目结构" class="heading-link"><i class="fas fa-link"></i></a><a href="#项目结构" class="headerlink" title="项目结构"></a><font color=#000000 size=4 face=粗体>项目结构</font></h3>
+      <p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="C:\Users\liusy\AppData\Roaming\Typora\typora-user-images\image-20211104184238187.png"  alt="image-20211104184238187">
+      </p>
+</li>
+<li>
+        <h3 id="experiment6-第一部分解读"   >
+          <a href="#experiment6-第一部分解读" class="heading-link"><i class="fas fa-link"></i></a><a href="#experiment6-第一部分解读" class="headerlink" title="experiment6 第一部分解读"></a><font color=#000000 size=4 face=粗体>experiment6 第一部分解读</font></h3>
+      <p>首先创建三个实体类，后创建类似数据库的类</p>
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.entity;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: liusy</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Time</span> : 2021/11/4 8:27</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Project</span> : web-course</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Title</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Title</span><span class="params">(<span class="type">int</span> id, String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getId</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setId</span><span class="params">(<span class="type">int</span> id)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.entity;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: liusy</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Time</span> : 2021/11/4 8:26</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Project</span> : web-course</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Course</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Course</span><span class="params">(<span class="type">int</span> id, String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getId</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setId</span><span class="params">(<span class="type">int</span> id)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.entity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: liusy</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Time</span> : 2021/11/4 8:26</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Project</span> : web-course</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Teacher</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Title title;</span><br><span class="line">    <span class="keyword">private</span> List&lt;Course&gt; courses;</span><br><span class="line">    <span class="keyword">private</span> Date date;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Teacher</span><span class="params">(<span class="type">int</span> id, String name, Title title, List&lt;Course&gt; courses, Date date)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">        <span class="built_in">this</span>.title = title;</span><br><span class="line">        <span class="built_in">this</span>.courses = courses;</span><br><span class="line">        <span class="built_in">this</span>.date = date;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getId</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setId</span><span class="params">(<span class="type">int</span> id)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Title <span class="title function_">getTitle</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> title;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setTitle</span><span class="params">(Title title)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.title = title;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;Course&gt; <span class="title function_">getCourses</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> courses;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setCourses</span><span class="params">(List&lt;Course&gt; courses)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.courses = courses;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Date <span class="title function_">getDate</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> date;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setDate</span><span class="params">(Date date)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.date = date;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+
+
+
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.entity.Course;</span><br><span class="line"><span class="keyword">import</span> com.entity.Teacher;</span><br><span class="line"><span class="keyword">import</span> com.entity.Title;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: liusy</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Time</span> : 2021/11/4 8:27</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Project</span> : web-course</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DatabaseUtils</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> List&lt;Teacher&gt; teachers;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> List&lt;Title&gt; titles;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> List&lt;Course&gt; courses;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">Title</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Title</span>(<span class="number">1</span>, <span class="string">&quot;讲师&quot;</span>);</span><br><span class="line">        <span class="type">Title</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Title</span>(<span class="number">2</span>, <span class="string">&quot;副教授&quot;</span>);</span><br><span class="line">        <span class="type">Title</span> <span class="variable">t3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Title</span>(<span class="number">3</span>, <span class="string">&quot;教授&quot;</span>);</span><br><span class="line">        titles = List.of(t1, t2, t3);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="type">Course</span> <span class="variable">c1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Course</span>(<span class="number">1</span>, <span class="string">&quot;Web开发技术&quot;</span>);</span><br><span class="line">        <span class="type">Course</span> <span class="variable">c2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Course</span>(<span class="number">2</span>, <span class="string">&quot;Java程序设计&quot;</span>);</span><br><span class="line">        <span class="type">Course</span> <span class="variable">c3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Course</span>(<span class="number">3</span>, <span class="string">&quot;数据库原理&quot;</span>);</span><br><span class="line">        <span class="type">Course</span> <span class="variable">c4</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Course</span>(<span class="number">4</span>, <span class="string">&quot;软件项目管理&quot;</span>);</span><br><span class="line">        courses = List.of(c1, c2, c3, c4);</span><br><span class="line"></span><br><span class="line">        <span class="type">Teacher</span> <span class="variable">teach1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Teacher</span>(<span class="number">1</span>, <span class="string">&quot;唐晨阳&quot;</span>,t3, List.of(c1, c4), <span class="keyword">new</span> <span class="title class_">Date</span>());</span><br><span class="line">        <span class="type">Teacher</span> <span class="variable">teach2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Teacher</span>(<span class="number">2</span>, <span class="string">&quot;刘春枝&quot;</span>, t2, List.of(c2, c3), <span class="keyword">new</span> <span class="title class_">Date</span>());</span><br><span class="line">        teachers = List.of(teach1, teach2);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> List&lt;Teacher&gt; <span class="title function_">getTeachers</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> teachers;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> List&lt;Course&gt; <span class="title function_">getCourses</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> courses;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> List&lt;Title&gt; <span class="title function_">getTitles</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> titles;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Teacher <span class="title function_">getTeacher</span><span class="params">(<span class="type">int</span> id)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> teachers.stream()</span><br><span class="line">                .filter(c -&gt; c.getId()==id)</span><br><span class="line">                .findFirst()</span><br><span class="line">                .orElse(<span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li><p>需要获取的就是$Teanchers$, $Title$,$Courses$三个列表，需要用get函数获取，又是至于类相关的，所以设置成<code>private static</code></p>
+</li>
+<li><p><strong>三个列表的生成</strong></p>
+<p>可以看作是类加载时就完成了，相当于预处理，那么就可以把他们放在<strong>静态代码块</strong>中进行加载，这样就不用放在get函数中了</p>
+</li>
+<li><p>另外就是<code>getTeacher</code>这个函数，放在之后讲</p>
+</li>
+</ul>
+</li>
+<li>
+        <h3 id="experiment6-第二部分解读"   >
+          <a href="#experiment6-第二部分解读" class="heading-link"><i class="fas fa-link"></i></a><a href="#experiment6-第二部分解读" class="headerlink" title="experiment6 第二部分解读"></a><font color=#000000 size=4 face=粗体>experiment6 第二部分解读</font></h3>
+      <p><strong>第一个需求</strong>：访问<code>localhost:8080/listteachers</code>时，将所有老师的信息通过表格呈现出来</p>
+<p>首先，<strong>一个jsp文件必须对应一个servlet类</strong>，通过<strong>servlet</strong>转发到jsp，才能让jsp生效，所以这两个需要结合起来写</p>
+<figure class="highlight javascript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ taglib prefix=<span class="string">&quot;c&quot;</span> uri=<span class="string">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> %&gt;</span><br><span class="line">&lt;%@ taglib prefix=<span class="string">&quot;fmt&quot;</span> uri=<span class="string">&quot;http://java.sun.com/jsp/jstl/fmt&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>listteachers<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">table</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>#<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>姓名<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">td</span>&gt;</span>注册时间<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">c:forEach</span> <span class="attr">items</span>=<span class="string">&quot;$&#123;teachers&#125;&quot;</span> <span class="attr">var</span> = <span class="string">&quot;teacher&quot;</span> <span class="attr">varStatus</span>=<span class="string">&quot;i&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>$&#123;i.count&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">td</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;updateteacher?tid=$&#123;teacher.id&#125;&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                        $&#123;teacher.name&#125;</span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">td</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                    <span class="tag">&lt;<span class="name">fmt:formatDate</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">                    <span class="attr">pattern</span>=<span class="string">&quot;yyyy-MM-dd HH:mm&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">                    <span class="attr">value</span>=<span class="string">&quot;$&#123;teacher.date&#125;&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">					/&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">c:forEach</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span></span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+
+<p>首先是jsp文件</p>
+<ul>
+<li>这里的${}里的对象，<strong>必须是通过servlet传过来的参数</strong></li>
+<li>其次不用通过对象的get函数来访问对象的属性，直接<code>.</code>即可</li>
+<li><code>&lt;c:forEach</code> <ul>
+<li>Items，集合数组等对象，<strong>必为通过EL获取的集合对象</strong></li>
+<li>Var，每次迭代的元素对象(variable方便记忆)</li>
+<li>varStatus，迭代状态变量<ul>
+<li>Index，当前迭代的索引，从0开始</li>
+<li>Count，当前迭代的次数，从1开始</li>
+<li>First，判断，boolean，是否为第一项</li>
+<li>Last，判断，boolean，是否为最后一项</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>&lt;fmt:formatDate</code> 可以自定义日期的格式</li>
+<li><code>&lt;a&gt;</code>链接，链接第二个页面，下面说</li>
+</ul>
+<p>其次是对应处理请求的servlet</p>
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> com.util.DatabaseUtils;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: liusy</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Time</span> : 2021/11/4 8:25</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Project</span> : web-course</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@WebServlet(&quot;/listteachers&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ListTeacherServlet</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">doGet</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        req.setAttribute(<span class="string">&quot;teachers&quot;</span>, DatabaseUtils.getTeachers());</span><br><span class="line">        req.getRequestDispatcher(<span class="string">&quot;/WEB-INF/jsp/listteachers.jsp&quot;</span>)</span><br><span class="line">                .forward(req, resp);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li><p><code>req.setAttribute(&quot;teachers&quot;, DatabaseUtils.getTeachers());</code></p>
+<p>这里就是给req设定参数$teachers$，从数据库里的函数调出来的列表，包含所有</p>
+</li>
+</ul>
+</li>
+<li>
+        <h3 id="experiment6-第三部分解读"   >
+          <a href="#experiment6-第三部分解读" class="heading-link"><i class="fas fa-link"></i></a><a href="#experiment6-第三部分解读" class="headerlink" title="experiment6 第三部分解读"></a><font color=#000000 size=4 face=粗体>experiment6 第三部分解读</font></h3>
+      <p><strong>第二个需求</strong>：我们想通过第一个界面通过点击老师的信息，进入到第二个界面，查看老师的详细信息</p>
+<p>先写jsp</p>
+<figure class="highlight javascript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ taglib prefix=<span class="string">&quot;c&quot;</span> uri=<span class="string">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;updateteacher&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;form method=&quot;post&quot; action=&quot;updateteacher&quot;&gt;</span><br><span class="line">    &lt;label&gt;</span><br><span class="line">        用户：</span><br><span class="line">        &lt;input type=&quot;text&quot; name = &quot;teacherName&quot; value=&quot;$&#123;teacher.name&#125;&quot;&gt;</span><br><span class="line">    &lt;/label&gt;</span><br><span class="line">    &lt;br/&gt;</span><br><span class="line">    &lt;label&gt;</span><br><span class="line">        注册时间：$&#123;teacher.date&#125;</span><br><span class="line">    &lt;/label&gt;</span><br><span class="line">    &lt;br/&gt;</span><br><span class="line">    &lt;label&gt;</span><br><span class="line">        职称：&lt;br/&gt;</span><br><span class="line">        &lt;select name = &quot;teacherTitle&quot;&gt;</span><br><span class="line">            &lt;c:forEach items=&quot;$&#123;titles&#125;&quot; var=&quot;t&quot;&gt;</span><br><span class="line">                &lt;c:set var=&quot;s&quot; value=&quot;&quot;/&gt;</span><br><span class="line">                &lt;c:if test=&quot;$&#123;t.id == teacher.title.id&#125;&quot;&gt;</span><br><span class="line">                    &lt;c:set var=&quot;s&quot; value=&quot;selected&quot;/&gt;</span><br><span class="line">                &lt;/c:if&gt;</span><br><span class="line">                &lt;option value=&quot;$&#123;t.id&#125;&quot; $&#123;s&#125;&gt;</span><br><span class="line">                        $&#123;t.name&#125;</span><br><span class="line">                &lt;/option&gt;</span><br><span class="line">            &lt;/c:forEach&gt;</span><br><span class="line">        &lt;/select&gt;</span><br><span class="line">    &lt;/label&gt;</span><br><span class="line"></span><br><span class="line">    &lt;label&gt;</span><br><span class="line">        授课：&lt;br&gt;</span><br><span class="line">        &lt;ul&gt;</span><br><span class="line">            &lt;c:forEach items=&quot;$&#123;courses&#125;&quot; var=&quot;course&quot;&gt;</span><br><span class="line">                &lt;c:set var=&quot;s&quot; value=&quot;&quot;/&gt;</span><br><span class="line">                &lt;c:forEach items=&quot;$&#123;teacher.courses&#125;&quot; var=&quot;tc&quot;&gt;</span><br><span class="line">                    &lt;c:if test=&quot;$&#123;course.id == tc.id&#125;&quot;&gt;</span><br><span class="line">                        &lt;c:set var=&quot;s&quot; value=&quot;checked&quot; /&gt;</span><br><span class="line">                    &lt;/c:if&gt;</span><br><span class="line">                &lt;/c:forEach&gt;</span><br><span class="line">                &lt;li&gt;</span><br><span class="line">                    &lt;label&gt;</span><br><span class="line">                            $&#123;course.name&#125;</span><br><span class="line">                        &lt;input type=&quot;checkbox&quot;</span><br><span class="line">                               name = &quot;teacherCourses&quot;</span><br><span class="line">                               value = &quot;$&#123;course.id&#125;&quot;</span><br><span class="line">                            $&#123;s&#125;</span><br><span class="line">                        /&gt;</span><br><span class="line">                    &lt;/label&gt;</span><br><span class="line">                &lt;/li&gt;</span><br><span class="line">            &lt;/c:forEach&gt;</span><br><span class="line">        &lt;/ul&gt;</span><br><span class="line">    &lt;/label&gt;</span><br><span class="line">    &lt;button type=&quot;submit&quot;&gt;提交&lt;/button&gt;</span><br><span class="line">    &lt;button type=&quot;reset&quot;&gt;重置&lt;/button&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li><p>从头开始</p>
+</li>
+<li><p><strong>如何进到这个界面</strong>？</p>
+<p>是通过<strong>第一个jsp</strong>的<code>&lt;a href=&quot;updateteacher?tid=$&#123;teacher.id&#125;&quot;&gt;</code>进入jsp渲染的界面，$?$后是传递的参数，这里是传递教师的$id$，这样就代表传递<strong>唯一</strong>的一名教师，到servlet中被处理</p>
+</li>
+<li><p><code>&lt;form method=&quot;post&quot; action=&quot;updateteacher&quot;&gt;</code>，老师的详细信息通过表单形式展出，所以这里的表单就可以不用向以前这样空着了，就可以向<code>localhost:8080/updateteacher</code>发起post请求，提交表单了，需要注意<strong>必须对应的servlet用post请求处理，否则会创建项目错误</strong></p>
+</li>
+<li><p><code>&lt;input type=&quot;text&quot; name = &quot;teacherName&quot; value=&quot;$&#123;teacher.name&#125;&quot;&gt;</code></p>
+<p><strong>第一部分</strong>是<strong>对象</strong>$$Teacher$$（单一）</p>
+<p>输入文本框，显示老师的名字，这里有三个属性</p>
+<ul>
+<li><p>type：即表明这是一个什么类型的输入，比如text,password,checkbox</p>
+</li>
+<li><p>name：在表单提交后引用表单数据，只有设置了 name 属性的表单元素才能在提交表单时传递它们的值。</p>
+<p>也就是说是提交表单后，post请求被带往servlet处理，这是post请求就带有着<strong>变量名</strong>为<code>teacherName</code>，<strong>值</strong>为<code>teacher.name</code>的变量</p>
+</li>
+<li><p>value：代表输入框的值，也是传表单其中的变量的值，在输入框中也就是输入的值</p>
+</li>
+<li><p>name和value，就是传递的<strong>变量的名字和值</strong></p>
+</li>
+</ul>
+</li>
+<li><p><code>&lt;select name = &quot;teacherTitle&quot;&gt;</code></p>
+<p><strong>第二部分</strong>是挑选出对象$$Teacher$$的<strong>唯一</strong>的$Title$</p>
+<p>所以可以在select里写name传输</p>
+<p><strong>具体思想</strong>：先创建一个变量，记录是否与老师的$$Title$$相同，之后遍历整个$Title$列表，并找到那个和这个老师相同的title（实现方法就是找相同的id），相同了变量记为$selected$</p>
+<p><code>&lt;option value=&quot;$&#123;t.id&#125;&quot; $&#123;s&#125;&gt;&#123;t.name&#125;&lt;/option&gt;</code></p>
+<p>然后设置选项的value值，由于表单是将<strong>选中的</strong>传上去，那么就是传$selected$的option</p>
+</li>
+<li><p><code>&lt;input type=&quot;checkbox&quot; name = &quot;teacherCourses&quot; value = &quot;$&#123;course.id&#125;&quot; $&#123;s&#125; /&gt;</code></p>
+</li>
+</ul>
+<p>  <strong>第三部分</strong>是挑选出对象$$Teacher$$的<strong>多个</strong>$Course$</p>
+<p>  由于是多个对象，所以在input中定义变量，这样传输过去的就是一个接一个的$teacherCourses$，最后可以在servlet中组成列表</p>
+<p>  <strong>具体思想</strong>：先创建一个变量，记录是否与老师的$$Courses$$相同，先遍历总的$$Courses$$，再遍历老师的$$Courses$$，选出相同的标记为$checked$</p>
+<ul>
+<li><code>&lt;c:if</code>中$test$位必须参数，即布尔值</li>
+</ul>
+<p>servlet</p>
+<figure class="highlight javascript"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">package com.<span class="property">controller</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.<span class="property">servlet</span>.<span class="property">ServletException</span>;</span><br><span class="line"><span class="keyword">import</span> javax.<span class="property">servlet</span>.<span class="property">annotation</span>.<span class="property">WebServlet</span>;</span><br><span class="line"><span class="keyword">import</span> javax.<span class="property">servlet</span>.<span class="property">http</span>.<span class="property">HttpServlet</span>;</span><br><span class="line"><span class="keyword">import</span> javax.<span class="property">servlet</span>.<span class="property">http</span>.<span class="property">HttpServletRequest</span>;</span><br><span class="line"><span class="keyword">import</span> javax.<span class="property">servlet</span>.<span class="property">http</span>.<span class="property">HttpServletResponse</span>;</span><br><span class="line"><span class="keyword">import</span> java.<span class="property">io</span>.<span class="property">IOException</span>;</span><br><span class="line"><span class="keyword">import</span> java.<span class="property">util</span>.<span class="property">Arrays</span>;</span><br><span class="line"><span class="keyword">import</span> java.<span class="property">util</span>.<span class="property">logging</span>.<span class="property">Logger</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.<span class="property">util</span>.<span class="property">DatabaseUtils</span>.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.<span class="property">lang</span>.<span class="property">Integer</span>.<span class="property">parseInt</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: liusy</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Time</span> : 2021/11/4 8:25</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Project</span> : web-course</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">@<span class="title class_">WebServlet</span>(<span class="string">&quot;/updateteacher&quot;</span>)</span><br><span class="line">public <span class="keyword">class</span> <span class="title class_">UpdateTeacherServlet</span> <span class="keyword">extends</span> <span class="title class_ inherited__">HttpServlet</span> &#123;</span><br><span class="line">    private <span class="keyword">static</span> <span class="title class_">Logger</span> logger = <span class="title class_">Logger</span>.<span class="title function_">getLogger</span>(<span class="title class_">UpdateTeacherServlet</span>.<span class="property">class</span>.<span class="title function_">getName</span>());</span><br><span class="line">    @<span class="title class_">Override</span></span><br><span class="line">    protected <span class="keyword">void</span> <span class="title function_">doGet</span>(<span class="title class_">HttpServletRequest</span> req, <span class="title class_">HttpServletResponse</span> resp) throws <span class="title class_">ServletException</span>, <span class="title class_">IOException</span> &#123;</span><br><span class="line">        int teacherId = <span class="built_in">parseInt</span>(req.<span class="title function_">getParameter</span>(<span class="string">&quot;tid&quot;</span>));</span><br><span class="line">        req.<span class="title function_">setAttribute</span>(<span class="string">&quot;teacher&quot;</span>, <span class="title function_">getTeacher</span>(teacherId));</span><br><span class="line">        req.<span class="title function_">setAttribute</span>(<span class="string">&quot;courses&quot;</span>, <span class="title function_">getCourses</span>());</span><br><span class="line">        req.<span class="title function_">setAttribute</span>(<span class="string">&quot;titles&quot;</span>, <span class="title function_">getTitles</span>());</span><br><span class="line"></span><br><span class="line">        req.<span class="title function_">getRequestDispatcher</span>(<span class="string">&quot;/WEB-INF/jsp/updateteacher.jsp&quot;</span>)</span><br><span class="line">                .<span class="title function_">forward</span>(req, resp);</span><br><span class="line">    &#125;</span><br><span class="line">    @<span class="title class_">Override</span></span><br><span class="line">    protected <span class="keyword">void</span> <span class="title function_">doPost</span>(<span class="title class_">HttpServletRequest</span> req, <span class="title class_">HttpServletResponse</span> resp) throws <span class="title class_">ServletException</span>, <span class="title class_">IOException</span> &#123;</span><br><span class="line">        req.<span class="title function_">setCharacterEncoding</span>(<span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">        logger.<span class="title function_">info</span>(<span class="string">&quot;姓名：&quot;</span> + req.<span class="title function_">getParameter</span>(<span class="string">&quot;teacherName&quot;</span>));</span><br><span class="line">        logger.<span class="title function_">info</span>(<span class="string">&quot;职称ID：&quot;</span> + req.<span class="title function_">getParameter</span>(<span class="string">&quot;teacherTitle&quot;</span>));</span><br><span class="line">        logger.<span class="title function_">info</span>(<span class="string">&quot;课程ID：&quot;</span> + <span class="title class_">Arrays</span>.<span class="title function_">asList</span>(req.<span class="title function_">getParameterValues</span>(<span class="string">&quot;teacherCourses&quot;</span>)));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li><p><code>logger.info</code>，即在控制台中将信息输出出来（当然也可以将在第二页面修改的信息输出出来）</p>
+</li>
+<li><p>get请求中，先取出从界面1传过来的教师的id，再给jsp传递所需要的参数</p>
+<ul>
+<li>这个老师的所有信息，通过数据库中的<strong>流操作</strong>进行获取</li>
+<li>所有的$Course$</li>
+<li>所有的$Title$</li>
+</ul>
+<p>之后转发即可</p>
+<ul>
+<li>post请求中设置编码，并输出通过界面2传递过来的表单的数据，可以看到表单中的name：$teacherName$，$teacherTitle$，$teacherCourses$，均作为变量传过来了，并作为参数从req中可以获取</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>这样就完成了！</p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://hexo.ab-in.cn">AB-IN</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://hexo.ab-in.cn/2022/01/06/WebExperiment-06/">https://hexo.ab-in.cn/2022/01/06/WebExperiment-06/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/html/">html</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/css/">css</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/js/">js</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/%E5%89%8D%E7%AB%AF/">前端</a></span></div><div class="post-share"><div class="social-share" data-sites="qzone, qq, weibo, wechat, douban, linkedin, facebook, twitter, google">Share to: </div></div><div class="post-reward reward"><div class="reward-button">请我喝杯咖啡~</div><div class="reward-qrcode"><span class="reward-qrcode-alipay"><img class="reward-qrcode-alipay__img" src="https://oss.ab-in.cn/Pay/alipay.png"><div class="reward-qrcode-alipay__text">支付宝打赏</div></span><span class="reward-qrcode-wechat"><img class="reward-qrcode-wechat__img" src="https://oss.ab-in.cn/Pay/weixin.png"><div class="reward-qrcode-wechat__text">微信打赏</div></span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2022/01/06/WebExperiment-07/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">WebExperiment-07</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2022/01/06/WebHomework-02/"><span class="paginator-prev__text">WebHomework-02</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div><div class="comments" id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC81NTEzNS8zMTYwMw"></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#WebExperiment-06"><span class="toc-number">1.</span> <span class="toc-text">
+          WebExperiment-06</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E6%B1%82"><span class="toc-number">1.0.1.</span> <span class="toc-text">
+          需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="toc-number">1.0.2.</span> <span class="toc-text">
+          项目结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#experiment6-%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E8%A7%A3%E8%AF%BB"><span class="toc-number">1.0.3.</span> <span class="toc-text">
+          experiment6 第一部分解读</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#experiment6-%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%E8%A7%A3%E8%AF%BB"><span class="toc-number">1.0.4.</span> <span class="toc-text">
+          experiment6 第二部分解读</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#experiment6-%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86%E8%A7%A3%E8%AF%BB"><span class="toc-number">1.0.5.</span> <span class="toc-text">
+          experiment6 第三部分解读</span></a></li></ol></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://oss.ab-in.cn/images/AB-IN.jpg" alt="avatar"></div><p class="sidebar-ov-author__text">NEFU AB-IN</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/AB-IN-lsy" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/AB_IN_liusy" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="http://wpa.qq.com/msgrd?v=3&amp;uin=1719827581&amp;site=qq&amp;menu=yes" target="_blank" rel="noopener" data-popover="QQ" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-qq"></i></span></a><a class="sidebar-ov-social-item" href="mailto:liusy200708@gmail.com" target="_blank" rel="noopener" data-popover="Gmail" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a></div><div class="sidebar-ov-feed"></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">您已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2023</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>AB-IN All Rights Reserved</span><span class="footer__devider">|</span><span><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">鲁ICP备2021035431号</a></span></div><div class="busuanzi"><span class="busuanzi-siteuv"><span class="busuanzi-siteuv__icon"><i class="fas fa-user"></i></span><span class="busuanzi-siteuv__info">访问人数</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_uv"></span></span><span class="busuanzi-sitepv"><span class="busuanzi-siteuv__icon"><i class="fas fa-eye"></i></span><span class="busuanzi-siteuv__info">浏览总量</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_pv"></span></span></div><div><script type="text/javascript" src="https://oneword.ab-in.cn/oneword/oneword.php?format=js&charset=utf-8"></script> <div id="oneword"><script>oneword()</script></div></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"></div><div class="search-btns">使用搜索：<span class="search-btns-item search-btns-item--google"><i class="fab fa-google"></i>谷歌</span><span class="search-btns-item search-btns-item--bing"><i></i>必应</span><span class="search-btns-item search-btns-item--baidu"><i></i>百度</span></div><div class="search-results"><div id="algolia-hits"></div></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><script src="//unpkg.com/jquery@v3.4.1/dist/jquery.min.js"></script><script src="//unpkg.com/velocity-animate@1.5.2/velocity.min.js"></script><script src="//unpkg.com/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script><script src="//unpkg.com/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script src="//unpkg.com/social-share.js@1.0.16/dist/js/social-share.min.js"></script><script src="//unpkg.com/instantsearch.js@2.1.1/dist/instantsearch.min.js" defer></script><script>window.addEventListener('DOMContentLoaded', function () {
+  $('.header-nav-search').on('click', function (e) {
+    e.stopPropagation();
+
+    $('body').css('overflow', 'hidden');
+    $('.search-popup')
+      .velocity('stop')
+      .velocity('transition.expandIn', {
+        duration: 300,
+        complete: function () {
+          $('.search-popup input').focus();
+        }
+      });
+    $('.search-mask')
+      .velocity('stop')
+      .velocity('transition.fadeIn', {
+        duration: 300
+      });
+  });
+
+  function closeSearch () {
+    $('body').css({ overflow: 'auto' });
+    $('.search-popup').css({ display: 'none' });
+    $('.search-mask').css({ display: 'none' });
+  }
+
+  $('.search-mask, .search-close').on('click', function () {
+    closeSearch();
+  });
+
+  $(document).on('keydown', function (e) {
+    // Escape <=> 27
+    if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+      closeSearch();
+    }
+  });
+
+  var algolia = CONFIG.algolia;
+  if (!algolia && !(algolia.appId && algolia.apiKey && algolia.indexName)) {
+    return console.error('Algolia setting is invalid.');
+  }
+
+  var search = instantsearch({
+    appId: algolia.appId,
+    apiKey: algolia.apiKey,
+    indexName: algolia.indexName,
+    searchParameters: {
+      hitsPerPage: algolia.hits.per_page || 10
+    },
+    searchFunction: function (helper) {
+      var searchInput = $('.search-input').find('input');
+
+      if (searchInput.val()) {
+        helper.search();
+      }
+    }
+  });
+
+  search.addWidget(
+    instantsearch.widgets.searchBox({
+      container: '.search-input',
+      reset: false,
+      magnifier: false,
+      placeholder: algolia.languages.inputPlaceholder
+    })
+  );
+
+  // The hits of search results.
+  search.addWidget(
+    instantsearch.widgets.hits({
+      container: '#algolia-hits',
+      templates: {
+        item: function (data) {
+          var link = data.permalink ? data.permalink : CONFIG.root + data.path;
+          return (
+            '<a href="' + link + '" class="algolia-hit-item-link">' +
+              data._highlightResult.title.value +
+            '</a>'
+          );
+        },
+        empty: function (data) {
+          return (
+            '<div id="algolia-hits-empty">' +
+              algolia.languages.hitsEmpty.replace(/\$\{query}/, data.query) +
+            '</div>'
+          );
+        }
+      },
+      cssClasses: {
+        item: 'algolia-hit-item'
+      }
+    })
+  );
+
+  // The stats of search results.
+  if ($('#algolia-stats')[0]) {
+    search.addWidget(
+      instantsearch.widgets.stats({
+        container: '#algolia-stats',
+        templates: {
+          body: function (data) {
+            var stats = algolia.languages.hitsStats
+              .replace(/\$\{hits}/, data.nbHits)
+              .replace(/\$\{time}/, data.processingTimeMS);
+            return (
+              stats +
+              '<span class="algolia-logo pull-right">' +
+                '<img src="' + CONFIG.root +
+                `${CONFIG.sourcePath.images}/algolia.svg" alt="Algolia" />` +
+              '</span>'
+            );
+          }
+        }
+      })
+    );
+  }
+
+  // The pagination of the results.
+  search.addWidget(
+    instantsearch.widgets.pagination({
+      container: '#algolia-pagination',
+      scrollTo: false,
+      showFirstLast: false,
+      labels: {
+        first: '<i class="fa fa-angle-double-left"></i>',
+        last: '<i class="fa fa-angle-double-right"></i>',
+        previous: '<i class="fa fa-angle-left"></i>',
+        next: '<i class="fa fa-angle-right"></i>'
+      },
+      cssClasses: {
+        root: 'pagination',
+        item: 'pagination-item',
+        link: 'page-number',
+        active: 'current',
+        disabled: 'disabled-item'
+      }
+    })
+  );
+
+  search.start();
+});</script><script src="//unpkg.com/pjax@latest/pjax.min.js"></script><script>window.addEventListener('DOMContentLoaded', function () {
+  var pjax = new Pjax({"selectors":["head title","#main",".pjax-reload",".header-inner"],"history":true,"scrollTo":false,"scrollRestoration":false,"cacheBust":false,"debug":false,"currentUrlFullReload":false,"timeout":0});
+  // 加载进度条的计时器
+  var loadingTimer = null;
+
+  // 重置页面 Y 方向上的滚动偏移量
+  document.addEventListener('pjax:send', function () {
+    $('.header-nav-menu').removeClass('show');
+    if (CONFIG.pjax && CONFIG.pjax.avoidBanner) {
+      $('html').velocity('scroll', {
+        duration: 500,
+        offset: $('#header').height(),
+        easing: 'easeInOutCubic'
+      });
+    }
+
+    var loadingBarWidth = 20;
+    var MAX_LOADING_WIDTH = 95;
+
+    $('.loading-bar').addClass('loading');
+    $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    clearInterval(loadingTimer);
+    loadingTimer = setInterval(function () {
+      loadingBarWidth += 3;
+      if (loadingBarWidth > MAX_LOADING_WIDTH) {
+        loadingBarWidth = MAX_LOADING_WIDTH;
+      }
+      $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    }, 500);
+  }, false);
+
+  window.addEventListener('pjax:complete', function () {
+    clearInterval(loadingTimer);
+    $('.loading-bar__progress').css('width', '100%');
+    $('.loading-bar').removeClass('loading');
+    setTimeout(function () {
+      $('.loading-bar__progress').css('width', '0');
+    }, 400);
+    $('link[rel=prefetch], script[data-pjax-rm]').each(function () {
+      $(this).remove();
+    });
+    $('script[data-pjax], #pjax-reload script').each(function () {
+      $(this).parent().append($(this).remove());
+    });
+
+    if (Stun.utils.pjaxReloadBoot) {
+      Stun.utils.pjaxReloadBoot();
+    }
+    if (Stun.utils.pjaxReloadScroll) {
+      Stun.utils.pjaxReloadScroll();
+    }
+    if (Stun.utils.pjaxReloadSidebar) {
+      Stun.utils.pjaxReloadSidebar();
+    }
+    if (true) {
+      if (Stun.utils.pjaxReloadHeader) {
+        Stun.utils.pjaxReloadHeader();
+      }
+      if (Stun.utils.pjaxReloadScrollIcon) {
+        Stun.utils.pjaxReloadScrollIcon();
+      }
+      if (Stun.utils.pjaxReloadLocalSearch) {
+        Stun.utils.pjaxReloadLocalSearch();
+      }
+    }
+  }, false);
+}, false);</script><div id="pjax-reload"><link href="https://unpkg.com/katex@0.10.2/dist/katex.min.css" rel="stylesheet" type="text/css"><link href="https://unpkg.com/katex@0.10.2/dist/contrib/copy-tex.css" rel="stylesheet" type="text/css"><script src="https://unpkg.com/katex@0.10.2/dist/contrib/copy-tex.min.js"></script><script src="//unpkg.com/quicklink@latest/dist/quicklink.umd.js"></script><script>function initQuicklink() {
+  quicklink({
+    timeout: '10000',
+    priority: true,
+    ignores: [uri => uri.includes('#'), uri => uri === 'https://hexo.ab-in.cn/2022/01/06/WebExperiment-06/', /\/api\/?/,uri => uri.includes('.xml'),uri => uri.includes('.zip'),(uri, el) => el.hasAttribute('nofollow'),(uri, el) => el.hasAttribute('noprefetch')]
+  });
+}
+
+if (true || false) {
+  initQuicklink();
+} else {
+  window.addEventListener('DOMContentLoaded', initQuicklink, false);
+}</script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script></div><script data-pjax="">function loadLivere () {
+  var d = document, s = d.createElement('script');
+
+  if (!d.getElementById('lv-container')) {
+    return;
+  }
+  if (typeof LivereTower === 'function') {
+    return;
+  }
+  s.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+  if (true) {
+    s.setAttribute('data-pjax-rm', '');
+  }
+  (d.head || d.body).appendChild(s);
+}
+
+if (true) {
+  loadLivere();
+} else {
+  window.addEventListener('DOMContentLoaded', loadLivere, false);
+}</script><script src="/js/utils.js?v=2.8.0"></script><script src="/js/stun-boot.js?v=2.8.0"></script><script src="/js/scroll.js?v=2.8.0"></script><script src="/js/header.js?v=2.8.0"></script><script src="/js/sidebar.js?v=2.8.0"></script><script type="application/json" src="/search.json"></script></body></html>
