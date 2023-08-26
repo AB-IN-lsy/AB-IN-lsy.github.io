@@ -1,0 +1,702 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#54bcff"><link rel="manifest" href="/manifest.json?v=2.8.0"><link rel="icon" href="/assets/favicon-16x16.png?v=2.8.0" type="image/png" sizes="16x16"><link rel="icon" href="/assets/favicon-32x32.png?v=2.8.0" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="/assets/android-chrome-192x192.png?v=2.8.0" sizes="180x180"><link rel="mask-icon" href="/%5Bobject%20Object%5D?v=2.8.0" color="#54bcff"><meta name="msapplication-TileImage" content="/%5Bobject%20Object%5D"><meta name="msapplication-TileColor" content="#000000"><meta name="google-site-verification" content="e4vuRgT_ouTNSxZf23XDFDixeCsDJiaAvmUQaKT_njA"><meta name="msvalidate.01" content="A2EE4D0CCD36C0B0741FA44DBF05FF0D"><meta name="baidu-site-verification" content="code-OOQCT4Wx7W"><meta name="description" content="摘要Title: 网站常见安全漏洞 | 青训营Tag: ByteDance、Go、后端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网站常见安全漏洞 | 青训营">
+<meta property="og:url" content="https://hexo.ab-in.cn/2023/08/26/ByteDance2023-08-26/index.html">
+<meta property="og:site_name" content="AB-IN&#39;s Blog">
+<meta property="og:description" content="摘要Title: 网站常见安全漏洞 | 青训营Tag: ByteDance、Go、后端">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/eb1a68583ed04af1b762cce3f2ee3583~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1748&amp;h=792&amp;e=png&amp;b=1663e8">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5ff9c0ae888d483f9fb89d80aa60bf54~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1527&amp;h=918&amp;e=png&amp;b=1462e8">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/feb78b557c7643c192a7a0162ef7cb12~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1429&amp;h=904&amp;e=png&amp;b=2170e8">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a2d43108a42e482687f05a914deef2b7~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2214&amp;h=1175&amp;e=png&amp;b=196ce8">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/30d2b1e8c2f148068492e0cf29d55c35~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2236&amp;h=813&amp;e=png&amp;b=2976eb">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5a890ab96c5c45f5b0be70b8d7d4fc75~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2051&amp;h=363&amp;e=png&amp;b=1965e8">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1a7d0a7efef24113ab8dd2cf9297593b~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2277&amp;h=1027&amp;e=png&amp;b=1965e8">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5853fb42b44d460ea4348620fa4a5ab8~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1362&amp;h=390&amp;e=png&amp;b=1e69ea">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/29be2e68e4bb4f49a6dd33685f30d8c5~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1694&amp;h=1182&amp;e=png&amp;b=1a6de9">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/40b15e1d794f490499aed4dd0af5212e~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2042&amp;h=1137&amp;e=png&amp;b=1c6ee8">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/81062e85f3b944a1ab0fb73f9ac660a1~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1804&amp;h=85&amp;e=png&amp;b=87b5fa">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/adf8e11de71241d888d97d75e44df34b~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2161&amp;h=896&amp;e=png&amp;b=206ae9">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9d1442622fdc4fbfb1ca06e32c6aaaca~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2240&amp;h=518&amp;e=png&amp;b=1f69e9">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/39b13023a26b49a6b3dc7073adb49cec~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2076&amp;h=1074&amp;e=png&amp;b=1a6de8">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2de86f204900431b838acf05f5352576~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2203&amp;h=972&amp;e=png&amp;b=186be7">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bde27ab23bbf4c6bad86b15d28a5772b~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2244&amp;h=1123&amp;e=png&amp;b=faf9f9">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/35c2a5d645f04762845e2f81c5236736~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2008&amp;h=1075&amp;e=png&amp;b=1e70ea">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7e828cba57cb45828330a6e3023b99c7~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1984&amp;h=1137&amp;e=png&amp;b=1e69e9">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6a823ad1830f4dab917ac15723d030d3~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1998&amp;h=642&amp;e=png&amp;b=1a66e9">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9d588852d62c48879935f5dec94c685b~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2113&amp;h=418&amp;e=png&amp;b=0c5ce6">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/843d3c33258f46689f422c301541d510~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1960&amp;h=526&amp;e=png&amp;b=2474eb">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b9f198577eea472a92877e46ef02e237~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2212&amp;h=933&amp;e=png&amp;b=226bea">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a6accc19fe1040fb9d52b497c2e20e7e~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2220&amp;h=985&amp;e=png&amp;b=f2f2f5">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bf6c17ce8566490d8b6a337d1e79192c~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2143&amp;h=1053&amp;e=png&amp;b=1461e7">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/133731565bb4414cb41eea4e75d66674~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2259&amp;h=392&amp;e=png&amp;b=1b67e9">
+<meta property="article:published_time" content="2023-08-26T13:51:18.000Z">
+<meta property="article:modified_time" content="2023-08-26T13:52:39.147Z">
+<meta property="article:author" content="AB-IN">
+<meta property="article:tag" content="ByteDance">
+<meta property="article:tag" content="Go">
+<meta property="article:tag" content="后端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/eb1a68583ed04af1b762cce3f2ee3583~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1748&amp;h=792&amp;e=png&amp;b=1663e8"><title>网站常见安全漏洞 | 青训营 | AB-IN's Blog</title><link ref="canonical" href="https://hexo.ab-in.cn/2023/08/26/ByteDance2023-08-26/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="//unpkg.com/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" type="text/css"><link rel="stylesheet" href="//unpkg.com/instantsearch.js@2.1.1/dist/instantsearch.min.css" type="text/css"><link rel="stylesheet" href="//unpkg.com/social-share.js@1.0.16/dist/css/share.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.8.0"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: {"appId":"DU3TAVNH2B","apiKey":"483f4ee8a687ed876e44dc2c27d52939","indexName":"hexo_BLOG","hits":{"per_page":10},"languages":{"inputPlaceholder":"搜索文章","hitsEmpty":"没有找到任何搜索结果：${query}","hitsStats":"找到 ${hits} 条搜索结果，耗时 ${time} 毫秒"}},
+  assistSearch: ["google","bing","baidu"],
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"ocean","wordWrap":true},
+  reward: true,
+  fancybox: true,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: {"avoidBanner":false},
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: {"switchPost":true},
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-newspaper"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-address-card"></i></span><span class="header-nav-menu-item__text">关于</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/author"><span class="header-nav-submenu-item__icon"><i class="fas fa-at"></i></span><span class="header-nav-submenu-item__text">作者</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/friends"><span class="header-nav-submenu-item__icon"><i class="fas fa-users"></i></span><span class="header-nav-submenu-item__text">友链</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/FAQ"><span class="header-nav-submenu-item__icon"><i class="fas fa-question"></i></span><span class="header-nav-submenu-item__text">FAQ</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="far fa-window-maximize"></i></span><span class="header-nav-menu-item__text">其余站点</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://www.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fab fa-safari"></i></span><span class="header-nav-submenu-item__text">主页</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://ssh.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fas fa-terminal"></i></span><span class="header-nav-submenu-item__text">终端</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://kod.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fas fa-cloud"></i></span><span class="header-nav-submenu-item__text">云盘</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://oneword.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fab fa-dailymotion"></i></span><span class="header-nav-submenu-item__text">一言</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://ab-in.blog.csdn.net"><span class="header-nav-submenu-item__icon"><i class="fas fa-copyright"></i></span><span class="header-nav-submenu-item__text">CSDN</span></a></div></div></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">网站常见安全漏洞 | 青训营</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2023-08-26</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2023-08-26</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">3k</span></span><span class="post-meta-item post-meta-item--readtime"><span class="post-meta-item__icon"><i class="far fa-clock"></i></span><span class="post-meta-item__info">阅读时长</span><span class="post-meta-item__value">16分</span></span><span class="post-meta-item post-meta-item--visitors"><span class="post-meta-item__icon"><i class="fas fa-eye"></i></span><span class="post-meta-item__info">阅读次数</span><span class="post-meta-item__value" id="busuanzi_value_page_pv"></span></span></div></header><div class="post-body">
+    <div class="note-plugin info">
+      <span class="note-plugin__icon note-plugin__icon--info">
+              <i class="fas fa-info-circle"></i>
+            </span>
+      <p><strong>摘要</strong><br />Title: 网站常见安全漏洞 | 青训营<br />Tag: ByteDance、Go、后端</p>
+    </div>
+  
+<span id="more"></span>
+<p><font size=3 face=楷体>Powered by:<strong>NEFU AB-IN</strong></font></p>
+<p><ul class="markdownIt-TOC">
+<li><a href="#font-size5-face%E7%B2%97%E4%BD%93%E7%BD%91%E7%AB%99%E5%9F%BA%E6%9C%AC%E7%BB%84%E6%88%90%E5%8F%8A%E6%BC%8F%E6%B4%9E%E5%AE%9A%E4%B9%89font"><font size=5 face=粗体>网站基本组成及漏洞定义</font></a></li>
+<li><a href="#font-size5-face%E7%B2%97%E4%BD%93%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%BC%8F%E6%B4%9Efont"><font size=5 face=粗体>服务端漏洞</font></a>
+<ul>
+<li><a href="#sql%E6%B3%A8%E5%85%A5"><strong>SQL注入</strong></a></li>
+<li><a href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><strong>命令执行</strong></a></li>
+<li><a href="#%E8%B6%8A%E6%9D%83%E6%BC%8F%E6%B4%9E"><strong>越权漏洞</strong></a></li>
+<li><a href="#ssrf"><strong>SSRF</strong></a></li>
+<li><a href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><strong>文件上传漏洞</strong></a></li>
+</ul>
+</li>
+<li><a href="#font-size5-face%E7%B2%97%E4%BD%93%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%BC%8F%E6%B4%9Efont"><font size=5 face=粗体>客户端漏洞</font></a>
+<ul>
+<li><a href="#%E5%BC%80%E6%94%BE%E9%87%8D%E5%AE%9A%E5%90%91"><strong>开放重定向</strong></a></li>
+<li><a href="#xss"><strong>XSS</strong></a></li>
+<li><a href="#csrf"><strong>CSRF</strong></a></li>
+<li><a href="#%E7%82%B9%E5%87%BB%E5%8A%AB%E6%8C%81"><strong>点击劫持</strong></a></li>
+<li><a href="#cors%E8%B7%A8%E5%9F%9F%E9%85%8D%E7%BD%AE%E9%94%99%E8%AF%AF"><strong>CORS跨域配置错误</strong></a></li>
+<li><a href="#websocket"><strong>WebSocket</strong></a></li>
+</ul>
+</li>
+</ul>
+</p>
+
+        <h1 id="font-color6495ed-size6网站常见安全漏洞-青训营-font"   >
+          <a href="#font-color6495ed-size6网站常见安全漏洞-青训营-font" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#font-color6495ed-size6网站常见安全漏洞-青训营-font"></a> <font color=#6495ED size=6>网站常见安全漏洞 | 青训营 </font></h1>
+      
+<ul>
+<li>
+<p>网站常见安全漏洞-网站基本组成及漏洞定义</p>
+</li>
+<li>
+<p>网站常见安全漏洞-服务端漏洞介绍</p>
+</li>
+<li>
+<p>网站常见安全漏洞-客户端漏洞介绍</p>
+</li>
+<li>
+<p>网站常见安全漏洞-总结及强调网络安全法</p>
+</li>
+</ul>
+
+        <h2 id="font-size5-face粗体网站基本组成及漏洞定义font"   >
+          <a href="#font-size5-face粗体网站基本组成及漏洞定义font" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#font-size5-face粗体网站基本组成及漏洞定义font"></a> <font size=5 face=粗体>网站基本组成及漏洞定义</font></h2>
+      
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/eb1a68583ed04af1b762cce3f2ee3583~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1748&amp;h=792&amp;e=png&amp;b=1663e8"  style=""  alt="image.png" />
+      </p>
+<p><strong>网关</strong>在计算机网络中指的是连接两个不同网络或协议的设备或系统。它的作用是将传入的数据包从一个网络发送到另一个网络中，充当网络的出口或入口。网关可以实现网络之间的通信和数据传输。</p>
+<p>网关的主要功能包括地址转换、协议转换、数据加密和解密、流量控制、访问控制等。它还负责将传入的数据包路由到正确的目标主机，并在多个网络之间进行数据传输和转发。</p>
+<p>NGINX 是一款高性能的开源网络代理服务器，它可以用作反向代理服务器、负载均衡器、HTTP缓存和网关等。作为网关，NGINX可以处理与网络之间的数据交换，转发请求，并将请求流量分发到内部的服务器集群。通过配置NGINX，可以实现对外部请求的流量控制、访问控制和安全性增强等功能。</p>
+<p>因此，可以说NGINX可以充当网关的角色，但它不仅仅是一个网关，还具备其他众多的功能。</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5ff9c0ae888d483f9fb89d80aa60bf54~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1527&amp;h=918&amp;e=png&amp;b=1462e8"  style=""  alt="image.png" />
+      </p>
+<p><strong>网关是在计算机网络中起到连接不同网络或网络段之间的作用</strong>，它可以用于数据的路由、过滤、转换等功能。下面是一些常见的网关作用和工作流程例子：</p>
+<ol>
+<li>
+<p>路由网关：路由网关用于连接不同的网络，并根据数据包的目的地址，决定将数据包发送到哪个网络上。例如，Cisco的路由器就是一种常见的路由网关。</p>
+</li>
+<li>
+<p>防火墙网关：防火墙网关用于监控和控制网络流量，以保护网络免受恶意攻击和未经授权的访问。例如，Checkpoint的防火墙就是一种常见的防火墙网关。</p>
+</li>
+<li>
+<p>SSL VPN网关：SSL VPN网关用于提供远程用户安全访问企业网络的功能，通过建立安全的虚拟专用网络（VPN）隧道，使远程用户可以安全地访问内部资源。例如，Juniper的SSL VPN网关就是一种常见的SSL VPN网关。</p>
+</li>
+<li>
+<p>API网关：API网关用于管理和保护企业的应用程序接口（API），它可以提供身份验证、访问控制、流量控制等功能。例如，Kong是一种常见的开源API网关。</p>
+</li>
+</ol>
+<p>网关的<strong>工作流程</strong>通常包括以下步骤：</p>
+<ol>
+<li>接收数据包：网关从连接的网络或主机接收数据包。</li>
+<li>解析数据包：网关解析数据包的头部信息，如源地址、目的地址、协议等。</li>
+<li>决策处理：根据预设的策略和规则，网关决定如何处理该数据包，如路由到其他网络、进行访问控制、过滤等。</li>
+<li>执行处理：网关执行相应的处理操作，如进行数据包的转发、修改数据包的内容等。</li>
+<li>发送数据包：网关将处理后的数据包发送到下一个网络或主机。</li>
+</ol>
+<p>举一个具体的网关实例是防火墙网关。当数据包进入防火墙网关时，网关会解析数据包的头部信息，如源IP地址、目的IP地址、端口号等。接着，网关根据预设的策略和规则，判断该数据包是否满足安全要求，如果不满足，网关可能会进行阻止或拦截处理；如果满足，网关可以根据策略将数据包转发到特定的网络或主机。同时，防火墙网关还可以对数据包进行深层次的检查和修改，以提供额外的安全保护。最后，网关将处理后的数据包发送到目标网络或主机。</p>
+<hr />
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/feb78b557c7643c192a7a0162ef7cb12~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1429&amp;h=904&amp;e=png&amp;b=2170e8"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h2 id="font-size5-face粗体服务端漏洞font"   >
+          <a href="#font-size5-face粗体服务端漏洞font" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#font-size5-face粗体服务端漏洞font"></a> <font size=5 face=粗体>服务端漏洞</font></h2>
+      
+<ul>
+<li>第三方组件漏洞 如log4j</li>
+<li>SQL 注入</li>
+<li>命令执行</li>
+<li>越权漏洞</li>
+<li>SSRF</li>
+<li>文件上传漏洞</li>
+</ul>
+
+        <h3 id="sql注入"   >
+          <a href="#sql注入" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#sql注入"></a> <strong>SQL注入</strong></h3>
+      
+<p>可能查出别的数据，通过union select<br />
+
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a2d43108a42e482687f05a914deef2b7~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2214&amp;h=1175&amp;e=png&amp;b=196ce8"  style=""  alt="image.png" />
+      </p>
+<ol>
+<li>
+<p>直接拼接语句时不安全的，用ORM包，以<strong>对象</strong>的方式查询</p>
+</li>
+<li>
+<p>Mybatis 占位符</p>
+<ul>
+<li>若使用#，把它当成动态的字段，是直接拼接的效果，不存在漏洞</li>
+<li>若使用$，不会对参数值进行转义，会导致潜在的注入风险<br />
+假设我们有一个查询用户信息的SQL语句：</li>
+</ul>
+ <figure class="highlight sql"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> username <span class="operator">=</span> $username</span><br></pre></td></tr></table></div></figure>
+<p>假设攻击者输入的username参数为：<code>' OR '1'='1'-- </code>（注意<strong>末尾的注释符号</strong>，注释掉原本的闭合单引号，并追加额外的SQL语句，从而影响整个查询的逻辑），那么最终拼接的SQL语句将会变成：</p>
+ <figure class="highlight sql"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> username <span class="operator">=</span> <span class="string">&#x27;&#x27;</span> <span class="keyword">OR</span> <span class="string">&#x27;1&#x27;</span><span class="operator">=</span><span class="string">&#x27;1&#x27;</span><span class="comment">--&#x27;</span></span><br></pre></td></tr></table></div></figure>
+<p>这样，由于<code>'1'='1'</code>始终为真，攻击者可以绕过用户名验证，获取到所有的用户信息。</p>
+<p>使用#号可以防止这种注入攻击，因为#会将参数值进行转义并添加单引号，即使攻击者输入恶意字符，也不会产生注入漏洞。</p>
+</li>
+<li>
+<p>Golang常见错误写法</p>
+<p>比如是图片中插入一个if语句，1始终为真，一直执行第二个参数的内容，会让服务器休眠10s，就可以让外面判断是否可以SQL注入，从而可以进一步判断表明等等</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/30d2b1e8c2f148068492e0cf29d55c35~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2236&amp;h=813&amp;e=png&amp;b=2976eb"  style=""  alt="image.png" />
+      </p>
+</li>
+</ol>
+<p><strong>防护措施</strong>（对外部数据进行数据清理）</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5a890ab96c5c45f5b0be70b8d7d4fc75~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2051&amp;h=363&amp;e=png&amp;b=1965e8"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h3 id="命令执行"   >
+          <a href="#命令执行" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#命令执行"></a> <strong>命令执行</strong></h3>
+      
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1a7d0a7efef24113ab8dd2cf9297593b~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2277&amp;h=1027&amp;e=png&amp;b=1965e8"  style=""  alt="image.png" />
+      </p>
+<p><strong>防护方式</strong></p>
+<ul>
+<li>设置白名单，只能操控这几个值</li>
+<li>设置黑名单，过滤字符</li>
+</ul>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5853fb42b44d460ea4348620fa4a5ab8~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1362&amp;h=390&amp;e=png&amp;b=1e69ea"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h3 id="越权漏洞"   >
+          <a href="#越权漏洞" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#越权漏洞"></a> <strong>越权漏洞</strong></h3>
+      
+<p>类别</p>
+<ul>
+<li>
+<p>未授权，不需要认证，拿到数据</p>
+</li>
+<li>
+<p>水平越权，查询同等级别的账户信息</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/29be2e68e4bb4f49a6dd33685f30d8c5~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1694&amp;h=1182&amp;e=png&amp;b=1a6de9"  style=""  alt="image.png" />
+      </p>
+</li>
+<li>
+<p>垂直越权，使用别的权利</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/40b15e1d794f490499aed4dd0af5212e~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2042&amp;h=1137&amp;e=png&amp;b=1c6ee8"  style=""  alt="image.png" />
+      </p>
+</li>
+</ul>
+<hr />
+
+        <h3 id="ssrf"   >
+          <a href="#ssrf" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#ssrf"></a> <strong>SSRF</strong></h3>
+      
+<p>SSRF代表&quot;Server-Side Request Forgery&quot;，翻译成中文是“服务器端请求伪造”。它是一种网络安全漏洞，攻击者可以通过操纵服务器发起的请求来访问、探测或攻击服务器内部的资源，甚至可能用于攻击内部系统。通常，攻击者会通过构造恶意请求来欺骗服务器，使其执行不安全的操作，例如向内部服务器发起HTTP请求或访问本地文件系统。</p>
+<p>以下是一些SSRF的具体例子：</p>
+<ol>
+<li>
+<p><strong>访问内部资源：</strong> 攻击者可以构造恶意请求，使服务器发起请求到内部的数据库、文件系统或其他敏感资源，然后将结果返回给攻击者。这可以用于获取敏感数据或执行未授权的操作。</p>
+</li>
+<li>
+<p><strong>绕过防火墙或内部网络访问限制：</strong> 攻击者可以利用SSRF来访问内部系统，绕过外部服务器的防火墙或网络访问控制列表，进而攻击内部系统。</p>
+</li>
+<li>
+<p><strong>攻击本地资源：</strong> 攻击者可以利用SSRF来尝试访问本地文件系统，例如<code>file:///</code>协议，从而读取或修改服务器上的文件。</p>
+</li>
+<li>
+<p><strong>攻击其他服务：</strong> 攻击者可以构造请求，使服务器发起攻击其他服务，例如发起DDoS攻击，这可能会导致其他服务不可用。</p>
+</li>
+</ol>
+<p>防止SSRF攻击通常涉及到验证和过滤输入，确保服务器不会发起恶意请求。此外，网络架构的设计也可以减轻SSRF的风险，如将服务器限制在受信任的网络环境中，以防止访问敏感资源。</p>
+<p><strong>防护方式</strong></p>
+<ol>
+<li>尽量这些不要让内网地址可以公网访问</li>
+<li>URL post只在白名单中选</li>
+</ol>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/81062e85f3b944a1ab0fb73f9ac660a1~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1804&amp;h=85&amp;e=png&amp;b=87b5fa"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h3 id="文件上传漏洞"   >
+          <a href="#文件上传漏洞" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#文件上传漏洞"></a> <strong>文件上传漏洞</strong></h3>
+      
+<ul>
+<li>
+<p>PHP脚本注入</p>
+</li>
+<li>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/adf8e11de71241d888d97d75e44df34b~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2161&amp;h=896&amp;e=png&amp;b=206ae9"  style=""  alt="image.png" />
+      </p>
+</li>
+</ul>
+<p><strong>防护方式</strong></p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9d1442622fdc4fbfb1ca06e32c6aaaca~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2240&amp;h=518&amp;e=png&amp;b=1f69e9"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h2 id="font-size5-face粗体客户端漏洞font"   >
+          <a href="#font-size5-face粗体客户端漏洞font" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#font-size5-face粗体客户端漏洞font"></a> <font size=5 face=粗体>客户端漏洞</font></h2>
+      
+<ul>
+<li>开放重定向</li>
+<li>XSS</li>
+<li>CSRF</li>
+<li>点击劫持（clickjacking）</li>
+<li>CORS跨域配置错误</li>
+<li>WebSocket</li>
+</ul>
+
+        <h3 id="开放重定向"   >
+          <a href="#开放重定向" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#开放重定向"></a> <strong>开放重定向</strong></h3>
+      
+<p>可能后面的URL不可控</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/39b13023a26b49a6b3dc7073adb49cec~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2076&amp;h=1074&amp;e=png&amp;b=1a6de8"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h3 id="xss"   >
+          <a href="#xss" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#xss"></a> <strong>XSS</strong></h3>
+      
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2de86f204900431b838acf05f5352576~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2203&amp;h=972&amp;e=png&amp;b=186be7"  style=""  alt="image.png" />
+      </p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bde27ab23bbf4c6bad86b15d28a5772b~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2244&amp;h=1123&amp;e=png&amp;b=faf9f9"  style=""  alt="image.png" />
+      </p>
+<p><strong>防护方法</strong></p>
+<p>对输入（标签和属性）进行控制，有些onload onclick后面可以跟代码，需要控制<br />
+
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/35c2a5d645f04762845e2f81c5236736~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2008&amp;h=1075&amp;e=png&amp;b=1e70ea"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h3 id="csrf"   >
+          <a href="#csrf" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#csrf"></a> <strong>CSRF</strong></h3>
+      
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7e828cba57cb45828330a6e3023b99c7~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1984&amp;h=1137&amp;e=png&amp;b=1e69e9"  style=""  alt="image.png" />
+      </p>
+<p><strong>防护方式</strong></p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6a823ad1830f4dab917ac15723d030d3~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1998&amp;h=642&amp;e=png&amp;b=1a66e9"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h3 id="点击劫持"   >
+          <a href="#点击劫持" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#点击劫持"></a> <strong>点击劫持</strong></h3>
+      
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9d588852d62c48879935f5dec94c685b~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2113&amp;h=418&amp;e=png&amp;b=0c5ce6"  style=""  alt="image.png" />
+      </p>
+<p>不让使用 <code>&lt;iframe&gt;</code> 元素嵌入到一个网页中的另一个网页或站点</p>
+<ul>
+<li>X-FRAME：deny 默认拒绝；sameorigin：允许</li>
+<li>配置白名单</li>
+</ul>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/843d3c33258f46689f422c301541d510~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1960&amp;h=526&amp;e=png&amp;b=2474eb"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h3 id="cors跨域配置错误"   >
+          <a href="#cors跨域配置错误" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#cors跨域配置错误"></a> <strong>CORS跨域配置错误</strong></h3>
+      
+<p>CORS代表&quot;跨源资源共享&quot;（Cross-Origin Resource Sharing），是一种用于在Web应用程序中处理跨域HTTP请求的安全机制。跨域请求是指一个网页上的代码试图向不同域（协议、域名或端口）的服务器发起HTTP请求。由于浏览器的同源策略（Same-Origin Policy）限制，跨域请求通常是被禁止的。CORS是一种通过浏览器的协作机制来允许跨域请求的方法。</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b9f198577eea472a92877e46ef02e237~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2212&amp;h=933&amp;e=png&amp;b=226bea"  style=""  alt="image.png" />
+      </p>
+<p>Middleware（中间件）是一种常见的软件设计模式，它允许你在一个应用程序的请求-响应过程中插入、扩展或修改功能，而不需要修改应用程序的核心代码。中间件位于应用程序的处理流程中，可以对请求和响应进行预处理、后处理或者转换。<br />
+
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a6accc19fe1040fb9d52b497c2e20e7e~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2220&amp;h=985&amp;e=png&amp;b=f2f2f5"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h3 id="websocket"   >
+          <a href="#websocket" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#websocket"></a> <strong>WebSocket</strong></h3>
+      
+<p>WebSocket（Web套接字）是一种用于在客户端和服务器之间进行<strong>全双工通信</strong>的网络协议。与传统的HTTP协议不同，WebSocket允许服务器主动向客户端发送数据，而不需要客户端明确地请求。这使得WebSocket非常适用于实时应用程序，如在线游戏、聊天应用、实时协作工具和实时数据传输等。</p>
+<p>以下是WebSocket与HTTP之间的主要区别：</p>
+<ol>
+<li>
+<p><strong>通信模式：</strong></p>
+<ul>
+<li><strong>HTTP：</strong> HTTP是一种请求-响应协议，客户端发送请求，服务器返回响应，然后连接关闭。这是一种单向通信模式。</li>
+<li><strong>WebSocket：</strong> WebSocket是全双工协议，允许客户端和服务器之间建立持久连接，双方可以同时发送和接收数据，而不需要不断地建立和关闭连接。</li>
+</ul>
+</li>
+<li>
+<p><strong>连接开销：</strong></p>
+<ul>
+<li><strong>HTTP：</strong> 每次客户端需要与服务器通信时，都需要建立一个新的HTTP连接，这需要时间和资源。</li>
+<li><strong>WebSocket：</strong> WebSocket连接是持久的，一旦建立，可以保持打开状态，允许实时通信，减少了连接开销。</li>
+</ul>
+</li>
+<li>
+<p><strong>协议头：</strong></p>
+<ul>
+<li><strong>HTTP：</strong> HTTP协议的请求和响应通常包含大量的头部信息，这些头部信息用于描述请求的性质和服务器的响应。</li>
+<li><strong>WebSocket：</strong> WebSocket头部相对较小，协议更轻量级，因此在通信期间传输的数据量更小，延迟更低。</li>
+</ul>
+</li>
+<li>
+<p><strong>端口：</strong></p>
+<ul>
+<li><strong>HTTP：</strong> HTTP通常使用标准端口80（HTTP）或443（HTTPS）。</li>
+<li><strong>WebSocket：</strong> WebSocket使用标准端口80或443，但也可以使用其他端口。</li>
+</ul>
+</li>
+<li>
+<p><strong>应用场景：</strong></p>
+<ul>
+<li><strong>HTTP：</strong> 适用于传统的请求-响应应用程序，如网页浏览、RESTful API调用等。</li>
+<li><strong>WebSocket：</strong> 适用于需要实时双向通信的应用程序，如在线游戏、聊天应用、实时协作工具和实时数据传输。</li>
+</ul>
+</li>
+</ol>
+<p>总之，WebSocket是一种更适合实时和双向通信的协议，它在一次连接的基础上允许客户端和服务器之间进行长时间的数据交换。而HTTP更适用于传统的请求-响应模式，每个请求都是独立的，连接会在请求和响应之间关闭。选择使用哪种协议取决于应用程序的需求。</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bf6c17ce8566490d8b6a337d1e79192c~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2143&amp;h=1053&amp;e=png&amp;b=1461e7"  style=""  alt="image.png" />
+      </p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/133731565bb4414cb41eea4e75d66674~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2259&amp;h=392&amp;e=png&amp;b=1b67e9"  style=""  alt="image.png" />
+      </p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://hexo.ab-in.cn">AB-IN</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://hexo.ab-in.cn/2023/08/26/ByteDance2023-08-26/">https://hexo.ab-in.cn/2023/08/26/ByteDance2023-08-26/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/ByteDance/">ByteDance</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/Go/">Go</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/%E5%90%8E%E7%AB%AF/">后端</a></span></div><div class="post-share"><div class="social-share" data-sites="qzone, qq, weibo, wechat, douban, linkedin, facebook, twitter, google">Share to: </div></div><div class="post-reward reward"><div class="reward-button">请我喝杯咖啡~</div><div class="reward-qrcode"><span class="reward-qrcode-alipay"><img class="reward-qrcode-alipay__img" src="https://oss.ab-in.cn/Pay/alipay.png"><div class="reward-qrcode-alipay__text">支付宝打赏</div></span><span class="reward-qrcode-wechat"><img class="reward-qrcode-wechat__img" src="https://oss.ab-in.cn/Pay/weixin.png"><div class="reward-qrcode-wechat__text">微信打赏</div></span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2023/08/26/Acwing2023-08-26/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">5017. 垦田计划</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2023/08/24/ByteDance2023-08-24-1/"><span class="paginator-prev__text">Go 语言进阶与依赖管理 | 青训营</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div><div class="comments" id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC81NTEzNS8zMTYwMw"></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#font-color6495ed-size6%E7%BD%91%E7%AB%99%E5%B8%B8%E8%A7%81%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E-%E9%9D%92%E8%AE%AD%E8%90%A5-font"><span class="toc-number">1.</span> <span class="toc-text">
+           网站常见安全漏洞 | 青训营 </span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#font-size5-face%E7%B2%97%E4%BD%93%E7%BD%91%E7%AB%99%E5%9F%BA%E6%9C%AC%E7%BB%84%E6%88%90%E5%8F%8A%E6%BC%8F%E6%B4%9E%E5%AE%9A%E4%B9%89font"><span class="toc-number">1.1.</span> <span class="toc-text">
+           网站基本组成及漏洞定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#font-size5-face%E7%B2%97%E4%BD%93%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%BC%8F%E6%B4%9Efont"><span class="toc-number">1.2.</span> <span class="toc-text">
+           服务端漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5"><span class="toc-number">1.2.1.</span> <span class="toc-text">
+           SQL注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">1.2.2.</span> <span class="toc-text">
+           命令执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B6%8A%E6%9D%83%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.2.3.</span> <span class="toc-text">
+           越权漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ssrf"><span class="toc-number">1.2.4.</span> <span class="toc-text">
+           SSRF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.2.5.</span> <span class="toc-text">
+           文件上传漏洞</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#font-size5-face%E7%B2%97%E4%BD%93%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%BC%8F%E6%B4%9Efont"><span class="toc-number">1.3.</span> <span class="toc-text">
+           客户端漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E6%94%BE%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">1.3.1.</span> <span class="toc-text">
+           开放重定向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xss"><span class="toc-number">1.3.2.</span> <span class="toc-text">
+           XSS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#csrf"><span class="toc-number">1.3.3.</span> <span class="toc-text">
+           CSRF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%82%B9%E5%87%BB%E5%8A%AB%E6%8C%81"><span class="toc-number">1.3.4.</span> <span class="toc-text">
+           点击劫持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cors%E8%B7%A8%E5%9F%9F%E9%85%8D%E7%BD%AE%E9%94%99%E8%AF%AF"><span class="toc-number">1.3.5.</span> <span class="toc-text">
+           CORS跨域配置错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#websocket"><span class="toc-number">1.3.6.</span> <span class="toc-text">
+           WebSocket</span></a></li></ol></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://oss.ab-in.cn/images/AB-IN.jpg" alt="avatar"></div><p class="sidebar-ov-author__text">NEFU AB-IN</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/AB-IN-lsy" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/AB_IN_liusy" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="http://wpa.qq.com/msgrd?v=3&amp;uin=1719827581&amp;site=qq&amp;menu=yes" target="_blank" rel="noopener" data-popover="QQ" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-qq"></i></span></a><a class="sidebar-ov-social-item" href="mailto:liusy200708@gmail.com" target="_blank" rel="noopener" data-popover="Gmail" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a></div><div class="sidebar-ov-feed"></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">您已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2023</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>AB-IN All Rights Reserved</span><span class="footer__devider">|</span><span><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">鲁ICP备2021035431号</a></span></div><div class="busuanzi"><span class="busuanzi-siteuv"><span class="busuanzi-siteuv__icon"><i class="fas fa-user"></i></span><span class="busuanzi-siteuv__info">访问人数</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_uv"></span></span><span class="busuanzi-sitepv"><span class="busuanzi-siteuv__icon"><i class="fas fa-eye"></i></span><span class="busuanzi-siteuv__info">浏览总量</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_pv"></span></span></div><div><script type="text/javascript" src="https://oneword.ab-in.cn/oneword/oneword.php?format=js&charset=utf-8"></script> <div id="oneword"><script>oneword()</script></div></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"></div><div class="search-btns">使用搜索：<span class="search-btns-item search-btns-item--google"><i class="fab fa-google"></i>谷歌</span><span class="search-btns-item search-btns-item--bing"><i></i>必应</span><span class="search-btns-item search-btns-item--baidu"><i></i>百度</span></div><div class="search-results"><div id="algolia-hits"></div></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><script src="//unpkg.com/jquery@v3.4.1/dist/jquery.min.js"></script><script src="//unpkg.com/velocity-animate@1.5.2/velocity.min.js"></script><script src="//unpkg.com/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script><script src="//unpkg.com/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script src="//unpkg.com/social-share.js@1.0.16/dist/js/social-share.min.js"></script><script src="//unpkg.com/instantsearch.js@2.1.1/dist/instantsearch.min.js" defer></script><script>window.addEventListener('DOMContentLoaded', function () {
+  $('.header-nav-search').on('click', function (e) {
+    e.stopPropagation();
+
+    $('body').css('overflow', 'hidden');
+    $('.search-popup')
+      .velocity('stop')
+      .velocity('transition.expandIn', {
+        duration: 300,
+        complete: function () {
+          $('.search-popup input').focus();
+        }
+      });
+    $('.search-mask')
+      .velocity('stop')
+      .velocity('transition.fadeIn', {
+        duration: 300
+      });
+  });
+
+  function closeSearch () {
+    $('body').css({ overflow: 'auto' });
+    $('.search-popup').css({ display: 'none' });
+    $('.search-mask').css({ display: 'none' });
+  }
+
+  $('.search-mask, .search-close').on('click', function () {
+    closeSearch();
+  });
+
+  $(document).on('keydown', function (e) {
+    // Escape <=> 27
+    if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+      closeSearch();
+    }
+  });
+
+  var algolia = CONFIG.algolia;
+  if (!algolia && !(algolia.appId && algolia.apiKey && algolia.indexName)) {
+    return console.error('Algolia setting is invalid.');
+  }
+
+  var search = instantsearch({
+    appId: algolia.appId,
+    apiKey: algolia.apiKey,
+    indexName: algolia.indexName,
+    searchParameters: {
+      hitsPerPage: algolia.hits.per_page || 10
+    },
+    searchFunction: function (helper) {
+      var searchInput = $('.search-input').find('input');
+
+      if (searchInput.val()) {
+        helper.search();
+      }
+    }
+  });
+
+  search.addWidget(
+    instantsearch.widgets.searchBox({
+      container: '.search-input',
+      reset: false,
+      magnifier: false,
+      placeholder: algolia.languages.inputPlaceholder
+    })
+  );
+
+  // The hits of search results.
+  search.addWidget(
+    instantsearch.widgets.hits({
+      container: '#algolia-hits',
+      templates: {
+        item: function (data) {
+          var link = data.permalink ? data.permalink : CONFIG.root + data.path;
+          return (
+            '<a href="' + link + '" class="algolia-hit-item-link">' +
+              data._highlightResult.title.value +
+            '</a>'
+          );
+        },
+        empty: function (data) {
+          return (
+            '<div id="algolia-hits-empty">' +
+              algolia.languages.hitsEmpty.replace(/\$\{query}/, data.query) +
+            '</div>'
+          );
+        }
+      },
+      cssClasses: {
+        item: 'algolia-hit-item'
+      }
+    })
+  );
+
+  // The stats of search results.
+  if ($('#algolia-stats')[0]) {
+    search.addWidget(
+      instantsearch.widgets.stats({
+        container: '#algolia-stats',
+        templates: {
+          body: function (data) {
+            var stats = algolia.languages.hitsStats
+              .replace(/\$\{hits}/, data.nbHits)
+              .replace(/\$\{time}/, data.processingTimeMS);
+            return (
+              stats +
+              '<span class="algolia-logo pull-right">' +
+                '<img src="' + CONFIG.root +
+                `${CONFIG.sourcePath.images}/algolia.svg" alt="Algolia" />` +
+              '</span>'
+            );
+          }
+        }
+      })
+    );
+  }
+
+  // The pagination of the results.
+  search.addWidget(
+    instantsearch.widgets.pagination({
+      container: '#algolia-pagination',
+      scrollTo: false,
+      showFirstLast: false,
+      labels: {
+        first: '<i class="fa fa-angle-double-left"></i>',
+        last: '<i class="fa fa-angle-double-right"></i>',
+        previous: '<i class="fa fa-angle-left"></i>',
+        next: '<i class="fa fa-angle-right"></i>'
+      },
+      cssClasses: {
+        root: 'pagination',
+        item: 'pagination-item',
+        link: 'page-number',
+        active: 'current',
+        disabled: 'disabled-item'
+      }
+    })
+  );
+
+  search.start();
+});</script><script src="//unpkg.com/pjax@latest/pjax.min.js"></script><script>window.addEventListener('DOMContentLoaded', function () {
+  var pjax = new Pjax({"selectors":["head title","#main",".pjax-reload",".header-inner"],"history":true,"scrollTo":false,"scrollRestoration":false,"cacheBust":false,"debug":false,"currentUrlFullReload":false,"timeout":0});
+  // 加载进度条的计时器
+  var loadingTimer = null;
+
+  // 重置页面 Y 方向上的滚动偏移量
+  document.addEventListener('pjax:send', function () {
+    $('.header-nav-menu').removeClass('show');
+    if (CONFIG.pjax && CONFIG.pjax.avoidBanner) {
+      $('html').velocity('scroll', {
+        duration: 500,
+        offset: $('#header').height(),
+        easing: 'easeInOutCubic'
+      });
+    }
+
+    var loadingBarWidth = 20;
+    var MAX_LOADING_WIDTH = 95;
+
+    $('.loading-bar').addClass('loading');
+    $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    clearInterval(loadingTimer);
+    loadingTimer = setInterval(function () {
+      loadingBarWidth += 3;
+      if (loadingBarWidth > MAX_LOADING_WIDTH) {
+        loadingBarWidth = MAX_LOADING_WIDTH;
+      }
+      $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    }, 500);
+  }, false);
+
+  window.addEventListener('pjax:complete', function () {
+    clearInterval(loadingTimer);
+    $('.loading-bar__progress').css('width', '100%');
+    $('.loading-bar').removeClass('loading');
+    setTimeout(function () {
+      $('.loading-bar__progress').css('width', '0');
+    }, 400);
+    $('link[rel=prefetch], script[data-pjax-rm]').each(function () {
+      $(this).remove();
+    });
+    $('script[data-pjax], #pjax-reload script').each(function () {
+      $(this).parent().append($(this).remove());
+    });
+
+    if (Stun.utils.pjaxReloadBoot) {
+      Stun.utils.pjaxReloadBoot();
+    }
+    if (Stun.utils.pjaxReloadScroll) {
+      Stun.utils.pjaxReloadScroll();
+    }
+    if (Stun.utils.pjaxReloadSidebar) {
+      Stun.utils.pjaxReloadSidebar();
+    }
+    if (true) {
+      if (Stun.utils.pjaxReloadHeader) {
+        Stun.utils.pjaxReloadHeader();
+      }
+      if (Stun.utils.pjaxReloadScrollIcon) {
+        Stun.utils.pjaxReloadScrollIcon();
+      }
+      if (Stun.utils.pjaxReloadLocalSearch) {
+        Stun.utils.pjaxReloadLocalSearch();
+      }
+    }
+  }, false);
+}, false);</script><div id="pjax-reload"><link href="https://unpkg.com/katex@0.10.2/dist/katex.min.css" rel="stylesheet" type="text/css"><link href="https://unpkg.com/katex@0.10.2/dist/contrib/copy-tex.css" rel="stylesheet" type="text/css"><script src="https://unpkg.com/katex@0.10.2/dist/contrib/copy-tex.min.js"></script><script src="//unpkg.com/quicklink@latest/dist/quicklink.umd.js"></script><script>function initQuicklink() {
+  quicklink({
+    timeout: '10000',
+    priority: true,
+    ignores: [uri => uri.includes('#'), uri => uri === 'https://hexo.ab-in.cn/2023/08/26/ByteDance2023-08-26/', /\/api\/?/,uri => uri.includes('.xml'),uri => uri.includes('.zip'),(uri, el) => el.hasAttribute('nofollow'),(uri, el) => el.hasAttribute('noprefetch')]
+  });
+}
+
+if (true || false) {
+  initQuicklink();
+} else {
+  window.addEventListener('DOMContentLoaded', initQuicklink, false);
+}</script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script></div><script data-pjax="">function loadLivere () {
+  var d = document, s = d.createElement('script');
+
+  if (!d.getElementById('lv-container')) {
+    return;
+  }
+  if (typeof LivereTower === 'function') {
+    return;
+  }
+  s.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+  if (true) {
+    s.setAttribute('data-pjax-rm', '');
+  }
+  (d.head || d.body).appendChild(s);
+}
+
+if (true) {
+  loadLivere();
+} else {
+  window.addEventListener('DOMContentLoaded', loadLivere, false);
+}</script><script src="/js/utils.js?v=2.8.0"></script><script src="/js/stun-boot.js?v=2.8.0"></script><script src="/js/scroll.js?v=2.8.0"></script><script src="/js/header.js?v=2.8.0"></script><script src="/js/sidebar.js?v=2.8.0"></script><script type="application/json" src="/search.json"></script></body></html>

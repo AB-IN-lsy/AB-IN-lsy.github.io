@@ -1,0 +1,499 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#54bcff"><link rel="manifest" href="/manifest.json?v=2.8.0"><link rel="icon" href="/assets/favicon-16x16.png?v=2.8.0" type="image/png" sizes="16x16"><link rel="icon" href="/assets/favicon-32x32.png?v=2.8.0" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="/assets/android-chrome-192x192.png?v=2.8.0" sizes="180x180"><link rel="mask-icon" href="/%5Bobject%20Object%5D?v=2.8.0" color="#54bcff"><meta name="msapplication-TileImage" content="/%5Bobject%20Object%5D"><meta name="msapplication-TileColor" content="#000000"><meta name="google-site-verification" content="e4vuRgT_ouTNSxZf23XDFDixeCsDJiaAvmUQaKT_njA"><meta name="msvalidate.01" content="A2EE4D0CCD36C0B0741FA44DBF05FF0D"><meta name="baidu-site-verification" content="code-OOQCT4Wx7W"><meta name="description" content="摘要Title: Go 语言进阶与依赖管理 | 青训营Tag: ByteDance、Go、后端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go 语言进阶与依赖管理 | 青训营">
+<meta property="og:url" content="https://hexo.ab-in.cn/2023/08/24/ByteDance2023-08-24-1/index.html">
+<meta property="og:site_name" content="AB-IN&#39;s Blog">
+<meta property="og:description" content="摘要Title: Go 语言进阶与依赖管理 | 青训营Tag: ByteDance、Go、后端">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a37dcfabf0154c488b4b43d9bce5719a~tplv-k3u1fbpfcp-watermark.image?">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0659c6e77b0b4056b2289c2d4ab29f3c~tplv-k3u1fbpfcp-watermark.image?">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/77e6b2756a9a4845800b46d7bccc0875~tplv-k3u1fbpfcp-watermark.image?">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bcdc3c5f61674961ba2d7d3d377dfa8a~tplv-k3u1fbpfcp-watermark.image?">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dfc283d4abdb4efaa799f2184295f0a7~tplv-k3u1fbpfcp-watermark.image?">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9ef95df858ab4b958854670892abd012~tplv-k3u1fbpfcp-watermark.image?">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/528a7f715be449f2bbf4351cd4c5b519~tplv-k3u1fbpfcp-watermark.image?">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/51105aca69c14d65b8e14f53a77fe0a7~tplv-k3u1fbpfcp-watermark.image?">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c296b596f21144178c4b90f8e5b72827~tplv-k3u1fbpfcp-watermark.image?">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b3b0fddb78e844428eb49c2f84274c5d~tplv-k3u1fbpfcp-watermark.image?">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b5547cf5b9f44b7bade7cc0f640c16e1~tplv-k3u1fbpfcp-watermark.image?">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7fb5fbd974f547c5b69ca07520ef8d26~tplv-k3u1fbpfcp-watermark.image?">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0ec31616ff3948cda617864944d5fc79~tplv-k3u1fbpfcp-watermark.image?">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/be5d7a2f4f1747e4b25c01d1fbf41473~tplv-k3u1fbpfcp-watermark.image?">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0606c3c229f24c60b189f8fdd39764b3~tplv-k3u1fbpfcp-watermark.image?">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3018915c7a1343feb16344fe5fc49740~tplv-k3u1fbpfcp-watermark.image?">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6b9c1cdc58c1408796feb55da2ec6506~tplv-k3u1fbpfcp-watermark.image?">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ec7a0771db56409cb76264dd3f7ec297~tplv-k3u1fbpfcp-watermark.image?">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/116121ede1734e17ae128894a710f9a5~tplv-k3u1fbpfcp-watermark.image?">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/46796035f7a2449d8a4e4a2025e38e6e~tplv-k3u1fbpfcp-watermark.image?">
+<meta property="article:published_time" content="2023-08-24T08:49:02.000Z">
+<meta property="article:modified_time" content="2023-08-24T08:49:50.600Z">
+<meta property="article:author" content="AB-IN">
+<meta property="article:tag" content="ByteDance">
+<meta property="article:tag" content="Go">
+<meta property="article:tag" content="后端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a37dcfabf0154c488b4b43d9bce5719a~tplv-k3u1fbpfcp-watermark.image?"><title>Go 语言进阶与依赖管理 | 青训营 | AB-IN's Blog</title><link ref="canonical" href="https://hexo.ab-in.cn/2023/08/24/ByteDance2023-08-24-1/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="//unpkg.com/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" type="text/css"><link rel="stylesheet" href="//unpkg.com/instantsearch.js@2.1.1/dist/instantsearch.min.css" type="text/css"><link rel="stylesheet" href="//unpkg.com/social-share.js@1.0.16/dist/css/share.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.8.0"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: {"appId":"DU3TAVNH2B","apiKey":"483f4ee8a687ed876e44dc2c27d52939","indexName":"hexo_BLOG","hits":{"per_page":10},"languages":{"inputPlaceholder":"搜索文章","hitsEmpty":"没有找到任何搜索结果：${query}","hitsStats":"找到 ${hits} 条搜索结果，耗时 ${time} 毫秒"}},
+  assistSearch: ["google","bing","baidu"],
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"ocean","wordWrap":true},
+  reward: true,
+  fancybox: true,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: {"avoidBanner":false},
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: {"switchPost":true},
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-newspaper"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-address-card"></i></span><span class="header-nav-menu-item__text">关于</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/author"><span class="header-nav-submenu-item__icon"><i class="fas fa-at"></i></span><span class="header-nav-submenu-item__text">作者</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/friends"><span class="header-nav-submenu-item__icon"><i class="fas fa-users"></i></span><span class="header-nav-submenu-item__text">友链</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/FAQ"><span class="header-nav-submenu-item__icon"><i class="fas fa-question"></i></span><span class="header-nav-submenu-item__text">FAQ</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="far fa-window-maximize"></i></span><span class="header-nav-menu-item__text">其余站点</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://www.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fab fa-safari"></i></span><span class="header-nav-submenu-item__text">主页</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://ssh.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fas fa-terminal"></i></span><span class="header-nav-submenu-item__text">终端</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://kod.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fas fa-cloud"></i></span><span class="header-nav-submenu-item__text">云盘</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://oneword.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fab fa-dailymotion"></i></span><span class="header-nav-submenu-item__text">一言</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://ab-in.blog.csdn.net"><span class="header-nav-submenu-item__icon"><i class="fas fa-copyright"></i></span><span class="header-nav-submenu-item__text">CSDN</span></a></div></div></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">Go 语言进阶与依赖管理 | 青训营</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2023-08-24</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2023-08-24</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.8k</span></span><span class="post-meta-item post-meta-item--readtime"><span class="post-meta-item__icon"><i class="far fa-clock"></i></span><span class="post-meta-item__info">阅读时长</span><span class="post-meta-item__value">12分</span></span><span class="post-meta-item post-meta-item--visitors"><span class="post-meta-item__icon"><i class="fas fa-eye"></i></span><span class="post-meta-item__info">阅读次数</span><span class="post-meta-item__value" id="busuanzi_value_page_pv"></span></span></div></header><div class="post-body">
+    <div class="note-plugin info">
+      <span class="note-plugin__icon note-plugin__icon--info">
+              <i class="fas fa-info-circle"></i>
+            </span>
+      <p><strong>摘要</strong><br />Title: Go 语言进阶与依赖管理 | 青训营<br />Tag: ByteDance、Go、后端</p>
+    </div>
+  
+<span id="more"></span>
+<p><font size=3 face=楷体>Powered by:<strong>NEFU AB-IN</strong></font></p>
+<p><ul class="markdownIt-TOC">
+<li><a href="#font-size5-face%E7%B2%97%E4%BD%93%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6font"><font size=5 face=粗体>语言进阶</font></a></li>
+<li><a href="#font-size5-face%E7%B2%97%E4%BD%93%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86font"><font size=5 face=粗体>依赖管理</font></a></li>
+<li><a href="#font-size5-face%E7%B2%97%E4%BD%93%E6%B5%8B%E8%AF%95font"><font size=5 face=粗体>测试</font></a></li>
+</ul>
+</p>
+
+        <h1 id="font-color6495ed-size6go-语言进阶与依赖管理-青训营-font"   >
+          <a href="#font-color6495ed-size6go-语言进阶与依赖管理-青训营-font" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#font-color6495ed-size6go-语言进阶与依赖管理-青训营-font"></a> <font color=#6495ED size=6>Go 语言进阶与依赖管理 | 青训营 </font></h1>
+      
+<ul>
+<li><strong>GO语言工程实践课后作业：实现思路、代码以及路径记录</strong></li>
+</ul>
+
+        <h2 id="font-size5-face粗体语言进阶font"   >
+          <a href="#font-size5-face粗体语言进阶font" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#font-size5-face粗体语言进阶font"></a> <font size=5 face=粗体>语言进阶</font></h2>
+      
+<p>Go可以充分发挥多核优势，高效运行</p>
+<p><strong>Goroutine</strong>是Go语言中的<strong>协程</strong>，一种<strong>轻量级的线程</strong>，由Go语言的运行时管理，可以实现高并发的程序设计，由于轻量级的特性，goroutine可以创建成千上万个，而且消耗的资源也相对较少。</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a37dcfabf0154c488b4b43d9bce5719a~tplv-k3u1fbpfcp-watermark.image?"  alt="image.png" />
+      </p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0659c6e77b0b4056b2289c2d4ab29f3c~tplv-k3u1fbpfcp-watermark.image?"  alt="image.png" />
+      </p>
+<p>在函数前加入go关键字，为一个函数创建协程运行</p>
+<figure class="highlight go"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">   <span class="string">&quot;fmt&quot;</span></span><br><span class="line">   <span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">hello</span><span class="params">(i <span class="type">int</span>)</span></span> &#123;</span><br><span class="line">   fmt.Println(<span class="string">&quot;hello goroutine : &quot;</span> + fmt.Sprint(i))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">HelloGoRoutine</span><span class="params">()</span></span> &#123;</span><br><span class="line">   <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">5</span>; i++ &#123;</span><br><span class="line">      <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(j <span class="type">int</span>)</span></span> &#123;</span><br><span class="line">         hello(j)</span><br><span class="line">      &#125;(i) <span class="comment">// 向函数传入i参数，作为j的值</span></span><br><span class="line">   &#125;</span><br><span class="line">   time.Sleep(time.Second)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">   HelloGoRoutine()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * hello goroutine : 4</span></span><br><span class="line"><span class="comment"> * hello goroutine : 2</span></span><br><span class="line"><span class="comment"> * hello goroutine : 1</span></span><br><span class="line"><span class="comment"> * hello goroutine : 3</span></span><br><span class="line"><span class="comment"> * hello goroutine : 0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+<p>运行结果是乱序的表示是<strong>并行运行的</strong></p>
+<hr />
+<p>CSP(Communicating Sequential Processes)<strong>通信顺序进程</strong>,是Go语言中重要的并发模型。</p>
+<p>主要特征有</p>
+<ol>
+<li>顺序进程：每个进程内部按顺序执行。</li>
+<li>通信进程：进程间通过通信(Message Passing)来协作。</li>
+<li>数据流：程序通过在进程间传递数据来工作。</li>
+</ol>
+<p>Go语言的CSP实现主要通过goroutine和channel</p>
+<ul>
+<li><strong>goroutine</strong>作为顺序执行的进程</li>
+<li><strong>channel</strong>用于goroutine间的通信</li>
+</ul>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/77e6b2756a9a4845800b46d7bccc0875~tplv-k3u1fbpfcp-watermark.image?"  alt="image.png" />
+      </p>
+<p>无缓冲通道（同步通道）</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bcdc3c5f61674961ba2d7d3d377dfa8a~tplv-k3u1fbpfcp-watermark.image?"  alt="image.png" />
+      </p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dfc283d4abdb4efaa799f2184295f0a7~tplv-k3u1fbpfcp-watermark.image?"  alt="image.png" />
+      </p>
+<p>在Go语言中，通过通信来共享内存是一种并发编程的思想，即通过goroutine之间的通信来进行数据共享，而不是直接共享内存空间。</p>
+<p>具体来说，当多个goroutine需要共享数据时，传统的做法是使用共享内存的方式，即使用互斥锁等机制来控制对共享变量的访问。但在Go语言中，引入了一种更优雅的方式，即使用通道（channel）来实现数据共享。</p>
+<figure class="highlight go"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">CalSquare</span><span class="params">()</span></span> &#123;</span><br><span class="line">   src := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="type">int</span>)     <span class="comment">//   生产无缓冲</span></span><br><span class="line">   dest := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="type">int</span>, <span class="number">3</span>) <span class="comment">//   消费缓冲3个元素</span></span><br><span class="line">   </span><br><span class="line">   <span class="comment">// 子协程发送0-9数字</span></span><br><span class="line">   <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">      <span class="keyword">defer</span> <span class="built_in">close</span>(src)</span><br><span class="line">      <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line">         src &lt;- i</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;()</span><br><span class="line"></span><br><span class="line">   <span class="comment">// 子协程计算输入数字的平方</span></span><br><span class="line">   <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">      <span class="keyword">defer</span> <span class="built_in">close</span>(dest)</span><br><span class="line">      <span class="keyword">for</span> i := <span class="keyword">range</span> src &#123;</span><br><span class="line">         dest &lt;- i * i</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;()</span><br><span class="line"></span><br><span class="line">   <span class="comment">// 主协程输出最后的平方数</span></span><br><span class="line">   <span class="keyword">for</span> i := <span class="keyword">range</span> dest &#123;</span><br><span class="line">      <span class="comment">// 复杂操作</span></span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">      fmt.Println(i)</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">   CalSquare()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+<hr />
+<p><strong>sync.WaitGroup</strong>是Go语言中的一个常用同步工具，可以用于等待一组goroutine结束。<br />
+内部维护了一个计数器，暴露add done wait三个方法</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9ef95df858ab4b958854670892abd012~tplv-k3u1fbpfcp-watermark.image?"  alt="image.png" />
+      </p>
+<p>之前例子的优化</p>
+<figure class="highlight go"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * @Author: NEFU AB-IN</span></span><br><span class="line"><span class="comment"> * @Date: 2023-08-24 15:15:22</span></span><br><span class="line"><span class="comment"> * @FilePath: \GoTest\11\11.go</span></span><br><span class="line"><span class="comment"> * @LastEditTime: 2023-08-24 15:17:01</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;sync&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">hello</span><span class="params">(i <span class="type">int</span>)</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;hello goroutine : &quot;</span> + fmt.Sprint(i))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">HelloGoRoutine</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line">	wg.Add(<span class="number">5</span>)</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">5</span>; i++ &#123;</span><br><span class="line">		<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(j <span class="type">int</span>)</span></span> &#123;</span><br><span class="line">			<span class="keyword">defer</span> wg.Done()</span><br><span class="line">			hello(j)</span><br><span class="line">		&#125;(i)</span><br><span class="line">	&#125;</span><br><span class="line">	wg.Wait()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	HelloGoRoutine()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * hello goroutine : 4</span></span><br><span class="line"><span class="comment"> * hello goroutine : 2</span></span><br><span class="line"><span class="comment"> * hello goroutine : 1</span></span><br><span class="line"><span class="comment"> * hello goroutine : 3</span></span><br><span class="line"><span class="comment"> * hello goroutine : 0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+<hr />
+
+        <h2 id="font-size5-face粗体依赖管理font"   >
+          <a href="#font-size5-face粗体依赖管理font" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#font-size5-face粗体依赖管理font"></a> <font size=5 face=粗体>依赖管理</font></h2>
+      
+<p>原生SDK（Software Development Kit）是指为特定操作系统或平台开发应用程序的软件工具包。它包含了一系列的开发工具和文档，用于帮助开发人员创建、测试和部署应用程序。原生SDK通常由操作系统或平台的开发者提供，可以让开发者利用操作系统或平台的特定功能和特性，开发高性能、可靠的应用程序。</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/528a7f715be449f2bbf4351cd4c5b519~tplv-k3u1fbpfcp-watermark.image?"  alt="image.png" />
+      </p>
+<p>go path</p>
+<p>弊端：无法实现package多版本控制<br />
+
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/51105aca69c14d65b8e14f53a77fe0a7~tplv-k3u1fbpfcp-watermark.image?"  alt="image.png" />
+      </p>
+<p>go vendor</p>
+<p>弊端：依赖关系隐藏在vendor中，理解和维护都更困难。依赖关系隐藏在vendor中，理解和维护都更困难。</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c296b596f21144178c4b90f8e5b72827~tplv-k3u1fbpfcp-watermark.image?"  alt="image.png" />
+      </p>
+<p>go moudle<br />
+(类似于Java里的maven)</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b3b0fddb78e844428eb49c2f84274c5d~tplv-k3u1fbpfcp-watermark.image?"  alt="image.png" />
+      </p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b5547cf5b9f44b7bade7cc0f640c16e1~tplv-k3u1fbpfcp-watermark.image?"  alt="image.png" />
+      </p>
+<p><code>$&#123;major&#125;.$&#123;minor&#125;.$&#123;patch&#125;</code></p>
+<p>major为大版本，patch为bug修复版本，如v1.3.0</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7fb5fbd974f547c5b69ca07520ef8d26~tplv-k3u1fbpfcp-watermark.image?"  alt="image.png" />
+      </p>
+<hr />
+<p><strong>依赖图</strong></p>
+<p>保证v1.3和v1.4是兼容的<br />
+
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0ec31616ff3948cda617864944d5fc79~tplv-k3u1fbpfcp-watermark.image?"  alt="image.png" />
+      </p>
+<hr />
+<p><strong>依赖分发 - go proxy</strong></p>
+<p>其实是个服务站点(中心仓库管理依赖库)，缓存仓库和版本，直接从proxy拉取依赖</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/be5d7a2f4f1747e4b25c01d1fbf41473~tplv-k3u1fbpfcp-watermark.image?"  alt="image.png" />
+      </p>
+<p>GOPROXY 是用逗号分隔的URL列表</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0606c3c229f24c60b189f8fdd39764b3~tplv-k3u1fbpfcp-watermark.image?"  alt="image.png" />
+      </p>
+<p>go get</p>
+<ul>
+<li>下载包的源码</li>
+<li>解压到GOPATH下</li>
+<li>解析并下载依赖</li>
+<li>缓存各版本的依赖</li>
+<li>会更新go.mod文件</li>
+</ul>
+<p>go mod</p>
+<ul>
+<li>init</li>
+<li>download</li>
+<li>tidy</li>
+</ul>
+<hr />
+
+        <h2 id="font-size5-face粗体测试font"   >
+          <a href="#font-size5-face粗体测试font" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#font-size5-face粗体测试font"></a> <font size=5 face=粗体>测试</font></h2>
+      
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3018915c7a1343feb16344fe5fc49740~tplv-k3u1fbpfcp-watermark.image?"  alt="image.png" />
+      </p>
+<p>单元测试</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6b9c1cdc58c1408796feb55da2ec6506~tplv-k3u1fbpfcp-watermark.image?"  alt="image.png" />
+      </p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ec7a0771db56409cb76264dd3f7ec297~tplv-k3u1fbpfcp-watermark.image?"  alt="image.png" />
+      </p>
+<p>比如</p>
+<figure class="highlight go"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Add</span><span class="params">(a <span class="type">int</span>, b <span class="type">int</span>)</span></span> <span class="type">int</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a+b</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestAdd</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">  output:=Add(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">  expectOutput:=<span class="number">3</span></span><br><span class="line">  <span class="keyword">if</span> output != expectOutput&#123;</span><br><span class="line">    t.Error(<span class="string">&quot;Add failed&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+<p>运行go test xxx.go 即可</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/116121ede1734e17ae128894a710f9a5~tplv-k3u1fbpfcp-watermark.image?"  alt="image.png" />
+      </p>
+<p><strong>assert</strong></p>
+<p>Go语言内置的testing包提供了assert包来进行单元测试的断言，assert能大大简化测试代码，不需要过多的if条件判断，只要最终结果不符合断言,就会自动标记为测试失败。</p>
+<figure class="highlight go"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> Test</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">   <span class="string">&quot;github.com/stretchr/testify/assert&quot;</span></span><br><span class="line">   <span class="string">&quot;testing&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Add</span><span class="params">(a <span class="type">int</span>, b <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">   <span class="keyword">return</span> a + b</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestAdd</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">   output := Add(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">   expectOutput := <span class="number">3</span></span><br><span class="line">   assert.Equal(t, expectOutput, output)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+<p><strong>覆盖率</strong></p>
+<ul>
+<li>当一个程序有多个分支时，就会产生多种测试案例，如果所有的测试案例都符合结果，那覆盖率就是100%。</li>
+<li>运行 <strong>go test xxx.go --cover</strong>，可以查看测试的覆盖率。</li>
+<li>一般覆盖率在50%~60%，较高覆盖率在80%+</li>
+<li>测试分支相互独立，全面覆盖</li>
+</ul>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/46796035f7a2449d8a4e4a2025e38e6e~tplv-k3u1fbpfcp-watermark.image?"  alt="image.png" />
+      </p>
+<p><strong>Mock测试</strong></p>
+<p>如果有一些外部依赖，可以通过mock实现<br />
+mock函数是用来模拟或替代指定函数的行为，以便在测试中控制函数的返回值或行为。</p>
+<p>打桩是指在测试过程中为函数设置预期的返回值或行为，以确保测试代码的可重复性和可控性。通常使用mock函数来进行打桩操作，通过设置mock函数的返回值或行为，模拟特定情况下函数的行为，以便进行测试或验证。</p>
+<p><strong>基准测试</strong></p>
+<p>分析系统性能时，在本地会比较方便</p>
+<p>基准测试是一种评估计算机系统、硬件或软件性能的方法。它通过运行一系列标准化的测试程序，以衡量系统在特定负载条件下的表现，从而提供了系统性能的参考标准或基准值。基准测试可以用于比较不同硬件或软件配置之间的性能差异，优化系统性能，或者评估系统变化对性能的影响。<br />
+基准测试通常涉及多个方面的测试，包括计算能力、内存管理、磁盘或存储访问、网络吞吐量等，并通过测量和记录相关性能指标，如处理速度、响应时间、吞吐量等来评估系统的性能。基准测试可以在实验室环境中进行，也可在真实场景中进行。<br />
+基准测试的结果可以用于为购买决策提供参考，评估系统在实际使用中的适应性，或者用于系统优化和调整，以达到更好的性能和效率。基准测试在计算机硬件和软件开发、系统管理和性能优化等领域都有广泛的应用。</p>
+<hr />
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://hexo.ab-in.cn">AB-IN</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://hexo.ab-in.cn/2023/08/24/ByteDance2023-08-24-1/">https://hexo.ab-in.cn/2023/08/24/ByteDance2023-08-24-1/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/ByteDance/">ByteDance</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/Go/">Go</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/%E5%90%8E%E7%AB%AF/">后端</a></span></div><div class="post-share"><div class="social-share" data-sites="qzone, qq, weibo, wechat, douban, linkedin, facebook, twitter, google">Share to: </div></div><div class="post-reward reward"><div class="reward-button">请我喝杯咖啡~</div><div class="reward-qrcode"><span class="reward-qrcode-alipay"><img class="reward-qrcode-alipay__img" src="https://oss.ab-in.cn/Pay/alipay.png"><div class="reward-qrcode-alipay__text">支付宝打赏</div></span><span class="reward-qrcode-wechat"><img class="reward-qrcode-wechat__img" src="https://oss.ab-in.cn/Pay/weixin.png"><div class="reward-qrcode-wechat__text">微信打赏</div></span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2023/08/26/ByteDance2023-08-26/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">网站常见安全漏洞 | 青训营</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2023/08/24/ByteDance2023-08-24/"><span class="paginator-prev__text">Go 语言的实战案例 SOCKS5 代理 | 青训营</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div><div class="comments" id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC81NTEzNS8zMTYwMw"></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#font-color6495ed-size6go-%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6%E4%B8%8E%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86-%E9%9D%92%E8%AE%AD%E8%90%A5-font"><span class="toc-number">1.</span> <span class="toc-text">
+           Go 语言进阶与依赖管理 | 青训营 </span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#font-size5-face%E7%B2%97%E4%BD%93%E8%AF%AD%E8%A8%80%E8%BF%9B%E9%98%B6font"><span class="toc-number">1.1.</span> <span class="toc-text">
+           语言进阶</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#font-size5-face%E7%B2%97%E4%BD%93%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86font"><span class="toc-number">1.2.</span> <span class="toc-text">
+           依赖管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#font-size5-face%E7%B2%97%E4%BD%93%E6%B5%8B%E8%AF%95font"><span class="toc-number">1.3.</span> <span class="toc-text">
+           测试</span></a></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://oss.ab-in.cn/images/AB-IN.jpg" alt="avatar"></div><p class="sidebar-ov-author__text">NEFU AB-IN</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/AB-IN-lsy" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/AB_IN_liusy" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="http://wpa.qq.com/msgrd?v=3&amp;uin=1719827581&amp;site=qq&amp;menu=yes" target="_blank" rel="noopener" data-popover="QQ" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-qq"></i></span></a><a class="sidebar-ov-social-item" href="mailto:liusy200708@gmail.com" target="_blank" rel="noopener" data-popover="Gmail" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a></div><div class="sidebar-ov-feed"></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">您已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2023</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>AB-IN All Rights Reserved</span><span class="footer__devider">|</span><span><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">鲁ICP备2021035431号</a></span></div><div class="busuanzi"><span class="busuanzi-siteuv"><span class="busuanzi-siteuv__icon"><i class="fas fa-user"></i></span><span class="busuanzi-siteuv__info">访问人数</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_uv"></span></span><span class="busuanzi-sitepv"><span class="busuanzi-siteuv__icon"><i class="fas fa-eye"></i></span><span class="busuanzi-siteuv__info">浏览总量</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_pv"></span></span></div><div><script type="text/javascript" src="https://oneword.ab-in.cn/oneword/oneword.php?format=js&charset=utf-8"></script> <div id="oneword"><script>oneword()</script></div></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"></div><div class="search-btns">使用搜索：<span class="search-btns-item search-btns-item--google"><i class="fab fa-google"></i>谷歌</span><span class="search-btns-item search-btns-item--bing"><i></i>必应</span><span class="search-btns-item search-btns-item--baidu"><i></i>百度</span></div><div class="search-results"><div id="algolia-hits"></div></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><script src="//unpkg.com/jquery@v3.4.1/dist/jquery.min.js"></script><script src="//unpkg.com/velocity-animate@1.5.2/velocity.min.js"></script><script src="//unpkg.com/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script><script src="//unpkg.com/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script src="//unpkg.com/social-share.js@1.0.16/dist/js/social-share.min.js"></script><script src="//unpkg.com/instantsearch.js@2.1.1/dist/instantsearch.min.js" defer></script><script>window.addEventListener('DOMContentLoaded', function () {
+  $('.header-nav-search').on('click', function (e) {
+    e.stopPropagation();
+
+    $('body').css('overflow', 'hidden');
+    $('.search-popup')
+      .velocity('stop')
+      .velocity('transition.expandIn', {
+        duration: 300,
+        complete: function () {
+          $('.search-popup input').focus();
+        }
+      });
+    $('.search-mask')
+      .velocity('stop')
+      .velocity('transition.fadeIn', {
+        duration: 300
+      });
+  });
+
+  function closeSearch () {
+    $('body').css({ overflow: 'auto' });
+    $('.search-popup').css({ display: 'none' });
+    $('.search-mask').css({ display: 'none' });
+  }
+
+  $('.search-mask, .search-close').on('click', function () {
+    closeSearch();
+  });
+
+  $(document).on('keydown', function (e) {
+    // Escape <=> 27
+    if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+      closeSearch();
+    }
+  });
+
+  var algolia = CONFIG.algolia;
+  if (!algolia && !(algolia.appId && algolia.apiKey && algolia.indexName)) {
+    return console.error('Algolia setting is invalid.');
+  }
+
+  var search = instantsearch({
+    appId: algolia.appId,
+    apiKey: algolia.apiKey,
+    indexName: algolia.indexName,
+    searchParameters: {
+      hitsPerPage: algolia.hits.per_page || 10
+    },
+    searchFunction: function (helper) {
+      var searchInput = $('.search-input').find('input');
+
+      if (searchInput.val()) {
+        helper.search();
+      }
+    }
+  });
+
+  search.addWidget(
+    instantsearch.widgets.searchBox({
+      container: '.search-input',
+      reset: false,
+      magnifier: false,
+      placeholder: algolia.languages.inputPlaceholder
+    })
+  );
+
+  // The hits of search results.
+  search.addWidget(
+    instantsearch.widgets.hits({
+      container: '#algolia-hits',
+      templates: {
+        item: function (data) {
+          var link = data.permalink ? data.permalink : CONFIG.root + data.path;
+          return (
+            '<a href="' + link + '" class="algolia-hit-item-link">' +
+              data._highlightResult.title.value +
+            '</a>'
+          );
+        },
+        empty: function (data) {
+          return (
+            '<div id="algolia-hits-empty">' +
+              algolia.languages.hitsEmpty.replace(/\$\{query}/, data.query) +
+            '</div>'
+          );
+        }
+      },
+      cssClasses: {
+        item: 'algolia-hit-item'
+      }
+    })
+  );
+
+  // The stats of search results.
+  if ($('#algolia-stats')[0]) {
+    search.addWidget(
+      instantsearch.widgets.stats({
+        container: '#algolia-stats',
+        templates: {
+          body: function (data) {
+            var stats = algolia.languages.hitsStats
+              .replace(/\$\{hits}/, data.nbHits)
+              .replace(/\$\{time}/, data.processingTimeMS);
+            return (
+              stats +
+              '<span class="algolia-logo pull-right">' +
+                '<img src="' + CONFIG.root +
+                `${CONFIG.sourcePath.images}/algolia.svg" alt="Algolia" />` +
+              '</span>'
+            );
+          }
+        }
+      })
+    );
+  }
+
+  // The pagination of the results.
+  search.addWidget(
+    instantsearch.widgets.pagination({
+      container: '#algolia-pagination',
+      scrollTo: false,
+      showFirstLast: false,
+      labels: {
+        first: '<i class="fa fa-angle-double-left"></i>',
+        last: '<i class="fa fa-angle-double-right"></i>',
+        previous: '<i class="fa fa-angle-left"></i>',
+        next: '<i class="fa fa-angle-right"></i>'
+      },
+      cssClasses: {
+        root: 'pagination',
+        item: 'pagination-item',
+        link: 'page-number',
+        active: 'current',
+        disabled: 'disabled-item'
+      }
+    })
+  );
+
+  search.start();
+});</script><script src="//unpkg.com/pjax@latest/pjax.min.js"></script><script>window.addEventListener('DOMContentLoaded', function () {
+  var pjax = new Pjax({"selectors":["head title","#main",".pjax-reload",".header-inner"],"history":true,"scrollTo":false,"scrollRestoration":false,"cacheBust":false,"debug":false,"currentUrlFullReload":false,"timeout":0});
+  // 加载进度条的计时器
+  var loadingTimer = null;
+
+  // 重置页面 Y 方向上的滚动偏移量
+  document.addEventListener('pjax:send', function () {
+    $('.header-nav-menu').removeClass('show');
+    if (CONFIG.pjax && CONFIG.pjax.avoidBanner) {
+      $('html').velocity('scroll', {
+        duration: 500,
+        offset: $('#header').height(),
+        easing: 'easeInOutCubic'
+      });
+    }
+
+    var loadingBarWidth = 20;
+    var MAX_LOADING_WIDTH = 95;
+
+    $('.loading-bar').addClass('loading');
+    $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    clearInterval(loadingTimer);
+    loadingTimer = setInterval(function () {
+      loadingBarWidth += 3;
+      if (loadingBarWidth > MAX_LOADING_WIDTH) {
+        loadingBarWidth = MAX_LOADING_WIDTH;
+      }
+      $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    }, 500);
+  }, false);
+
+  window.addEventListener('pjax:complete', function () {
+    clearInterval(loadingTimer);
+    $('.loading-bar__progress').css('width', '100%');
+    $('.loading-bar').removeClass('loading');
+    setTimeout(function () {
+      $('.loading-bar__progress').css('width', '0');
+    }, 400);
+    $('link[rel=prefetch], script[data-pjax-rm]').each(function () {
+      $(this).remove();
+    });
+    $('script[data-pjax], #pjax-reload script').each(function () {
+      $(this).parent().append($(this).remove());
+    });
+
+    if (Stun.utils.pjaxReloadBoot) {
+      Stun.utils.pjaxReloadBoot();
+    }
+    if (Stun.utils.pjaxReloadScroll) {
+      Stun.utils.pjaxReloadScroll();
+    }
+    if (Stun.utils.pjaxReloadSidebar) {
+      Stun.utils.pjaxReloadSidebar();
+    }
+    if (true) {
+      if (Stun.utils.pjaxReloadHeader) {
+        Stun.utils.pjaxReloadHeader();
+      }
+      if (Stun.utils.pjaxReloadScrollIcon) {
+        Stun.utils.pjaxReloadScrollIcon();
+      }
+      if (Stun.utils.pjaxReloadLocalSearch) {
+        Stun.utils.pjaxReloadLocalSearch();
+      }
+    }
+  }, false);
+}, false);</script><div id="pjax-reload"><link href="https://unpkg.com/katex@0.10.2/dist/katex.min.css" rel="stylesheet" type="text/css"><link href="https://unpkg.com/katex@0.10.2/dist/contrib/copy-tex.css" rel="stylesheet" type="text/css"><script src="https://unpkg.com/katex@0.10.2/dist/contrib/copy-tex.min.js"></script><script src="//unpkg.com/quicklink@latest/dist/quicklink.umd.js"></script><script>function initQuicklink() {
+  quicklink({
+    timeout: '10000',
+    priority: true,
+    ignores: [uri => uri.includes('#'), uri => uri === 'https://hexo.ab-in.cn/2023/08/24/ByteDance2023-08-24-1/', /\/api\/?/,uri => uri.includes('.xml'),uri => uri.includes('.zip'),(uri, el) => el.hasAttribute('nofollow'),(uri, el) => el.hasAttribute('noprefetch')]
+  });
+}
+
+if (true || false) {
+  initQuicklink();
+} else {
+  window.addEventListener('DOMContentLoaded', initQuicklink, false);
+}</script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script></div><script data-pjax="">function loadLivere () {
+  var d = document, s = d.createElement('script');
+
+  if (!d.getElementById('lv-container')) {
+    return;
+  }
+  if (typeof LivereTower === 'function') {
+    return;
+  }
+  s.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+  if (true) {
+    s.setAttribute('data-pjax-rm', '');
+  }
+  (d.head || d.body).appendChild(s);
+}
+
+if (true) {
+  loadLivere();
+} else {
+  window.addEventListener('DOMContentLoaded', loadLivere, false);
+}</script><script src="/js/utils.js?v=2.8.0"></script><script src="/js/stun-boot.js?v=2.8.0"></script><script src="/js/scroll.js?v=2.8.0"></script><script src="/js/header.js?v=2.8.0"></script><script src="/js/sidebar.js?v=2.8.0"></script><script type="application/json" src="/search.json"></script></body></html>
