@@ -1,0 +1,808 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#54bcff"><link rel="manifest" href="/manifest.json?v=2.8.0"><link rel="icon" href="/assets/favicon-16x16.png?v=2.8.0" type="image/png" sizes="16x16"><link rel="icon" href="/assets/favicon-32x32.png?v=2.8.0" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="/assets/android-chrome-192x192.png?v=2.8.0" sizes="180x180"><link rel="mask-icon" href="/%5Bobject%20Object%5D?v=2.8.0" color="#54bcff"><meta name="msapplication-TileImage" content="/%5Bobject%20Object%5D"><meta name="msapplication-TileColor" content="#000000"><meta name="google-site-verification" content="e4vuRgT_ouTNSxZf23XDFDixeCsDJiaAvmUQaKT_njA"><meta name="msvalidate.01" content="A2EE4D0CCD36C0B0741FA44DBF05FF0D"><meta name="baidu-site-verification" content="code-OOQCT4Wx7W"><meta name="description" content="摘要Title: HTTP 框架修炼之道 | 青训营Tag: ByteDance、Go、后端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP 框架修炼之道 | 青训营">
+<meta property="og:url" content="https://hexo.ab-in.cn/2023/08/27/ByteDance2023-08-27/index.html">
+<meta property="og:site_name" content="AB-IN&#39;s Blog">
+<meta property="og:description" content="摘要Title: HTTP 框架修炼之道 | 青训营Tag: ByteDance、Go、后端">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9d7d0d9132f14b1e86d6a8ba1a1e8123~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=945&amp;h=1304&amp;e=png&amp;b=faf2f1">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4c64371652aa431c9b03e25cfcb1a8e9~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2335&amp;h=1072&amp;e=png&amp;b=0365e6">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/eb6c9ab230f9495982a4ccc3560c8ae8~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2124&amp;h=685&amp;e=png&amp;b=0566e5">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/839c1b3fd5204fafa7fbf27917f1baac~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1500&amp;h=572&amp;e=png&amp;b=f5f3f3">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/14af8e252ed34ff58f0258a3afe6324f~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2475&amp;h=916&amp;e=png&amp;b=0265e7">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/44d1e2bb47774e1582d4df0b43cd69c3~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2002&amp;h=1300&amp;e=png&amp;b=0365e6">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6da0854f57a14a6197a043b15d815f26~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2415&amp;h=1314&amp;e=png&amp;b=f9faee">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6e965ede76564b369e57c26e4cbe4e85~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2356&amp;h=1164&amp;e=png&amp;b=0265e6">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3e866f3907da4440990b76a64058a99c~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2460&amp;h=1295&amp;e=png&amp;b=faf3ef">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/45e8dc359d304b5b905284a07964a1f5~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2023&amp;h=1141&amp;e=png&amp;b=0265e7">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/980dd94291e345f7ba27861bf79913a5~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2168&amp;h=1150&amp;e=png&amp;b=0265e6">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/97eb9b50a69643e089bec9e88e5f8ad6~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2040&amp;h=1308&amp;e=png&amp;b=f5f3f3">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6ddbd5a2003d447a9e441c3ee3b26b92~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2023&amp;h=1276&amp;e=png&amp;b=f5f3f3">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5506df6f4d3743ec8d7888a774067997~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2050&amp;h=1238&amp;e=png&amp;b=0365e6">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/43731a4e531b44a28f12a1607e49eed2~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2183&amp;h=921&amp;e=png&amp;b=f5f4f4">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/18df3f50209541e1bceefc4f2b7e03e2~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2304&amp;h=945&amp;e=png&amp;b=0465e5">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/674a91efd3314e1dab4b09c57195740f~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1842&amp;h=1002&amp;e=png&amp;b=0265e7">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/31f1e904999d4fdab2ffe479999b3198~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2293&amp;h=1042&amp;e=png&amp;b=0365e6">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4434f76910a645b1a030b1d1fc0a3590~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2372&amp;h=1310&amp;e=png&amp;b=fdfdfd">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/abe1108f8bda44f6888a83957dcce12e~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2140&amp;h=880&amp;e=png&amp;b=0265e6">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a8fc7a8e75a14b2f956a1519932dbe30~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1898&amp;h=1010&amp;e=png&amp;b=0365e6">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a5f3a1fa3b5645e7a53bc61a3a50c396~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1984&amp;h=1065&amp;e=png&amp;b=0265e7">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6827a349e81d4ede8fbf7d3869024a1e~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2188&amp;h=1000&amp;e=png&amp;b=0265e6">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/82f9594d0ced4962bf0e19462e81c271~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2445&amp;h=1117&amp;e=png&amp;b=f5f4f4">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/35c08363034b435a888a9891f17f1391~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2149&amp;h=597&amp;e=png&amp;b=f6f5f5">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/afaab735ddb24930b67b7785d09a34c4~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2408&amp;h=1029&amp;e=png&amp;b=f4f2f2">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/43ca73f3f2be4caa8178f8b3edc16023~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1464&amp;h=361&amp;e=png&amp;b=0265e7">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/31fa4d87228544a691b0ad486c034a8e~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2376&amp;h=857&amp;e=png&amp;b=0265e6">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b818323f8eb042d59e1df1553a1087e1~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2299&amp;h=1069&amp;e=png&amp;b=f5f4f4">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ab2fda05d61747578286e485741e0d45~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2484&amp;h=989&amp;e=png&amp;b=fbf0e2">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/16d9d9ff11b74e458f48201811f3a7be~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2077&amp;h=1327&amp;e=png&amp;b=0365e6">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ae97a0297b02407592549ba800cc6e8c~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2458&amp;h=1006&amp;e=png&amp;b=0265e7">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3f3632bb90b145dab34723db9fe3518c~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2384&amp;h=1061&amp;e=png&amp;b=ffffff">
+<meta property="article:published_time" content="2023-08-27T14:56:26.000Z">
+<meta property="article:modified_time" content="2023-08-27T14:57:14.787Z">
+<meta property="article:author" content="AB-IN">
+<meta property="article:tag" content="ByteDance">
+<meta property="article:tag" content="Go">
+<meta property="article:tag" content="后端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9d7d0d9132f14b1e86d6a8ba1a1e8123~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=945&amp;h=1304&amp;e=png&amp;b=faf2f1"><title>HTTP 框架修炼之道 | 青训营 | AB-IN's Blog</title><link ref="canonical" href="https://hexo.ab-in.cn/2023/08/27/ByteDance2023-08-27/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="//unpkg.com/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" type="text/css"><link rel="stylesheet" href="//unpkg.com/instantsearch.js@2.1.1/dist/instantsearch.min.css" type="text/css"><link rel="stylesheet" href="//unpkg.com/social-share.js@1.0.16/dist/css/share.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.8.0"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: {"appId":"DU3TAVNH2B","apiKey":"483f4ee8a687ed876e44dc2c27d52939","indexName":"hexo_BLOG","hits":{"per_page":10},"languages":{"inputPlaceholder":"搜索文章","hitsEmpty":"没有找到任何搜索结果：${query}","hitsStats":"找到 ${hits} 条搜索结果，耗时 ${time} 毫秒"}},
+  assistSearch: ["google","bing","baidu"],
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"ocean","wordWrap":true},
+  reward: true,
+  fancybox: true,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: {"avoidBanner":false},
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: {"switchPost":true},
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-newspaper"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-address-card"></i></span><span class="header-nav-menu-item__text">关于</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/author"><span class="header-nav-submenu-item__icon"><i class="fas fa-at"></i></span><span class="header-nav-submenu-item__text">作者</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/friends"><span class="header-nav-submenu-item__icon"><i class="fas fa-users"></i></span><span class="header-nav-submenu-item__text">友链</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/FAQ"><span class="header-nav-submenu-item__icon"><i class="fas fa-question"></i></span><span class="header-nav-submenu-item__text">FAQ</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="far fa-window-maximize"></i></span><span class="header-nav-menu-item__text">其余站点</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://www.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fab fa-safari"></i></span><span class="header-nav-submenu-item__text">主页</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://ssh.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fas fa-terminal"></i></span><span class="header-nav-submenu-item__text">终端</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://kod.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fas fa-cloud"></i></span><span class="header-nav-submenu-item__text">云盘</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://oneword.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fab fa-dailymotion"></i></span><span class="header-nav-submenu-item__text">一言</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://ab-in.blog.csdn.net"><span class="header-nav-submenu-item__icon"><i class="fas fa-copyright"></i></span><span class="header-nav-submenu-item__text">CSDN</span></a></div></div></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">HTTP 框架修炼之道 | 青训营</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2023-08-27</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2023-08-27</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">4.8k</span></span><span class="post-meta-item post-meta-item--readtime"><span class="post-meta-item__icon"><i class="far fa-clock"></i></span><span class="post-meta-item__info">阅读时长</span><span class="post-meta-item__value">28分</span></span><span class="post-meta-item post-meta-item--visitors"><span class="post-meta-item__icon"><i class="fas fa-eye"></i></span><span class="post-meta-item__info">阅读次数</span><span class="post-meta-item__value" id="busuanzi_value_page_pv"></span></span></div></header><div class="post-body">
+    <div class="note-plugin info">
+      <span class="note-plugin__icon note-plugin__icon--info">
+              <i class="fas fa-info-circle"></i>
+            </span>
+      <p><strong>摘要</strong><br />Title: HTTP 框架修炼之道 | 青训营<br />Tag: ByteDance、Go、后端</p>
+    </div>
+  
+<span id="more"></span>
+<p><font size=3 face=楷体>Powered by:<strong>NEFU AB-IN</strong></font></p>
+<p><ul class="markdownIt-TOC">
+<li><a href="#font-size5-face%E7%B2%97%E4%BD%93%E8%B5%B0%E8%BF%9B-http-%E5%8D%8F%E8%AE%AEfont"><font size=5 face=粗体>走进 HTTP 协议</font></a></li>
+<li><a href="#font-size5-face%E7%B2%97%E4%BD%93http-%E6%A1%86%E6%9E%B6%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0font"><font size=5 face=粗体>HTTP 框架的设计与实现</font></a>
+<ul>
+<li><a href="#%E5%BA%94%E7%94%A8%E5%B1%82">应用层</a></li>
+<li><a href="#%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%B1%82">中间件层</a></li>
+<li><a href="#%E8%B7%AF%E7%94%B1%E8%AE%BE%E8%AE%A1">路由设计</a></li>
+<li><a href="#%E5%8D%8F%E8%AE%AE%E5%B1%82">协议层</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BC%A0%E8%BE%93%E5%B1%82%E7%BD%91%E7%BB%9C%E5%B1%82">传输层（网络层）</a>
+<ul>
+<li><a href="#1-bioblocking-io">1. BIO（Blocking I/O）:</a></li>
+<li><a href="#2-nionon-blocking-io">2. NIO（Non-blocking I/O）:</a></li>
+<li><a href="#%E5%8C%BA%E5%88%AB">区别：</a></li>
+</ul>
+</li>
+<li><a href="#font-size5-face%E7%B2%97%E4%BD%93%E6%80%A7%E8%83%BD%E4%BF%AE%E7%82%BC%E4%B9%8B%E9%81%93%E4%B8%8E%E4%BC%81%E4%B8%9A%E5%AE%9E%E8%B7%B5font"><font size=5 face=粗体>性能修炼之道与企业实践</font></a>
+<ul>
+<li><a href="#%E9%92%88%E5%AF%B9%E7%BD%91%E7%BB%9C%E5%BA%93%E7%9A%84%E4%BC%98%E5%8C%96">针对网络库的优化</a></li>
+<li><a href="#%E9%92%88%E5%AF%B9%E5%8D%8F%E8%AE%AE%E7%9A%84%E4%BC%98%E5%8C%96">针对协议的优化</a></li>
+</ul>
+</li>
+</ul>
+</p>
+
+        <h1 id="font-color6495ed-size6http-框架修炼之道-青训营-font"   >
+          <a href="#font-color6495ed-size6http-框架修炼之道-青训营-font" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#font-color6495ed-size6http-框架修炼之道-青训营-font"></a> <font color=#6495ED size=6>HTTP 框架修炼之道 | 青训营 </font></h1>
+      
+<ul>
+<li>
+<p>走进 HTTP 协议</p>
+</li>
+<li>
+<p>HTTP 框架的设计与实现</p>
+</li>
+<li>
+<p>性能修炼之道与企业实践</p>
+</li>
+</ul>
+
+        <h2 id="font-size5-face粗体走进-http-协议font"   >
+          <a href="#font-size5-face粗体走进-http-协议font" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#font-size5-face粗体走进-http-协议font"></a> <font size=5 face=粗体>走进 HTTP 协议</font></h2>
+      
+<p>前后端通过http通信，负责对http请求解析，根据路由选择对应逻辑</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9d7d0d9132f14b1e86d6a8ba1a1e8123~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=945&amp;h=1304&amp;e=png&amp;b=faf2f1"  style=""  alt="image.png" />
+      </p>
+<p><strong>超文本</strong>通常包括文本、图像、音频、视频等多种媒体类型，这些内容通过链接与其他相关信息相互连接。最著名的超文本系统之一是万维网（World Wide Web，简称Web）</p>
+<p>协议要素</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4c64371652aa431c9b03e25cfcb1a8e9~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2335&amp;h=1072&amp;e=png&amp;b=0365e6"  style=""  alt="image.png" />
+      </p>
+<p>content-length 描述body有多少字节<br />
+
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/eb6c9ab230f9495982a4ccc3560c8ae8~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2124&amp;h=685&amp;e=png&amp;b=0566e5"  style=""  alt="image.png" />
+      </p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/839c1b3fd5204fafa7fbf27917f1baac~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1500&amp;h=572&amp;e=png&amp;b=f5f3f3"  style=""  alt="image.png" />
+      </p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/14af8e252ed34ff58f0258a3afe6324f~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2475&amp;h=916&amp;e=png&amp;b=0265e7"  style=""  alt="image.png" />
+      </p>
+<p>HTTP（Hypertext Transfer Protocol）是一种用于在Web上传输数据的应用层协议。HTTP请求通常由客户端（例如浏览器）发送给服务器，然后服务器响应请求并返回数据给客户端。以下是HTTP协议完整的请求流程以及请求中包含的内容：</p>
+<ol>
+<li>
+<p><strong>建立TCP连接</strong>：在发送HTTP请求之前，客户端首先需要与服务器建立一个TCP连接。这通常涉及到域名解析（将域名解析为IP地址）和与服务器的三次握手握手过程以建立连接。</p>
+</li>
+<li>
+<p><strong>客户端发送HTTP请求</strong>：一旦建立了TCP连接，客户端会发送HTTP请求到服务器。HTTP请求通常包括以下部分：</p>
+<ul>
+<li>
+<p><strong>请求行</strong>：包含HTTP方法（例如GET、POST、PUT等）、请求的URL（Uniform Resource Locator）以及HTTP协议版本（例如HTTP/1.1）。</p>
+</li>
+<li>
+<p><strong>请求头</strong>：包含关于请求的元信息，如Host（主机名）、User-Agent（用户代理，通常是浏览器的标识）、Accept（可接受的响应内容类型）、Cookies等。</p>
+</li>
+<li>
+<p><strong>空行</strong>：一个空行用来分隔请求头和请求体。</p>
+</li>
+<li>
+<p><strong>请求体</strong>：对于某些HTTP方法（如POST），请求体可以包含客户端发送给服务器的数据，例如表单数据或JSON。后面跟换行符</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>服务器处理请求</strong>：一旦服务器接收到HTTP请求，它会解析请求并采取相应的操作。这可能涉及到查询数据库、执行应用程序逻辑等。</p>
+</li>
+<li>
+<p><strong>服务器发送HTTP响应</strong>：服务器会生成HTTP响应并将其发送回客户端。HTTP响应通常包括以下部分：</p>
+<ul>
+<li>
+<p><strong>状态行</strong>：包含HTTP协议版本、响应状态代码和状态消息。例如，HTTP/1.1 200 OK表示请求成功。</p>
+</li>
+<li>
+<p><strong>响应头</strong>：包含有关响应的元信息，如Server（服务器信息）、Content-Type（响应内容类型）、Content-Length（响应内容长度）等。</p>
+</li>
+<li>
+<p><strong>空行</strong>：与请求一样，一个空行分隔响应头和响应体。</p>
+</li>
+<li>
+<p><strong>响应体</strong>：包含服务器返回给客户端的实际数据，如HTML页面、JSON数据等。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>关闭连接</strong>：一旦服务器发送完响应，服务器和客户端可以选择关闭TCP连接（HTTP/1.0通常会关闭，而HTTP/1.1默认保持连接以便复用）。</p>
+</li>
+</ol>
+<p><strong>HTTP协议是无状态的</strong>，这意味着每个请求都是独立的，服务器不会在请求之间保留任何状态信息。如果需要跟踪用户状态，通常会使用Cookie等机制。</p>
+<p>总之，HTTP协议的请求流程涉及建立连接、发送请求、处理请求、发送响应以及关闭连接。协议的具体细节和头部字段可能会根据HTTP版本和服务器配置而有所不同。HTTP/1.1和HTTP/2是较新的版本，它们引入了一些性能优化和新的功能。</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/44d1e2bb47774e1582d4df0b43cd69c3~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2002&amp;h=1300&amp;e=png&amp;b=0365e6"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h2 id="font-size5-face粗体http-框架的设计与实现font"   >
+          <a href="#font-size5-face粗体http-框架的设计与实现font" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#font-size5-face粗体http-框架的设计与实现font"></a> <font size=5 face=粗体>HTTP 框架的设计与实现</font></h2>
+      
+<p>http框架聚焦于第四层之上——应用层</p>
+<p>分层设计，使得可以使用下一层的接口，专注于本层开发即可</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6da0854f57a14a6197a043b15d815f26~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2415&amp;h=1314&amp;e=png&amp;b=f9faee"  style=""  alt="image.png" />
+      </p>
+<p>http框架设计，也应分层设计</p>
+<ul>
+<li>分为五层，层与层解耦</li>
+<li>应用层 跟用户直接打交道的一层 对请求抽象 提供丰富API</li>
+<li>中间件层 对用户有预处理和后处理的逻辑</li>
+<li>路由层 寻址</li>
+<li>协议层 http1.1</li>
+<li>网络层</li>
+<li>common 放一些公共逻辑</li>
+</ul>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6e965ede76564b369e57c26e4cbe4e85~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2356&amp;h=1164&amp;e=png&amp;b=0265e6"  style=""  alt="image.png" />
+      </p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3e866f3907da4440990b76a64058a99c~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2460&amp;h=1295&amp;e=png&amp;b=faf3ef"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h3 id="应用层"   >
+          <a href="#应用层" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#应用层"></a> 应用层</h3>
+      
+<p>提供合理API</p>
+<p><code>ctx</code> 通常代表一个上下文对象（用于在特定的执行环境中传递和共享数据、状态和方法），包含了与当前HTTP请求和响应相关的信息和方法。这种上下文对象通常由Web框架或服务器提供，以简化HTTP请求和响应的处理。</p>
+<ul>
+<li>可理解性：获取body，如ctx.GetBody()</li>
+<li>简单性：如ctx.Request.Header.Peek()</li>
+<li>冗余性：
+<ul>
+<li>getbody 和 body 不用一起存在</li>
+<li>不能某个接口是两个接口拼起来</li>
+</ul>
+</li>
+<li>兼容性</li>
+<li>可测性</li>
+<li>可见性</li>
+</ul>
+<p>不要试图在文档中说明，很多用户不看文档</p>
+<hr />
+
+        <h3 id="中间件层"   >
+          <a href="#中间件层" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#中间件层"></a> 中间件层</h3>
+      
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/45e8dc359d304b5b905284a07964a1f5~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2023&amp;h=1141&amp;e=png&amp;b=0265e7"  style=""  alt="image.png" />
+      </p>
+<p>在Go语言中以及许多HTTP框架中，<strong>“handler”</strong>（处理程序）通常是一个用于处理HTTP请求的函数、方法或对象。处理程序负责接收HTTP请求、执行相应的操作，然后生成HTTP响应。处理程序通常用于路由请求和处理请求的逻辑。以下是一些关于处理程序的常见情况：</p>
+<ol>
+<li>
+<p><strong>HTTP请求处理程序</strong>：</p>
+<ul>
+<li>
+<p>在Go的标准库中，HTTP请求处理程序是一个函数，通常有两个参数：<code>http.ResponseWriter</code> 和 <code>*http.Request</code>。<code>http.ResponseWriter</code> 用于构建HTTP响应，<code>*http.Request</code> 包含了HTTP请求的信息（例如URL、HTTP方法、请求头等）。</p>
+</li>
+<li>
+<p>例如，以下是一个简单的HTTP请求处理程序示例，它回应一个 “Hello, World!” 消息：</p>
+<figure class="highlight go"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;net/http&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">helloHandler</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">    fmt.Fprintln(w, <span class="string">&quot;Hello, World!&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    http.HandleFunc(<span class="string">&quot;/hello&quot;</span>, helloHandler)</span><br><span class="line">    http.ListenAndServe(<span class="string">&quot;:8080&quot;</span>, <span class="literal">nil</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>HTTP框架中的处理程序</strong>：</p>
+<ul>
+<li>
+<p>许多HTTP框架（如Gin、Echo、Chi等）提供了自定义处理程序的概念，通常支持更灵活的路由和中间件配置。在这些框架中，处理程序可以是函数、结构体的方法，或者是实现了特定接口的类型。</p>
+</li>
+<li>
+<p>例如，在Gin框架中，您可以定义路由和处理程序如下：</p>
+<figure class="highlight go"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    r := gin.Default()</span><br><span class="line">    r.GET(<span class="string">&quot;/hello&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">        c.String(http.StatusOK, <span class="string">&quot;Hello, World!&quot;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    r.Run(<span class="string">&quot;:8080&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>中间件</strong>：</p>
+<ul>
+<li>
+<p>处理程序也可以是中间件函数，它们用于在实际请求处理程序之前或之后执行一些操作，如身份验证、日志记录、路由控制等。中间件函数通常接受一个处理请求的函数，并返回一个新的处理请求的函数。</p>
+</li>
+<li>
+<p>以下是一个简单的日志记录中间件的示例：</p>
+<figure class="highlight go"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">loggingMiddleware</span><span class="params">(next http.Handler)</span></span> http.Handler &#123;</span><br><span class="line">    <span class="keyword">return</span> http.HandlerFunc(<span class="function"><span class="keyword">func</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">        log.Println(<span class="string">&quot;Request received:&quot;</span>, r.Method, r.URL.Path)</span><br><span class="line">        next.ServeHTTP(w, r)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+</li>
+</ul>
+</li>
+</ol>
+<p>总之，无论是在Go标准库还是在HTTP框架中，处理程序通常是用于处理HTTP请求的函数、方法或对象。这些处理程序负责执行与请求相关的操作，并生成HTTP响应。处理程序可以用于定义路由、中间件，以及应用程序的核心逻辑，它们是构建Web应用程序的重要组件。不同的框架可能有不同的实现和用法，但基本概念是相似的。</p>
+<p>经过 日志-&gt; Metrics 的预处理，再执行业务逻辑，再出去经过后处理</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/980dd94291e345f7ba27861bf79913a5~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2168&amp;h=1150&amp;e=png&amp;b=0265e6"  style=""  alt="image.png" />
+      </p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/97eb9b50a69643e089bec9e88e5f8ad6~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2040&amp;h=1308&amp;e=png&amp;b=f5f3f3"  style=""  alt="image.png" />
+      </p>
+<p><strong>解释上图的流程：</strong></p>
+<p>在某些Go语言的Web框架和中间件中，<strong><code>ctx.Next(c)</code></strong> 是用来调用下一个中间件或处理程序的方法。这种语法通常用于中间件函数中，以控制中间件链的执行流程。</p>
+<p>具体来说，<code>ctx</code> 通常是一个上下文对象，<code>Next(c)</code> 是该上下文对象的方法。这个方法的作用是将请求传递给下一个中间件或处理程序，并继续执行下一个处理步骤。在处理HTTP请求时，中间件通常按照它们在链中的顺序依次执行，然后再将请求传递给实际的请求处理程序。</p>
+<p>以下是一个使用<code>ctx.Next(c)</code> 的示例，假设您使用的是Gin框架的中间件：</p>
+<figure class="highlight go"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">customMiddleware</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 执行一些前置操作</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;Middleware: Before Request&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 调用下一个中间件或处理程序</span></span><br><span class="line">    c.Next()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 执行一些后置操作</span></span><br><span class="line">    fmt.Println(<span class="string">&quot;Middleware: After Request&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    r := gin.Default()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用自定义中间件</span></span><br><span class="line">    r.Use(customMiddleware)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义路由处理程序</span></span><br><span class="line">    r.GET(<span class="string">&quot;/hello&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">        <span class="comment">// 处理HTTP请求</span></span><br><span class="line">        c.String(http.StatusOK, <span class="string">&quot;Hello, World!&quot;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    r.Run(<span class="string">&quot;:8080&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+<p>在上述示例中，<code>customMiddleware</code> 是一个自定义中间件。在中间件中，它首先执行一些前置操作，然后调用 <code>c.Next()</code> 来将请求传递给下一个中间件或处理程序。在本例中，下一个处理程序是定义的路由处理程序，它会处理实际的HTTP请求。然后，中间件再执行一些后置操作。</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6ddbd5a2003d447a9e441c3ee3b26b92~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2023&amp;h=1276&amp;e=png&amp;b=f5f3f3"  style=""  alt="image.png" />
+      </p>
+<p>以下是对代码的解释：</p>
+<ol>
+<li>
+<p><code>ctx.JSON(200, &quot;ok&quot;)</code>：</p>
+<ul>
+<li>这行代码通常用于处理HTTP请求并生成HTTP响应。</li>
+<li><code>ctx</code> 可能是一个上下文对象，用于表示HTTP请求和响应的上下文。</li>
+<li><code>JSON</code> 是一个方法，用于生成HTTP响应，并将数据以JSON格式返回给客户端。</li>
+<li><code>200</code> 是HTTP响应的状态码，表示成功。</li>
+<li><code>&quot;ok&quot;</code> 是要返回给客户端的JSON数据。在这种情况下，它是一个简单的字符串，表示一切正常。</li>
+</ul>
+</li>
+<li>
+<p><code>h := server.New()</code>：</p>
+<ul>
+<li>这行代码创建了一个名为 <code>h</code> 的新的服务器实例。</li>
+<li><code>server</code> 可能是一个自定义的服务器对象或框架中的服务器对象。</li>
+<li><code>New()</code> 是一个构造函数或工厂方法，用于创建服务器实例。</li>
+</ul>
+</li>
+<li>
+<p><code>h.Spin()</code>：</p>
+<ul>
+<li>这行代码启动了服务器，使其开始监听传入的HTTP请求。</li>
+<li><code>Spin()</code> 可能是服务器对象中的一个方法，用于启动服务器并开始接受和处理HTTP请求。</li>
+</ul>
+</li>
+</ol>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5506df6f4d3743ec8d7888a774067997~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2050&amp;h=1238&amp;e=png&amp;b=0365e6"  style=""  alt="image.png" />
+      </p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/43731a4e531b44a28f12a1607e49eed2~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2183&amp;h=921&amp;e=png&amp;b=f5f4f4"  style=""  alt="image.png" />
+      </p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/18df3f50209541e1bceefc4f2b7e03e2~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2304&amp;h=945&amp;e=png&amp;b=0465e5"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h3 id="路由设计"   >
+          <a href="#路由设计" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#路由设计"></a> 路由设计</h3>
+      
+<p>框架路由的主要作用是<strong>将传入的URL映射到相应的处理函数</strong>（也称为处理程序或控制器）。当客户端发送一个HTTP请求时，这个请求通常包括一个URL（Uniform Resource Locator），URL表示了客户端想要访问的资源或执行的操作。</p>
+<p>框架的路由系统的任务就是根据请求的URL来确定应该执行哪个处理函数来处理该请求。这个匹配过程通常基于一组路由规则，这些规则将特定的URL模式与特定的处理函数关联起来。当请求的URL与某个路由规则匹配时，框架就会调用相应的处理函数来处理请求。</p>
+<p>例如，假设有一个简单的路由规则：</p>
+<ul>
+<li>当URL是 “/user” 时，执行名为 “handleUser” 的处理函数。</li>
+<li>当URL是 “/product” 时，执行名为 “handleProduct” 的处理函数。</li>
+</ul>
+<p>如果客户端发送了一个HTTP请求，URL是 “/user”，框架的路由系统将会匹配这个请求到 “handleUser” 处理函数，然后执行与之关联的代码，以完成相应的操作。</p>
+<p>总之，框架路由的目的是将URL映射到适当的处理函数，以便根据请求的内容执行相应的操作。这种机制使得Web应用程序能够根据不同的URL来呈现不同的页面或提供不同的服务。</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/674a91efd3314e1dab4b09c57195740f~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1842&amp;h=1002&amp;e=png&amp;b=0265e7"  style=""  alt="image.png" />
+      </p>
+<p><strong>静态路由</strong><br />
+
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/31f1e904999d4fdab2ffe479999b3198~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2293&amp;h=1042&amp;e=png&amp;b=0365e6"  style=""  alt="image.png" />
+      </p>
+<p><strong>参数路由</strong></p>
+<p>提出公共的：或者 /</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4434f76910a645b1a030b1d1fc0a3590~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2372&amp;h=1310&amp;e=png&amp;b=fdfdfd"  style=""  alt="image.png" />
+      </p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/abe1108f8bda44f6888a83957dcce12e~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2140&amp;h=880&amp;e=png&amp;b=0265e6"  style=""  alt="image.png" />
+      </p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a8fc7a8e75a14b2f956a1519932dbe30~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1898&amp;h=1010&amp;e=png&amp;b=0365e6"  style=""  alt="image.png" />
+      </p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a5f3a1fa3b5645e7a53bc61a3a50c396~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1984&amp;h=1065&amp;e=png&amp;b=0265e7"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h3 id="协议层"   >
+          <a href="#协议层" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#协议层"></a> 协议层</h3>
+      
+<p>完成对接口的拓展就能完成对协议的拓展</p>
+<ul>
+<li>不要把context写到struct，需要显示的通过函数的第一个参数传过来，需要context进行上下文传递</li>
+<li>需要传链接</li>
+<li>返回值，抛给上层error</li>
+</ul>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6827a349e81d4ede8fbf7d3869024a1e~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2188&amp;h=1000&amp;e=png&amp;b=0265e6"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h2 id="传输层网络层"   >
+          <a href="#传输层网络层" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#传输层网络层"></a> 传输层（网络层）</h2>
+      
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/82f9594d0ced4962bf0e19462e81c271~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2445&amp;h=1117&amp;e=png&amp;b=f5f4f4"  style=""  alt="image.png" />
+      </p>
+<p>NIO（Non-blocking I/O）和BIO（Blocking I/O）是两种不同的I/O模型，它们描述了计算机系统中处理输入和输出的方式。以下是它们的具体含义以及它们之间的区别：</p>
+
+        <h3 id="1-bioblocking-io"   >
+          <a href="#1-bioblocking-io" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#1-bioblocking-io"></a> 1. BIO（Blocking I/O）:</h3>
+      
+<p>BIO是一种阻塞式I/O模型。在BIO中，当应用程序执行I/O操作时，它会阻塞（暂停）直到I/O操作完成。这意味着在进行I/O操作期间，应用程序不能执行其他任务，它必须等待数据准备好或者操作完成。</p>
+<p><strong>示例</strong>：</p>
+<p>假设您编写一个简单的文件复制程序，使用BIO模型，代码可能如下：</p>
+<figure class="highlight go"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;io&quot;</span></span><br><span class="line">    <span class="string">&quot;os&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    sourceFile, err := os.Open(<span class="string">&quot;input.txt&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="built_in">panic</span>(err)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">defer</span> sourceFile.Close()</span><br><span class="line"></span><br><span class="line">    destFile, err := os.Create(<span class="string">&quot;output.txt&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="built_in">panic</span>(err)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">defer</span> destFile.Close()</span><br><span class="line"></span><br><span class="line">    buffer := <span class="built_in">make</span>([]<span class="type">byte</span>, <span class="number">1024</span>)</span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">        bytesRead, err := sourceFile.Read(buffer)</span><br><span class="line">        <span class="keyword">if</span> err == io.EOF &#123;</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="built_in">panic</span>(err)</span><br><span class="line">        &#125;</span><br><span class="line">        destFile.Write(buffer[:bytesRead])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+<p>在上面的代码中，<code>inputStream.read(buffer)</code> 和 <code>outputStream.write(buffer, 0, bytesRead)</code> 都是阻塞调用，它们会等待数据读取或写入完成。</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/35c08363034b435a888a9891f17f1391~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2149&amp;h=597&amp;e=png&amp;b=f6f5f5"  style=""  alt="image.png" />
+      </p>
+
+        <h3 id="2-nionon-blocking-io"   >
+          <a href="#2-nionon-blocking-io" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#2-nionon-blocking-io"></a> 2. NIO（Non-blocking I/O）:</h3>
+      
+<p>NIO是一种非阻塞式I/O模型。在NIO中，应用程序可以发起I/O操作，但不会等待操作完成。相反，它会继续执行其他任务，然后稍后检查操作的状态。这意味着一个线程可以管理多个I/O操作，提高了系统的并发性能。</p>
+<p><strong>示例</strong>：</p>
+<p>使用Java NIO编写的文件复制程序可以如下所示：</p>
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">FileChannel</span> <span class="variable">sourceChannel</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(<span class="string">&quot;input.txt&quot;</span>).getChannel();</span><br><span class="line"><span class="type">FileChannel</span> <span class="variable">destChannel</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(<span class="string">&quot;output.txt&quot;</span>).getChannel();</span><br><span class="line"></span><br><span class="line"><span class="type">ByteBuffer</span> <span class="variable">buffer</span> <span class="operator">=</span> ByteBuffer.allocate(<span class="number">1024</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (sourceChannel.read(buffer) != -<span class="number">1</span>) &#123;</span><br><span class="line">    buffer.flip();</span><br><span class="line">    destChannel.write(buffer);</span><br><span class="line">    buffer.clear();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sourceChannel.close();</span><br><span class="line">destChannel.close();</span><br></pre></td></tr></table></div></figure>
+<p>在上面的代码中，<code>sourceChannel.read(buffer)</code> 和 <code>destChannel.write(buffer)</code> 是非阻塞调用，它们不会等待数据读取或写入完成，而是继续执行后续代码。</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/afaab735ddb24930b67b7785d09a34c4~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2408&amp;h=1029&amp;e=png&amp;b=f4f2f2"  style=""  alt="image.png" />
+      </p>
+
+        <h3 id="区别"   >
+          <a href="#区别" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#区别"></a> 区别：</h3>
+      
+<ol>
+<li>
+<p><strong>阻塞 vs. 非阻塞</strong>：</p>
+<ul>
+<li>BIO是阻塞式I/O，意味着当执行I/O操作时，线程会被阻塞，直到操作完成。</li>
+<li>NIO是非阻塞式I/O，线程不会被阻塞，可以继续执行其他任务。</li>
+</ul>
+</li>
+<li>
+<p><strong>并发性</strong>：</p>
+<ul>
+<li>BIO通常需要为每个客户端连接创建一个新的线程，因此对于大量客户端的情况，线程开销会很大。</li>
+<li>NIO允许一个线程管理多个I/O操作，因此可以更高效地处理大量并发连接。</li>
+</ul>
+</li>
+<li>
+<p><strong>编程复杂性</strong>：</p>
+<ul>
+<li>BIO编程通常比较简单，因为它使用阻塞调用，代码顺序执行。</li>
+<li>NIO编程较复杂，因为需要处理异步I/O操作和状态管理。</li>
+</ul>
+</li>
+<li>
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>BIO适用于连接数较少但I/O操作较重的情况，如文件I/O或数据库连接。</li>
+<li>NIO适用于需要处理大量并发连接，例如网络服务器或聊天应用程序。</li>
+</ul>
+</li>
+</ol>
+<p>总之，BIO和NIO是两种不同的I/O模型，它们在处理I/O操作时的工作方式不同。选择哪种模型通常取决于应用程序的需求和性能要求。</p>
+<hr />
+
+        <h2 id="font-size5-face粗体性能修炼之道与企业实践font"   >
+          <a href="#font-size5-face粗体性能修炼之道与企业实践font" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#font-size5-face粗体性能修炼之道与企业实践font"></a> <font size=5 face=粗体>性能修炼之道与企业实践</font></h2>
+      
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/43ca73f3f2be4caa8178f8b3edc16023~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1464&amp;h=361&amp;e=png&amp;b=0265e7"  style=""  alt="image.png" />
+      </p>
+
+        <h3 id="针对网络库的优化"   >
+          <a href="#针对网络库的优化" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#针对网络库的优化"></a> 针对网络库的优化</h3>
+      
+<p><strong>go net</strong></p>
+<p>流式友好 小包性能高</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/31fa4d87228544a691b0ad486c034a8e~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2376&amp;h=857&amp;e=png&amp;b=0265e6"  style=""  alt="image.png" />
+      </p>
+<p>问题：需要用户在后台管理buffer 需要的开销比较大</p>
+<p>解决：为每一个链接绑定一块buffer（4K左右）</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b818323f8eb042d59e1df1553a1087e1~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2299&amp;h=1069&amp;e=png&amp;b=f5f4f4"  style=""  alt="image.png" />
+      </p>
+<p><strong>netpoll</strong></p>
+<p>中大包性能高 时延低</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ab2fda05d61747578286e485741e0d45~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2484&amp;h=989&amp;e=png&amp;b=fbf0e2"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h3 id="针对协议的优化"   >
+          <a href="#针对协议的优化" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#针对协议的优化"></a> 针对协议的优化</h3>
+      
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/16d9d9ff11b74e458f48201811f3a7be~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2077&amp;h=1327&amp;e=png&amp;b=0365e6"  style=""  alt="image.png" />
+      </p>
+<p>在HTTP协议中，“\r\n” 表示回车（Carriage Return）和换行（Line Feed），它们在HTTP报文中用于分隔报头（Header）字段。HTTP报头字段通常使用&quot;\r\n&quot;来表示字段之间的分隔，而字段的名称和值之间也使用&quot;\r\n&quot;来分隔。</p>
+<p>例如，下面是一个HTTP请求的示例，其中使用了&quot;\r\n&quot;来分隔报头字段：</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET /index.html HTTP/1.1\r\n</span><br><span class="line">Host: www.example.com\r\n</span><br><span class="line">User-Agent: Mozilla/5.0\r\n</span><br><span class="line">Accept: text/html\r\n</span><br><span class="line">\r\n</span><br></pre></td></tr></table></div></figure>
+<p>在这个示例中，每个报头字段的名称和值之间都用&quot;\r\n&quot;分隔，而每个报头的末尾使用两个连续的&quot;\r\n&quot;来表示报头结束。这是HTTP协议中的硬线标准，表示了HTTP请求的正确格式。</p>
+<p>总之，“hard line” 或 “hardline” 在计算机通信领域通常指的是一种严格要求的标准或规则，而在HTTP协议中，“\r\n” 用于表示回车和换行，是HTTP请求和响应中报头字段的分隔符。</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ae97a0297b02407592549ba800cc6e8c~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2458&amp;h=1006&amp;e=png&amp;b=0265e7"  style=""  alt="image.png" />
+      </p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3f3632bb90b145dab34723db9fe3518c~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2384&amp;h=1061&amp;e=png&amp;b=ffffff"  style=""  alt="image.png" />
+      </p>
+<p><strong>“request context” 池化技术</strong>指的是将请求上下文对象（通常称为 request context）放入池中以进行有效的重用的技术。这个概念通常用于高并发的服务器应用程序，特别是Web服务器，以减少对象的创建和垃圾回收（GC）的开销。</p>
+<p>在Web服务器中，每个客户端请求通常都需要一个请求上下文对象，该对象用于存储与该请求相关的信息，例如请求头、请求参数、用户身份验证信息等等。在高并发情况下，频繁地创建和销毁这些请求上下文对象可能会导致性能问题，因为对象的创建和销毁都会涉及到内存分配和垃圾回收。</p>
+<p>池化技术的核心思想是，当一个请求上下文对象不再需要时，它不会被立即销毁，而是放回到一个对象池（或请求上下文池）中，以备将来重用。这样做有几个好处：</p>
+<ol>
+<li>
+<p><strong>减少对象创建和销毁开销</strong>：通过重用对象，减少了频繁的内存分配和垃圾回收，提高了性能。</p>
+</li>
+<li>
+<p><strong>降低内存占用</strong>：对象池控制了请求上下文对象的数量，防止了内存泄漏或内存溢出。</p>
+</li>
+<li>
+<p><strong>更稳定的响应时间</strong>：通过减少GC的发生频率，可以更稳定地维持低延迟和一致的响应时间。</p>
+</li>
+</ol>
+<p>使用池化技术时，通常会在服务器启动时创建一定数量的请求上下文对象，并将它们放入池中。然后，当请求到达时，可以从池中获取一个请求上下文对象，并在请求处理完成后将其返回池中，以供下一个请求使用。</p>
+<p>这种技术需要小心管理对象的生命周期，以确保对象在适当的时候被释放回池中，以避免资源泄漏。常见的编程语言和框架通常提供了池化技术的实现</p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://hexo.ab-in.cn">AB-IN</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://hexo.ab-in.cn/2023/08/27/ByteDance2023-08-27/">https://hexo.ab-in.cn/2023/08/27/ByteDance2023-08-27/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/ByteDance/">ByteDance</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/Go/">Go</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/%E5%90%8E%E7%AB%AF/">后端</a></span></div><div class="post-share"><div class="social-share" data-sites="qzone, qq, weibo, wechat, douban, linkedin, facebook, twitter, google">Share to: </div></div><div class="post-reward reward"><div class="reward-button">请我喝杯咖啡~</div><div class="reward-qrcode"><span class="reward-qrcode-alipay"><img class="reward-qrcode-alipay__img" src="https://oss.ab-in.cn/Pay/alipay.png"><div class="reward-qrcode-alipay__text">支付宝打赏</div></span><span class="reward-qrcode-wechat"><img class="reward-qrcode-wechat__img" src="https://oss.ab-in.cn/Pay/weixin.png"><div class="reward-qrcode-wechat__text">微信打赏</div></span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2023/08/30/ByteDance2023-08-30/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">深入浅出RPC框架 | 青训营</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2023/08/26/Acwing2023-08-26/"><span class="paginator-prev__text">5017. 垦田计划</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div><div class="comments" id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC81NTEzNS8zMTYwMw"></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#font-color6495ed-size6http-%E6%A1%86%E6%9E%B6%E4%BF%AE%E7%82%BC%E4%B9%8B%E9%81%93-%E9%9D%92%E8%AE%AD%E8%90%A5-font"><span class="toc-number">1.</span> <span class="toc-text">
+           HTTP 框架修炼之道 | 青训营 </span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#font-size5-face%E7%B2%97%E4%BD%93%E8%B5%B0%E8%BF%9B-http-%E5%8D%8F%E8%AE%AEfont"><span class="toc-number">1.1.</span> <span class="toc-text">
+           走进 HTTP 协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#font-size5-face%E7%B2%97%E4%BD%93http-%E6%A1%86%E6%9E%B6%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0font"><span class="toc-number">1.2.</span> <span class="toc-text">
+           HTTP 框架的设计与实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%B1%82"><span class="toc-number">1.2.1.</span> <span class="toc-text">
+           应用层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%B1%82"><span class="toc-number">1.2.2.</span> <span class="toc-text">
+           中间件层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.2.3.</span> <span class="toc-text">
+           路由设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E5%B1%82"><span class="toc-number">1.2.4.</span> <span class="toc-text">
+           协议层</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%A0%E8%BE%93%E5%B1%82%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="toc-number">1.3.</span> <span class="toc-text">
+           传输层（网络层）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-bioblocking-io"><span class="toc-number">1.3.1.</span> <span class="toc-text">
+           1. BIO（Blocking I&#x2F;O）:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-nionon-blocking-io"><span class="toc-number">1.3.2.</span> <span class="toc-text">
+           2. NIO（Non-blocking I&#x2F;O）:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%BA%E5%88%AB"><span class="toc-number">1.3.3.</span> <span class="toc-text">
+           区别：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#font-size5-face%E7%B2%97%E4%BD%93%E6%80%A7%E8%83%BD%E4%BF%AE%E7%82%BC%E4%B9%8B%E9%81%93%E4%B8%8E%E4%BC%81%E4%B8%9A%E5%AE%9E%E8%B7%B5font"><span class="toc-number">1.4.</span> <span class="toc-text">
+           性能修炼之道与企业实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%92%88%E5%AF%B9%E7%BD%91%E7%BB%9C%E5%BA%93%E7%9A%84%E4%BC%98%E5%8C%96"><span class="toc-number">1.4.1.</span> <span class="toc-text">
+           针对网络库的优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%92%88%E5%AF%B9%E5%8D%8F%E8%AE%AE%E7%9A%84%E4%BC%98%E5%8C%96"><span class="toc-number">1.4.2.</span> <span class="toc-text">
+           针对协议的优化</span></a></li></ol></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://oss.ab-in.cn/images/AB-IN.jpg" alt="avatar"></div><p class="sidebar-ov-author__text">NEFU AB-IN</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/AB-IN-lsy" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/AB_IN_liusy" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="http://wpa.qq.com/msgrd?v=3&amp;uin=1719827581&amp;site=qq&amp;menu=yes" target="_blank" rel="noopener" data-popover="QQ" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-qq"></i></span></a><a class="sidebar-ov-social-item" href="mailto:liusy200708@gmail.com" target="_blank" rel="noopener" data-popover="Gmail" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a></div><div class="sidebar-ov-feed"></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">您已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2023</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>AB-IN All Rights Reserved</span><span class="footer__devider">|</span><span><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">鲁ICP备2021035431号</a></span></div><div class="busuanzi"><span class="busuanzi-siteuv"><span class="busuanzi-siteuv__icon"><i class="fas fa-user"></i></span><span class="busuanzi-siteuv__info">访问人数</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_uv"></span></span><span class="busuanzi-sitepv"><span class="busuanzi-siteuv__icon"><i class="fas fa-eye"></i></span><span class="busuanzi-siteuv__info">浏览总量</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_pv"></span></span></div><div><script type="text/javascript" src="https://oneword.ab-in.cn/oneword/oneword.php?format=js&charset=utf-8"></script> <div id="oneword"><script>oneword()</script></div></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"></div><div class="search-btns">使用搜索：<span class="search-btns-item search-btns-item--google"><i class="fab fa-google"></i>谷歌</span><span class="search-btns-item search-btns-item--bing"><i></i>必应</span><span class="search-btns-item search-btns-item--baidu"><i></i>百度</span></div><div class="search-results"><div id="algolia-hits"></div></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><script src="//unpkg.com/jquery@v3.4.1/dist/jquery.min.js"></script><script src="//unpkg.com/velocity-animate@1.5.2/velocity.min.js"></script><script src="//unpkg.com/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script><script src="//unpkg.com/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script src="//unpkg.com/social-share.js@1.0.16/dist/js/social-share.min.js"></script><script src="//unpkg.com/instantsearch.js@2.1.1/dist/instantsearch.min.js" defer></script><script>window.addEventListener('DOMContentLoaded', function () {
+  $('.header-nav-search').on('click', function (e) {
+    e.stopPropagation();
+
+    $('body').css('overflow', 'hidden');
+    $('.search-popup')
+      .velocity('stop')
+      .velocity('transition.expandIn', {
+        duration: 300,
+        complete: function () {
+          $('.search-popup input').focus();
+        }
+      });
+    $('.search-mask')
+      .velocity('stop')
+      .velocity('transition.fadeIn', {
+        duration: 300
+      });
+  });
+
+  function closeSearch () {
+    $('body').css({ overflow: 'auto' });
+    $('.search-popup').css({ display: 'none' });
+    $('.search-mask').css({ display: 'none' });
+  }
+
+  $('.search-mask, .search-close').on('click', function () {
+    closeSearch();
+  });
+
+  $(document).on('keydown', function (e) {
+    // Escape <=> 27
+    if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+      closeSearch();
+    }
+  });
+
+  var algolia = CONFIG.algolia;
+  if (!algolia && !(algolia.appId && algolia.apiKey && algolia.indexName)) {
+    return console.error('Algolia setting is invalid.');
+  }
+
+  var search = instantsearch({
+    appId: algolia.appId,
+    apiKey: algolia.apiKey,
+    indexName: algolia.indexName,
+    searchParameters: {
+      hitsPerPage: algolia.hits.per_page || 10
+    },
+    searchFunction: function (helper) {
+      var searchInput = $('.search-input').find('input');
+
+      if (searchInput.val()) {
+        helper.search();
+      }
+    }
+  });
+
+  search.addWidget(
+    instantsearch.widgets.searchBox({
+      container: '.search-input',
+      reset: false,
+      magnifier: false,
+      placeholder: algolia.languages.inputPlaceholder
+    })
+  );
+
+  // The hits of search results.
+  search.addWidget(
+    instantsearch.widgets.hits({
+      container: '#algolia-hits',
+      templates: {
+        item: function (data) {
+          var link = data.permalink ? data.permalink : CONFIG.root + data.path;
+          return (
+            '<a href="' + link + '" class="algolia-hit-item-link">' +
+              data._highlightResult.title.value +
+            '</a>'
+          );
+        },
+        empty: function (data) {
+          return (
+            '<div id="algolia-hits-empty">' +
+              algolia.languages.hitsEmpty.replace(/\$\{query}/, data.query) +
+            '</div>'
+          );
+        }
+      },
+      cssClasses: {
+        item: 'algolia-hit-item'
+      }
+    })
+  );
+
+  // The stats of search results.
+  if ($('#algolia-stats')[0]) {
+    search.addWidget(
+      instantsearch.widgets.stats({
+        container: '#algolia-stats',
+        templates: {
+          body: function (data) {
+            var stats = algolia.languages.hitsStats
+              .replace(/\$\{hits}/, data.nbHits)
+              .replace(/\$\{time}/, data.processingTimeMS);
+            return (
+              stats +
+              '<span class="algolia-logo pull-right">' +
+                '<img src="' + CONFIG.root +
+                `${CONFIG.sourcePath.images}/algolia.svg" alt="Algolia" />` +
+              '</span>'
+            );
+          }
+        }
+      })
+    );
+  }
+
+  // The pagination of the results.
+  search.addWidget(
+    instantsearch.widgets.pagination({
+      container: '#algolia-pagination',
+      scrollTo: false,
+      showFirstLast: false,
+      labels: {
+        first: '<i class="fa fa-angle-double-left"></i>',
+        last: '<i class="fa fa-angle-double-right"></i>',
+        previous: '<i class="fa fa-angle-left"></i>',
+        next: '<i class="fa fa-angle-right"></i>'
+      },
+      cssClasses: {
+        root: 'pagination',
+        item: 'pagination-item',
+        link: 'page-number',
+        active: 'current',
+        disabled: 'disabled-item'
+      }
+    })
+  );
+
+  search.start();
+});</script><script src="//unpkg.com/pjax@latest/pjax.min.js"></script><script>window.addEventListener('DOMContentLoaded', function () {
+  var pjax = new Pjax({"selectors":["head title","#main",".pjax-reload",".header-inner"],"history":true,"scrollTo":false,"scrollRestoration":false,"cacheBust":false,"debug":false,"currentUrlFullReload":false,"timeout":0});
+  // 加载进度条的计时器
+  var loadingTimer = null;
+
+  // 重置页面 Y 方向上的滚动偏移量
+  document.addEventListener('pjax:send', function () {
+    $('.header-nav-menu').removeClass('show');
+    if (CONFIG.pjax && CONFIG.pjax.avoidBanner) {
+      $('html').velocity('scroll', {
+        duration: 500,
+        offset: $('#header').height(),
+        easing: 'easeInOutCubic'
+      });
+    }
+
+    var loadingBarWidth = 20;
+    var MAX_LOADING_WIDTH = 95;
+
+    $('.loading-bar').addClass('loading');
+    $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    clearInterval(loadingTimer);
+    loadingTimer = setInterval(function () {
+      loadingBarWidth += 3;
+      if (loadingBarWidth > MAX_LOADING_WIDTH) {
+        loadingBarWidth = MAX_LOADING_WIDTH;
+      }
+      $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    }, 500);
+  }, false);
+
+  window.addEventListener('pjax:complete', function () {
+    clearInterval(loadingTimer);
+    $('.loading-bar__progress').css('width', '100%');
+    $('.loading-bar').removeClass('loading');
+    setTimeout(function () {
+      $('.loading-bar__progress').css('width', '0');
+    }, 400);
+    $('link[rel=prefetch], script[data-pjax-rm]').each(function () {
+      $(this).remove();
+    });
+    $('script[data-pjax], #pjax-reload script').each(function () {
+      $(this).parent().append($(this).remove());
+    });
+
+    if (Stun.utils.pjaxReloadBoot) {
+      Stun.utils.pjaxReloadBoot();
+    }
+    if (Stun.utils.pjaxReloadScroll) {
+      Stun.utils.pjaxReloadScroll();
+    }
+    if (Stun.utils.pjaxReloadSidebar) {
+      Stun.utils.pjaxReloadSidebar();
+    }
+    if (true) {
+      if (Stun.utils.pjaxReloadHeader) {
+        Stun.utils.pjaxReloadHeader();
+      }
+      if (Stun.utils.pjaxReloadScrollIcon) {
+        Stun.utils.pjaxReloadScrollIcon();
+      }
+      if (Stun.utils.pjaxReloadLocalSearch) {
+        Stun.utils.pjaxReloadLocalSearch();
+      }
+    }
+  }, false);
+}, false);</script><div id="pjax-reload"><link href="https://unpkg.com/katex@0.10.2/dist/katex.min.css" rel="stylesheet" type="text/css"><link href="https://unpkg.com/katex@0.10.2/dist/contrib/copy-tex.css" rel="stylesheet" type="text/css"><script src="https://unpkg.com/katex@0.10.2/dist/contrib/copy-tex.min.js"></script><script src="//unpkg.com/quicklink@latest/dist/quicklink.umd.js"></script><script>function initQuicklink() {
+  quicklink({
+    timeout: '10000',
+    priority: true,
+    ignores: [uri => uri.includes('#'), uri => uri === 'https://hexo.ab-in.cn/2023/08/27/ByteDance2023-08-27/', /\/api\/?/,uri => uri.includes('.xml'),uri => uri.includes('.zip'),(uri, el) => el.hasAttribute('nofollow'),(uri, el) => el.hasAttribute('noprefetch')]
+  });
+}
+
+if (true || false) {
+  initQuicklink();
+} else {
+  window.addEventListener('DOMContentLoaded', initQuicklink, false);
+}</script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script></div><script data-pjax="">function loadLivere () {
+  var d = document, s = d.createElement('script');
+
+  if (!d.getElementById('lv-container')) {
+    return;
+  }
+  if (typeof LivereTower === 'function') {
+    return;
+  }
+  s.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+  if (true) {
+    s.setAttribute('data-pjax-rm', '');
+  }
+  (d.head || d.body).appendChild(s);
+}
+
+if (true) {
+  loadLivere();
+} else {
+  window.addEventListener('DOMContentLoaded', loadLivere, false);
+}</script><script src="/js/utils.js?v=2.8.0"></script><script src="/js/stun-boot.js?v=2.8.0"></script><script src="/js/scroll.js?v=2.8.0"></script><script src="/js/header.js?v=2.8.0"></script><script src="/js/sidebar.js?v=2.8.0"></script><script type="application/json" src="/search.json"></script></body></html>

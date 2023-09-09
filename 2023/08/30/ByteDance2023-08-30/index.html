@@ -1,0 +1,806 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#54bcff"><link rel="manifest" href="/manifest.json?v=2.8.0"><link rel="icon" href="/assets/favicon-16x16.png?v=2.8.0" type="image/png" sizes="16x16"><link rel="icon" href="/assets/favicon-32x32.png?v=2.8.0" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="/assets/android-chrome-192x192.png?v=2.8.0" sizes="180x180"><link rel="mask-icon" href="/%5Bobject%20Object%5D?v=2.8.0" color="#54bcff"><meta name="msapplication-TileImage" content="/%5Bobject%20Object%5D"><meta name="msapplication-TileColor" content="#000000"><meta name="google-site-verification" content="e4vuRgT_ouTNSxZf23XDFDixeCsDJiaAvmUQaKT_njA"><meta name="msvalidate.01" content="A2EE4D0CCD36C0B0741FA44DBF05FF0D"><meta name="baidu-site-verification" content="code-OOQCT4Wx7W"><meta name="description" content="摘要Title: 深入浅出RPC框架 | 青训营Tag: ByteDance、Go、后端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入浅出RPC框架 | 青训营">
+<meta property="og:url" content="https://hexo.ab-in.cn/2023/08/30/ByteDance2023-08-30/index.html">
+<meta property="og:site_name" content="AB-IN&#39;s Blog">
+<meta property="og:description" content="摘要Title: 深入浅出RPC框架 | 青训营Tag: ByteDance、Go、后端">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/11e80c65e63f4b989963e971372d0e5f~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1100&amp;h=1036&amp;e=png&amp;b=0265e7">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/46f242ad51c84f65ba27519c30dd3199~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=959&amp;h=572&amp;e=png&amp;b=fefdfd">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fab555f77c2a4bd7afab9578664ed706~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=714&amp;h=542&amp;e=png&amp;a=1&amp;b=fefefe">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f0bcfc3e92504a0d8ec029bd8f48e8be~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1776&amp;h=859&amp;e=png&amp;b=f6fdfd">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3c79f0a5e0604f579e101effbc6b6947~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2395&amp;h=1240&amp;e=png&amp;b=f9f9f9">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/695bcad530714e58aa6a3731f486f772~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1959&amp;h=961&amp;e=png&amp;b=0365e5">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b2988643e15047a39bd70fe0051a05c8~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2447&amp;h=1294&amp;e=png&amp;b=0465e5">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/de707eacdd4645a78fbc9f473278f17a~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=803&amp;h=229&amp;e=png&amp;b=ffffff">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/209bc3da33cf4db3a858ec0ed066ca1e~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2338&amp;h=1265&amp;e=png&amp;b=fdf6f5">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c0872131cdfc4f1ea838ff08dae633e2~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1818&amp;h=937&amp;s=1407095&amp;e=png&amp;b=7ea5de">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8b4bc21d5b094d1585c19892710fe1bc~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2170&amp;h=1298&amp;s=1205894&amp;e=png&amp;b=0265e7">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/57284f1183d6475d883bbdd4e48786a3~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1338&amp;h=696&amp;s=366661&amp;e=png&amp;b=e9f6f9">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5ce439588240459f84325827ae2211d7~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2404&amp;h=1201&amp;s=1181167&amp;e=png&amp;b=2f78b8">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/20b8ab69f1c84f4489137e5e00513240~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=996&amp;h=750&amp;s=500455&amp;e=png&amp;a=1&amp;b=d2f4f6">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2672834e69ce4ac6a477129a19024574~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1124&amp;h=781&amp;s=426866&amp;e=png&amp;b=d5e0f1">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/abb31958bb204f3bb7ae2be80a0bfa21~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2236&amp;h=1266&amp;s=1482934&amp;e=png&amp;b=0365e6">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e6523610a4d34ca7a4d25722f12f718c~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2355&amp;h=1225&amp;s=1597755&amp;e=png&amp;b=0465e5">
+<meta property="article:published_time" content="2023-08-30T13:11:10.000Z">
+<meta property="article:modified_time" content="2023-08-30T16:02:26.128Z">
+<meta property="article:author" content="AB-IN">
+<meta property="article:tag" content="ByteDance">
+<meta property="article:tag" content="Go">
+<meta property="article:tag" content="后端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/11e80c65e63f4b989963e971372d0e5f~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1100&amp;h=1036&amp;e=png&amp;b=0265e7"><title>深入浅出RPC框架 | 青训营 | AB-IN's Blog</title><link ref="canonical" href="https://hexo.ab-in.cn/2023/08/30/ByteDance2023-08-30/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="//unpkg.com/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" type="text/css"><link rel="stylesheet" href="//unpkg.com/instantsearch.js@2.1.1/dist/instantsearch.min.css" type="text/css"><link rel="stylesheet" href="//unpkg.com/social-share.js@1.0.16/dist/css/share.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.8.0"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: {"appId":"DU3TAVNH2B","apiKey":"483f4ee8a687ed876e44dc2c27d52939","indexName":"hexo_BLOG","hits":{"per_page":10},"languages":{"inputPlaceholder":"搜索文章","hitsEmpty":"没有找到任何搜索结果：${query}","hitsStats":"找到 ${hits} 条搜索结果，耗时 ${time} 毫秒"}},
+  assistSearch: ["google","bing","baidu"],
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"ocean","wordWrap":true},
+  reward: true,
+  fancybox: true,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: {"avoidBanner":false},
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: {"switchPost":true},
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-newspaper"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-address-card"></i></span><span class="header-nav-menu-item__text">关于</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/author"><span class="header-nav-submenu-item__icon"><i class="fas fa-at"></i></span><span class="header-nav-submenu-item__text">作者</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/friends"><span class="header-nav-submenu-item__icon"><i class="fas fa-users"></i></span><span class="header-nav-submenu-item__text">友链</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/FAQ"><span class="header-nav-submenu-item__icon"><i class="fas fa-question"></i></span><span class="header-nav-submenu-item__text">FAQ</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="far fa-window-maximize"></i></span><span class="header-nav-menu-item__text">其余站点</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://www.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fab fa-safari"></i></span><span class="header-nav-submenu-item__text">主页</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://ssh.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fas fa-terminal"></i></span><span class="header-nav-submenu-item__text">终端</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://kod.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fas fa-cloud"></i></span><span class="header-nav-submenu-item__text">云盘</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://oneword.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fab fa-dailymotion"></i></span><span class="header-nav-submenu-item__text">一言</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://ab-in.blog.csdn.net"><span class="header-nav-submenu-item__icon"><i class="fas fa-copyright"></i></span><span class="header-nav-submenu-item__text">CSDN</span></a></div></div></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">深入浅出RPC框架 | 青训营</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2023-08-30</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2023-08-31</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">5.7k</span></span><span class="post-meta-item post-meta-item--readtime"><span class="post-meta-item__icon"><i class="far fa-clock"></i></span><span class="post-meta-item__info">阅读时长</span><span class="post-meta-item__value">30分</span></span><span class="post-meta-item post-meta-item--visitors"><span class="post-meta-item__icon"><i class="fas fa-eye"></i></span><span class="post-meta-item__info">阅读次数</span><span class="post-meta-item__value" id="busuanzi_value_page_pv"></span></span></div></header><div class="post-body">
+    <div class="note-plugin info">
+      <span class="note-plugin__icon note-plugin__icon--info">
+              <i class="fas fa-info-circle"></i>
+            </span>
+      <p><strong>摘要</strong><br />Title: 深入浅出RPC框架 | 青训营<br />Tag: ByteDance、Go、后端</p>
+    </div>
+  
+<span id="more"></span>
+<p><font size=3 face=楷体>Powered by:<strong>NEFU AB-IN</strong></font></p>
+<p><ul class="markdownIt-TOC">
+<li><a href="#font-size5-face%E7%B2%97%E4%BD%93rpc-%E6%A1%86%E6%9E%B6%E5%88%86%E5%B1%82%E8%AE%BE%E8%AE%A1font"><font size=5 face=粗体>RPC 框架分层设计</font></a>
+<ul>
+<li><a href="#%E8%BF%9C%E7%A8%8B%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8rpc%E4%BB%8B%E7%BB%8D">远程函数调用（RPC）介绍</a></li>
+<li><a href="#%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A">名词解释</a></li>
+<li><a href="#%E4%B8%80%E6%AC%A1rpc%E8%BF%87%E7%A8%8B">一次RPC过程</a></li>
+<li><a href="#rpc%E5%A5%BD%E5%A4%84%E5%92%8C%E5%BC%8A%E7%AB%AF">RPC好处和弊端</a></li>
+<li><a href="#%E5%88%86%E5%B1%82%E8%AE%BE%E8%AE%A1">分层设计</a>
+<ul>
+<li><a href="#%E7%BC%96%E8%A7%A3%E7%A0%81%E5%B1%82">编解码层</a></li>
+<li><a href="#%E5%8D%8F%E8%AE%AE%E5%B1%82">协议层</a></li>
+<li><a href="#%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%B1%82">网络通信层</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#font-size5-face%E7%B2%97%E4%BD%93rpc-%E5%85%B3%E9%94%AE%E6%8C%87%E6%A0%87%E5%88%86%E6%9E%90%E4%B8%8E%E4%BC%81%E4%B8%9A%E5%AE%9E%E8%B7%B5font"><font size=5 face=粗体>RPC 关键指标分析与企业实践</font></a>
+<ul>
+<li><a href="#%E7%A8%B3%E5%AE%9A%E6%80%A7">稳定性</a>
+<ul>
+<li><a href="#%E4%BF%9D%E9%9A%9C%E7%AD%96%E7%95%A5">保障策略</a></li>
+<li><a href="#%E8%AF%B7%E6%B1%82%E6%88%90%E5%8A%9F%E7%8E%87">请求成功率</a></li>
+<li><a href="#%E9%95%BF%E5%B0%BE%E8%AF%B7%E6%B1%82">长尾请求</a></li>
+<li><a href="#%E6%B3%A8%E5%86%8C%E4%B8%AD%E9%97%B4%E4%BB%B6middleware-%E6%8B%A6%E6%88%AA%E5%99%A8">注册中间件（middleware、拦截器…）</a></li>
+</ul>
+</li>
+<li><a href="#%E6%98%93%E7%94%A8%E6%80%A7">易用性</a></li>
+<li><a href="#%E6%8B%93%E5%B1%95%E6%80%A7">拓展性</a></li>
+<li><a href="#%E8%A7%82%E6%B5%8B%E6%80%A7">观测性</a></li>
+<li><a href="#%E9%AB%98%E6%80%A7%E8%83%BD">高性能</a></li>
+</ul>
+</li>
+<li><a href="#font-size5-face%E7%B2%97%E4%BD%93rpc%E4%BC%81%E4%B8%9A%E5%AE%9E%E8%B7%B5font"><font size=5 face=粗体>RPC企业实践</font></a>
+<ul>
+<li><a href="#%E6%9E%B6%E6%9E%84">架构</a></li>
+<li><a href="#%E8%87%AA%E7%A0%94%E7%BD%91%E7%BB%9C%E5%BA%93-netpoll">自研网络库-Netpoll</a></li>
+<li><a href="#%E6%8B%93%E5%B1%95%E6%80%A7%E8%AE%BE%E8%AE%A1">拓展性设计</a></li>
+<li><a href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-%E7%BD%91%E7%BB%9C%E5%BA%93%E4%BC%98%E5%8C%96">性能优化-网络库优化</a></li>
+<li><a href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-%E7%BC%96%E8%A7%A3%E7%A0%81%E4%BC%98%E5%8C%96">性能优化-编解码优化</a></li>
+<li><a href="#%E5%90%88%E5%B9%B6%E9%83%A8%E7%BD%B2">合并部署</a></li>
+<li><a href="#%E6%97%A2%E6%9C%89http%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8rpc">既有HTTP,为什么用RPC？</a>
+<ul>
+<li><a href="#rpc-%E5%8F%AA%E6%98%AF%E4%B8%80%E7%A7%8D%E8%AE%BE%E8%AE%A1%E8%80%8C%E5%B7%B2">RPC 只是一种设计而已</a></li>
+<li><a href="#rpc%E6%A1%86%E6%9E%B6%E5%8A%9F%E8%83%BD%E6%9B%B4%E9%BD%90%E5%85%A8">RPC框架功能更齐全</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</p>
+
+        <h1 id="font-color6495ed-size6深入浅出rpc框架-青训营-font"   >
+          <a href="#font-color6495ed-size6深入浅出rpc框架-青训营-font" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#font-color6495ed-size6深入浅出rpc框架-青训营-font"></a> <font color=#6495ED size=6>深入浅出RPC框架 | 青训营 </font></h1>
+      
+<ul>
+<li>
+<p>RPC 框架分层设计</p>
+</li>
+<li>
+<p>RPC 关键指标分析与企业实践</p>
+</li>
+</ul>
+
+        <h2 id="font-size5-face粗体rpc-框架分层设计font"   >
+          <a href="#font-size5-face粗体rpc-框架分层设计font" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#font-size5-face粗体rpc-框架分层设计font"></a> <font size=5 face=粗体>RPC 框架分层设计</font></h2>
+      
+
+        <h3 id="远程函数调用rpc介绍"   >
+          <a href="#远程函数调用rpc介绍" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#远程函数调用rpc介绍"></a> 远程函数调用（RPC）介绍</h3>
+      
+<p>RPC框架是一种用于实现远程过程调用（Remote Procedure Call，简称RPC）的软件工具或框架。它提供了一种方式，使不同计算机上的程序能够通过网络相互调用函数或方法，就像调用本地函数一样。RPC框架的主要目的是简化分布式系统中的通信和远程调用过程，使开发人员能够更轻松地构建分布式应用程序。</p>
+<p>以下是RPC框架的一些常见用途和使用方法：</p>
+<p><strong>1. 分布式服务调用：</strong> RPC框架允许在不同的服务器上运行的程序相互调用函数或方法。这对于构建分布式应用程序和微服务体系结构非常有用，因为它可以将不同服务之间的通信抽象化。</p>
+<p><strong>2. 跨语言通信：</strong> RPC框架通常支持多种编程语言，这意味着您可以使用不同编程语言编写的程序之间进行通信。这在构建多语言系统时非常有用。</p>
+<p><strong>3. 代码生成：</strong> 大多数RPC框架会生成客户端和服务器端的代码，这样开发人员就不需要手动编写网络通信代码。这减少了错误和提高了开发效率。</p>
+<p><strong>4. 序列化和反序列化：</strong> RPC框架处理数据的序列化（将数据转换为可在网络上传输的格式）和反序列化（将接收到的数据转换回本地格式），从而使远程调用变得更加透明。</p>
+<p><strong>5. 异常处理：</strong> RPC框架通常具有异常处理机制，允许在分布式系统中处理各种错误情况。</p>
+<p><strong>6. 安全性：</strong> 许多RPC框架提供安全性功能，如身份验证和数据加密，以保护通信数据的安全性。</p>
+<p>下面是使用RPC框架的一般<strong>步骤</strong>：</p>
+<p><strong>1. 定义接口：</strong> 首先，您需要定义远程过程调用的接口，包括要调用的函数或方法名称、参数和返回值。</p>
+<p><strong>2. 生成代码：</strong> 使用RPC框架工具，您可以生成客户端和服务器端的代码。这通常涉及在接口定义上运行代码生成器，以生成与您选择的编程语言相对应的代码。</p>
+<p><strong>3. 实现服务器：</strong> 在服务器端，您需要实现定义的接口，以处理来自客户端的远程调用请求。</p>
+<p><strong>4. 实现客户端：</strong> 在客户端，您可以使用生成的客户端代码来远程调用服务器上的函数或方法。</p>
+<p><strong>5. 部署和运行：</strong> 部署服务器和客户端应用程序，然后通过网络进行通信，进行远程调用。</p>
+<p>常见的RPC框架包括gRPC、Apache Thrift、Java RMI（远程方法调用）、JSON-RPC、XML-RPC等。不同的框架具有不同的特点和适用场景，您可以根据项目的需求选择合适的RPC框架。</p>
+<hr />
+
+        <h3 id="名词解释"   >
+          <a href="#名词解释" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#名词解释"></a> 名词解释</h3>
+      
+<p>当涉及到RPC框架和分布式系统时，以下是与您提到的术语相关的解释：</p>
+<ol>
+<li>
+<p><strong>IDL (Interface Description Language) 文件：</strong> IDL是一种特定语法的语言，用于定义接口和数据结构。它提供了一种独立于编程语言的方式来描述接口的方法、参数和返回值，以及数据的结构。IDL文件定义了客户端和服务器之间的通信协议的规范。</p>
+</li>
+<li>
+<p><strong>生成代码：</strong> RPC框架通常能够根据IDL文件生成客户端和服务器端的代码。这些代码用于处理序列化、反序列化、网络通信和远程过程调用。生成的代码使开发人员无需手动编写底层通信代码，从而提高了开发效率。</p>
+</li>
+<li>
+<p><strong>编解码：</strong> 在RPC中，数据在网络上传输之前需要被序列化（编码）为一种可传输的格式，然后在接收方被反序列化（解码）回本地格式。编解码是为了在网络上传输数据，并确保数据能够正确地在不同机器上传递和解释。</p>
+</li>
+<li>
+<p><strong>通信协议：</strong> 通信协议是定义在网络上传输数据时使用的规则和约定。它决定了数据的结构、序列化方法、错误处理等。在RPC中，通信协议用于确保客户端和服务器之间的正确通信。</p>
+</li>
+<li>
+<p><strong>网络传输：</strong> RPC框架使用网络传输来在不同计算机之间传递数据。网络传输包括将数据从一个计算机发送到另一个计算机的过程，通常涉及数据分割、传输控制、数据校验等。</p>
+</li>
+</ol>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/11e80c65e63f4b989963e971372d0e5f~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1100&amp;h=1036&amp;e=png&amp;b=0265e7"  style=""  alt="image.png" />
+      </p>
+<p>在一个典型的RPC框架中，这些步骤按以下方式运作：</p>
+<ol>
+<li>使用IDL文件定义接口、方法、参数和数据结构。</li>
+<li>使用RPC框架的工具生成客户端和服务器端的代码，这些代码包括编解码和通信协议的实现。</li>
+<li>在服务器端实现IDL文件中定义的接口方法，用于处理远程调用请求。</li>
+<li>在客户端使用生成的客户端代码，通过远程调用请求调用服务器上的方法。</li>
+<li>数据在客户端和服务器之间经过编码和解码，使用通信协议在网络上传输。</li>
+<li>网络传输将编码后的数据从客户端发送到服务器，然后将结果返回给客户端。</li>
+</ol>
+<p>整个过程的目标<strong>是使远程调用和分布式通信尽可能地透明</strong>，使开发人员能够将注意力集中在<strong>业务逻辑</strong>而不是底层通信细节上。</p>
+<hr />
+
+        <h3 id="一次rpc过程"   >
+          <a href="#一次rpc过程" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#一次rpc过程"></a> 一次RPC过程</h3>
+      
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/46f242ad51c84f65ba27519c30dd3199~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=959&amp;h=572&amp;e=png&amp;b=fefdfd"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h3 id="rpc好处和弊端"   >
+          <a href="#rpc好处和弊端" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#rpc好处和弊端"></a> RPC好处和弊端</h3>
+      
+<p><strong>好处</strong></p>
+<ol>
+<li>单一职责，有利于分工协作和运维开发。开发（使用的语言）、部署以及运维（上线时间）都是独立的。</li>
+<li>可扩展性强，能够扩缩资源，复用资源，使资源使用率更优。</li>
+<li>故障隔离，服务整体可靠性更高。</li>
+</ol>
+<p><strong>弊端</strong></p>
+<ol>
+<li>服务宕机，对方应如何处理？</li>
+<li>调用过程中发生网络异常，如何保证消息的可达性？</li>
+<li>请求突增导致服务无法及时处理，有哪些应对措施？</li>
+</ol>
+<hr />
+
+        <h3 id="分层设计"   >
+          <a href="#分层设计" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#分层设计"></a> 分层设计</h3>
+      
+<p>Apache Thrift（简称Thrift）是一个开源的跨语言的远程过程调用（RPC）框架和服务化的软件堆栈，最初由Facebook开发并于2007年开源。它旨在解决不同编程语言之间进行高效通信的问题，特别是在分布式系统中。</p>
+<p>分层主要是三层</p>
+<ul>
+<li><strong>编解码层</strong></li>
+<li><strong>协议层</strong></li>
+<li><strong>网络通信层</strong></li>
+</ul>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fab555f77c2a4bd7afab9578664ed706~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=714&amp;h=542&amp;e=png&amp;a=1&amp;b=fefefe"  style=""  alt="image.png" />
+      </p>
+
+        <h4 id="编解码层"   >
+          <a href="#编解码层" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#编解码层"></a> 编解码层</h4>
+      
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f0bcfc3e92504a0d8ec029bd8f48e8be~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1776&amp;h=859&amp;e=png&amp;b=f6fdfd"  style=""  alt="image.png" />
+      </p>
+<p>生成代码也可看做编解码层的一部分，因为内部包含了编解码的逻辑。用户和服务器依赖同一份IDL生成codegen（可以是不同语言的）</p>
+<p>IDL的<strong>数据格式</strong>如何选择？</p>
+<ul>
+<li>语言特定的格式：许多编程语言都内建了将内存对象编码为字节序列的支持，例如<code>Java</code>有<code>Java.io.Serializable</code>。好处是非常方便，可以用很少的额外代码实现内存对象的保存与恢复。但是这类编码通常与特定的编程语言深度绑定，其他语言很难读取这种数据。此外还有安全性和兼容性的问题。</li>
+<li>文本格式：JSON、XML、CSV等文本格式具有人类可读性。但数字编码多有歧义之处，如XML和CSV不能区分数字和字符串；JSON不能区分整数和浮点数，且不能指定精度。处理大数据时存在问题。没有强制模型约束使得实际操作中往往以文档方式进行约定，可能会给调试带来不便。由于JSON在一些语言中的序列化和反序列化需要采用反射机制，所以性能也比较差。</li>
+<li><strong>二进制编码</strong>：有<strong>TLV</strong>、Varint等多种编码方式，具备跨语言和高性能等优点，常见的有Thrift的BinaryProtocol，Protobuf等。</li>
+</ul>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3c79f0a5e0604f579e101effbc6b6947~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2395&amp;h=1240&amp;e=png&amp;b=f9f9f9"  style=""  alt="image.png" />
+      </p>
+<p><strong>选择依据</strong></p>
+<ol>
+<li>兼容性(支持新增字段)：支持自动增加新的字段，而不影响老的服务，这将提高系统的灵活度</li>
+<li>通用性(编码大小解码时长)：支持跨平台、跨语言</li>
+<li>性能(平台语言)：从空间和时间两个维度来考虑，也就是编码后数据大小和编码耗费时长</li>
+</ol>
+
+        <h4 id="协议层"   >
+          <a href="#协议层" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#协议层"></a> 协议层</h4>
+      
+<p>现在把请求的数据转换成字节流了，需要通信协议和元数据，传给另一边</p>
+<p><strong>协议是双方确定的交流语义</strong></p>
+<p>常见的两种协议</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/695bcad530714e58aa6a3731f486f772~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1959&amp;h=961&amp;e=png&amp;b=0365e5"  style=""  alt="image.png" />
+      </p>
+<p>多路复用：同一个连接内可以有多个请求流</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b2988643e15047a39bd70fe0051a05c8~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2447&amp;h=1294&amp;e=png&amp;b=0465e5"  style=""  alt="image.png" />
+      </p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/de707eacdd4645a78fbc9f473278f17a~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=803&amp;h=229&amp;e=png&amp;b=ffffff"  style=""  alt="image.png" />
+      </p>
+
+        <h4 id="网络通信层"   >
+          <a href="#网络通信层" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#网络通信层"></a> 网络通信层</h4>
+      
+<p><strong>Sockets API</strong> （套接字应用程序接口）介于应用层和传输层中间，是一组函数和数据结构，用于在网络上进行进程间通信。它提供了一种编程接口，使得开发者可以创建网络连接、发送和接收数据，并处理网络通信的各种细节，使用套接字，应用程序可以建立网络连接并进行双向通信。</p>
+<p>套接字在网络通信中扮演重要的角色，它提供了以下功能：</p>
+<ol>
+<li>
+<p>建立连接：套接字允许应用程序建立与远程主机的连接。通过指定主机地址和端口，应用程序可以使用套接字来发起连接请求。</p>
+</li>
+<li>
+<p>数据传输：一旦建立了连接，套接字可用于在应用程序之间传输数据。发送方可以将数据写入套接字，而接收方可以从套接字中读取数据。</p>
+</li>
+<li>
+<p>协议支持：套接字库支持多种协议，如TCP（传输控制协议）和UDP（用户数据报协议）。这使得开发人员可以选择适合特定需求的协议，并根据需要进行配置。</p>
+</li>
+</ol>
+<p>下面是一个简单的示例，使用Python的socket模块来创建一个基本的客户端-服务器应用程序：</p>
+<figure class="highlight python"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 服务器端代码</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建套接字</span></span><br><span class="line">server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绑定地 址和端口</span></span><br><span class="line">server_address = (<span class="string">&#x27;localhost&#x27;</span>, <span class="number">8080</span>)</span><br><span class="line">server_socket.bind(server_address)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 监听连接</span></span><br><span class="line">server_socket.listen(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 等待客户端连接</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;等待客户端连接...&#x27;</span>)</span><br><span class="line">client_socket, client_address = server_socket.accept()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;客户端已连接:&#x27;</span>, client_address)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 接收数据</span></span><br><span class="line">data = client_socket.recv(<span class="number">1024</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;接收到的数据:&#x27;</span>, data.decode())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 发送响应</span></span><br><span class="line">response = <span class="string">&#x27;Hello, client!&#x27;</span></span><br><span class="line">client_socket.sendall(response.encode())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭连接</span></span><br><span class="line">client_socket.close()</span><br><span class="line">server_socket.close()</span><br></pre></td></tr></table></div></figure>
+<figure class="highlight python"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 客户端代码</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建套接字</span></span><br><span class="line">client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 连接服务器</span></span><br><span class="line">server_address = (<span class="string">&#x27;localhost&#x27;</span>, <span class="number">8080</span>)</span><br><span class="line">client_socket.connect(server_address)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 发送数据</span></span><br><span class="line">message = <span class="string">&#x27;Hello, server!&#x27;</span></span><br><span class="line">client_socket.sendall(message.encode())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 接收响应</span></span><br><span class="line">response = client_socket.recv(<span class="number">1024</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;收到的响应:&#x27;</span>, response.decode())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭连接</span></span><br><span class="line">client_socket.close()</span><br></pre></td></tr></table></div></figure>
+<p>在这个例子中，通过使用socket模块创建了一个服务器和一个客户端。服务器绑定在本地主机的8080端口上，并监听来自客户端的连接请求。客户端连接到服务器的指定地址和端口。</p>
+<p>一旦建立连接，服务器接收到来自客户端的消息，并发送一个简单的响应。客户端发送一个消息给服务器，并等待响应。最后，他们关闭连接。</p>
+<p>这只是一个简单的示例，展示了套接字在建立连接、发送和接收数据方面的作用。套接字API提供了更多功能和选项，以满足不同类型的网络通信需求。</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/209bc3da33cf4db3a858ec0ed066ca1e~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2338&amp;h=1265&amp;e=png&amp;b=fdf6f5"  style=""  alt="image.png" />
+      </p>
+<p>服务器会监听连接。由于服务器不止负责连接，而且要负责处理其它事物，于是会先将连接放入消息队列。队列大小（back log）一般设为128。</p>
+<p>如果队列未满，客户端直接将状态设为已连接，若队列已满，则客户端阻塞，等待队列更新。</p>
+<p>客户端与服务器连接完成后将进行数据读写，直到一方关闭连接。</p>
+<p><strong>采用封装好的网络库，作为通信层</strong></p>
+<ul>
+<li>提供易用API：封装底层Socket API。连接管理和事件分发</li>
+<li>功能：支持tcp、udp和uds等协议。能够优雅的退出、进行异常处理等</li>
+<li>性能：应用层buffer减少copy，高性能定时器、对象池等</li>
+</ul>
+<hr />
+
+        <h2 id="font-size5-face粗体rpc-关键指标分析与企业实践font"   >
+          <a href="#font-size5-face粗体rpc-关键指标分析与企业实践font" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#font-size5-face粗体rpc-关键指标分析与企业实践font"></a> <font size=5 face=粗体>RPC 关键指标分析与企业实践</font></h2>
+      
+
+        <h3 id="稳定性"   >
+          <a href="#稳定性" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#稳定性"></a> 稳定性</h3>
+      
+
+        <h4 id="保障策略"   >
+          <a href="#保障策略" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#保障策略"></a> 保障策略</h4>
+      
+<ul>
+<li>
+<p><strong>熔断</strong>： 一个服务 A 调用服务 B 时，服务 B 的业务逻辑又调用了服务 C，而这时服务 C 响应超时了，由于服务 B 依赖服务 C，C 超时直接导致 B 的业务逻辑一直等待，而这个时候服务 A 继续频繁地调用服务 B，服务 B 就可能会因为堆积大量的请求而导致服务宕机，由此就导致了服务雪崩的问题。</p>
+</li>
+<li>
+<p><strong>限流</strong>： 当调用端发送请求过来时，服务端在执行业务逻辑之前先执行检查限流逻辑，如果发现访问量过大并且超出了限流条件，就让服务端直接降级处理或者返回给调用方一个限流异常。</p>
+</li>
+<li>
+<p><strong>超时</strong>： 当下游的服务因为某种原因响应过慢，下游服务主动停掉一些不太重要的业务，释放出服务器资源，避免浪费资源</p>
+</li>
+</ul>
+<p>三种保障策略都算是<strong>降级手段</strong>（服务器的降级手段是在服务器面临压力或故障时采取的策略，旨在减轻负载、保障稳定性。常见方法包括请求限流、关闭不必要的服务、降低服务质量、分流流量至备用服务器等。这有助于防止服务器过载，确保系统仍然可用，尽管在较低的性能水平下。）</p>
+
+        <h4 id="请求成功率"   >
+          <a href="#请求成功率" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#请求成功率"></a> 请求成功率</h4>
+      
+<p>提高方法：</p>
+<ul>
+<li>负载均衡：若A调用B，可多个A调用，多个B被调用，减少压力</li>
+<li>重试</li>
+</ul>
+
+        <h4 id="长尾请求"   >
+          <a href="#长尾请求" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#长尾请求"></a> 长尾请求</h4>
+      
+<p><strong>长尾请求</strong>的一般标准为用时超过99%其它请求的请求。长尾请求总是会存在，业界关于延迟有一个常用的P99标准，也就是99%的请求延迟要满足在一定耗时以内，1%的请求会大于这个耗时，而这1%就可以认为是长尾请求。造成长尾请求的原因包括网络抖动、GC、系统调度等。</p>
+<p>解决：<strong>backup request（备份请求）</strong>：我们先预设一个阈值t3（比超时时间小，通常建议是RPC请求实验的pct99），当req1发出后超过t3没有返回，我们就直接发起重试请求req2。此时相当于有<strong>两个请求同时运行</strong>，任何一个成功返回后就可以立即结束这次请求。这样整体耗时就是t4,它表示从第一个请求出发到第一个结果返回的时间。相比与超时后再请求，大大减少了时延。</p>
+
+        <h4 id="注册中间件middleware-拦截器"   >
+          <a href="#注册中间件middleware-拦截器" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#注册中间件middleware-拦截器"></a> 注册中间件（middleware、拦截器…）</h4>
+      
+<p>框架通过注册中间件的方式使用上述功能。用户或服务器在创建时可选是否加入上述功能，这种灵活的方式保障了整体的稳定性。</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c0872131cdfc4f1ea838ff08dae633e2~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1818&amp;h=937&amp;s=1407095&amp;e=png&amp;b=7ea5de"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h3 id="易用性"   >
+          <a href="#易用性" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#易用性"></a> 易用性</h3>
+      
+<ul>
+<li>开箱即用：合理的默认参数选项，丰富的文档</li>
+<li>周边工具：框架提供一系列工具辅助用户来更好的使用框架，如生成代码工具，脚手架工具等。尽可能支持多个编解码协议</li>
+</ul>
+<hr />
+
+        <h3 id="拓展性"   >
+          <a href="#拓展性" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#拓展性"></a> 拓展性</h3>
+      
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8b4bc21d5b094d1585c19892710fe1bc~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2170&amp;h=1298&amp;s=1205894&amp;e=png&amp;b=0265e7"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h3 id="观测性"   >
+          <a href="#观测性" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#观测性"></a> 观测性</h3>
+      
+<ul>
+<li><strong>Log</strong></li>
+<li><strong>Metric</strong>（指标）是在监控和评估系统性能时使用的度量标准
+<ul>
+<li>QPS（每秒查询率，Queries Per Second）</li>
+<li>延迟（请求处理时间）</li>
+</ul>
+</li>
+<li><strong>Tracing</strong>（链路跟踪）</li>
+<li>内置状态观测性服务</li>
+</ul>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/57284f1183d6475d883bbdd4e48786a3~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1338&amp;h=696&amp;s=366661&amp;e=png&amp;b=e9f6f9"  style=""  alt="image.png" />
+      </p>
+<p>线程（Thread）和协程（Coroutine）都是用于并发执行任务的编程概念，但它们有一些区别和联系。</p>
+<p>区别：</p>
+<ol>
+<li><strong>并发模型：</strong> 线程是操作系统层面的并发执行单元，每个线程都有自己的上下文，可以由操作系统进行调度。而协程是程序层面的并发模型，由程序员显式地控制执行的切换，不需要操作系统的干预。</li>
+<li><strong>开销：</strong> 线程通常有较高的创建和切换开销，因为涉及操作系统的资源分配和上下文切换。协程的切换开销较低，因为切换是在用户空间内进行的。</li>
+<li><strong>并发性：</strong> 线程可以在多个处理器核心上同时运行，因此适合CPU密集型任务。协程通常运行在单个线程内，适合I/O密集型任务。</li>
+</ol>
+<p>联系：</p>
+<ol>
+<li><strong>并发性目标：</strong> 线程和协程都旨在实现并发执行，提高程序的效率和响应性。</li>
+<li><strong>多任务处理：</strong> 两者都可以用于处理多个任务，但线程可能需要更多的系统资源。</li>
+<li><strong>状态管理：</strong> 线程和协程都需要考虑状态同步和共享资源的问题，以避免竞争条件和数据不一致。</li>
+</ol>
+<p>总之，线程适用于需要并行处理和多核利用的场景，而协程适用于处理大量I/O操作和轻量级并发的场景，通过避免昂贵的线程切换开销来提供更好的性能。</p>
+<hr />
+
+        <h3 id="高性能"   >
+          <a href="#高性能" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#高性能"></a> 高性能</h3>
+      
+<p><strong>连接池</strong>，<strong>多路复用</strong>：减少连接的复用率，减少重复创建和销毁的开销</p>
+<p><strong>多路复用</strong>：调用端向服务端的一个节点发送请求，并发场景下，如果是非连接多路复用，每个请求都会持有一个连接，直到请求结束连接才会被关闭或者放入连接池复用，并发量与连接数是对等的关系。而使用连接多路复用，所有请求都可以在一个连接上完成，大家可以明显看到连接资源利用上的差异</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5ce439588240459f84325827ae2211d7~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2404&amp;h=1201&amp;s=1181167&amp;e=png&amp;b=2f78b8"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h2 id="font-size5-face粗体rpc企业实践font"   >
+          <a href="#font-size5-face粗体rpc企业实践font" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#font-size5-face粗体rpc企业实践font"></a> <font size=5 face=粗体>RPC企业实践</font></h2>
+      
+<p><strong>Kitex</strong> 企业内部大范围使用 go 语言进行开发，而 kitex 是内部多年最佳实践沉淀出来的一个高性能高可扩展性的 <strong>go RPC</strong> 框架。</p>
+
+        <h3 id="架构"   >
+          <a href="#架构" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#架构"></a> 架构</h3>
+      
+<p>kitex分为三个部分</p>
+<ul>
+<li>核心组件core</li>
+<li>与字节公司内部基础设施集成的部分Byted</li>
+<li>代码生成工具tool</li>
+</ul>
+<p>核心部分除了用户端和服务端之外，还包括注册中心（register）、服务发现（discovery）、负载均衡（loadbalance）、熔断（circuitbreak）、重试（retry）、限流（limit）等。关键的数据结构包括结点（endpoint）、rpc元数据（rpcinfo）等。remote是与远端交互的一层，transport可以和网络库交互，codec负责编解码。</p>
+<p>代码生成工具提供命令行工具（cmd）、解析器（parser）、插件机制（plugin）、生成器（generator）、自更新（selfupdate）。</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/20b8ab69f1c84f4489137e5e00513240~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=996&amp;h=750&amp;s=500455&amp;e=png&amp;a=1&amp;b=d2f4f6"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h3 id="自研网络库-netpoll"   >
+          <a href="#自研网络库-netpoll" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#自研网络库-netpoll"></a> 自研网络库-Netpoll</h3>
+      
+<p>为什么要自研网络库？</p>
+<ol>
+<li><strong>原生库（go net）</strong>（如<code>net/http</code> 用于处理 HTTP 请求和响应，<code>net/tcp</code> 用于处理 TCP 连接，<code>net/udp</code> 用于处理 UDP 数据等） 无法感知连接状态，使用连接池时，池中存在失效连接，影响连接池的复用。</li>
+<li>原生库存在goroutine暴涨的风险：使用一个连接对应一个goroutine的模式，利用率低下，存在大量goroutine占用调度开销，影响性能。</li>
+</ol>
+<p><strong>Netpoll</strong> 解决了什么问题：</p>
+<ul>
+<li>解决无法感知状态连接问题：引入epoll主动监听机制，感知连接状态</li>
+<li>解决goroutine池：建立goroutine池，复用goroutine</li>
+<li>提升性能：引入Nocopy Buffer，向上层提供NoCopy接口，编解码层面零拷贝</li>
+</ul>
+<hr />
+
+        <h3 id="拓展性设计"   >
+          <a href="#拓展性设计" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#拓展性设计"></a> 拓展性设计</h3>
+      
+<p>支持多协议，自定义协议拓展</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2672834e69ce4ac6a477129a19024574~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1124&amp;h=781&amp;s=426866&amp;e=png&amp;b=d5e0f1"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h3 id="性能优化-网络库优化"   >
+          <a href="#性能优化-网络库优化" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#性能优化-网络库优化"></a> 性能优化-网络库优化</h3>
+      
+<p><strong>调度优化</strong>：</p>
+<ul>
+<li>epoll wait在调度上的控制</li>
+<li>gopool重用goroutine降低同时运行协程数</li>
+</ul>
+<p><strong>LinkBuffer</strong>：</p>
+<ul>
+<li>读写并行无锁，支持nocopy地流式读写</li>
+<li>高效扩缩容</li>
+<li>Nocopy Buffer池化，减少GC</li>
+</ul>
+<p><strong>Pool</strong>：</p>
+<ul>
+<li>引入内存池和对象池，减少GC开销</li>
+</ul>
+<hr />
+
+        <h3 id="性能优化-编解码优化"   >
+          <a href="#性能优化-编解码优化" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#性能优化-编解码优化"></a> 性能优化-编解码优化</h3>
+      
+<p>编解码逻辑往往在生成代码里面</p>
+<p><strong>Codegen</strong>（代码生成）：</p>
+<ul>
+<li>预计算并预分配内存，减少内存操作次数，包括内存分配和拷贝</li>
+<li>inline减少函数调用次数和避免不必要得反射操作等</li>
+<li>自研基于go的thrift IDL解析和代码生成器，支持完善的Thrift IDL语法和语义检查，支持插件机制-Thriftgo</li>
+</ul>
+<p><strong>JIT</strong>（just in time，即时编译，当某段代码即将第一次被执行时编译）：</p>
+<ul>
+<li>使用JIT编译技术改善用户体验的同时带来更强的编解码性能，减轻用户维护生成代码的负担</li>
+<li>基于JIT编译技术的高性能动态Thrift编解码器-frugal。</li>
+</ul>
+<hr />
+
+        <h3 id="合并部署"   >
+          <a href="#合并部署" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#合并部署"></a> 合并部署</h3>
+      
+<p>但是不同微服务不能直接合并</p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/abb31958bb204f3bb7ae2be80a0bfa21~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2236&amp;h=1266&amp;s=1482934&amp;e=png&amp;b=0365e6"  style=""  alt="image.png" />
+      </p>
+<p>
+        <img     class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e6523610a4d34ca7a4d25722f12f718c~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=2355&amp;h=1225&amp;s=1597755&amp;e=png&amp;b=0465e5"  style=""  alt="image.png" />
+      </p>
+<hr />
+
+        <h3 id="既有http为什么用rpc"   >
+          <a href="#既有http为什么用rpc" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#既有http为什么用rpc"></a> 既有HTTP,为什么用RPC？</h3>
+      
+
+        <h4 id="rpc-只是一种设计而已"   >
+          <a href="#rpc-只是一种设计而已" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#rpc-只是一种设计而已"></a> RPC 只是一种设计而已</h4>
+      
+<p>RPC 只是一种概念、一种设计，就是为了解决 <strong>不同服务之间的调用问题</strong>, 它一般会包含有 <strong>传输协议</strong> 和 <strong>序列化协议</strong> 这两个。</p>
+<p>但是，HTTP 是一种协议，RPC框架可以使用 HTTP协议作为传输协议或者直接使用TCP作为传输协议，使用不同的协议一般也是为了适应不同的场景。</p>
+
+        <h4 id="rpc框架功能更齐全"   >
+          <a href="#rpc框架功能更齐全" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#rpc框架功能更齐全"></a> RPC框架功能更齐全</h4>
+      
+<p>成熟的 RPC框架还提供好了“服务自动注册与发现”、“智能负载均衡”、“可视化的服务治理和运维”、“运行期流量调度”等等功能，这些也算是选择 RPC 进行服务注册和发现的一方面原因吧！</p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://hexo.ab-in.cn">AB-IN</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://hexo.ab-in.cn/2023/08/30/ByteDance2023-08-30/">https://hexo.ab-in.cn/2023/08/30/ByteDance2023-08-30/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/ByteDance/">ByteDance</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/Go/">Go</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://hexo.ab-in.cn/tags/%E5%90%8E%E7%AB%AF/">后端</a></span></div><div class="post-share"><div class="social-share" data-sites="qzone, qq, weibo, wechat, douban, linkedin, facebook, twitter, google">Share to: </div></div><div class="post-reward reward"><div class="reward-button">请我喝杯咖啡~</div><div class="reward-qrcode"><span class="reward-qrcode-alipay"><img class="reward-qrcode-alipay__img" src="https://oss.ab-in.cn/Pay/alipay.png"><div class="reward-qrcode-alipay__text">支付宝打赏</div></span><span class="reward-qrcode-wechat"><img class="reward-qrcode-wechat__img" src="https://oss.ab-in.cn/Pay/weixin.png"><div class="reward-qrcode-wechat__text">微信打赏</div></span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2023/09/07/Acwing2023-09-07/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">487. 金明的预算方案</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2023/08/27/ByteDance2023-08-27/"><span class="paginator-prev__text">HTTP 框架修炼之道 | 青训营</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div><div class="comments" id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC81NTEzNS8zMTYwMw"></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#font-color6495ed-size6%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BArpc%E6%A1%86%E6%9E%B6-%E9%9D%92%E8%AE%AD%E8%90%A5-font"><span class="toc-number">1.</span> <span class="toc-text">
+           深入浅出RPC框架 | 青训营 </span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#font-size5-face%E7%B2%97%E4%BD%93rpc-%E6%A1%86%E6%9E%B6%E5%88%86%E5%B1%82%E8%AE%BE%E8%AE%A1font"><span class="toc-number">1.1.</span> <span class="toc-text">
+           RPC 框架分层设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8rpc%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.1.</span> <span class="toc-text">
+           远程函数调用（RPC）介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A"><span class="toc-number">1.1.2.</span> <span class="toc-text">
+           名词解释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E6%AC%A1rpc%E8%BF%87%E7%A8%8B"><span class="toc-number">1.1.3.</span> <span class="toc-text">
+           一次RPC过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rpc%E5%A5%BD%E5%A4%84%E5%92%8C%E5%BC%8A%E7%AB%AF"><span class="toc-number">1.1.4.</span> <span class="toc-text">
+           RPC好处和弊端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%B1%82%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.1.5.</span> <span class="toc-text">
+           分层设计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E8%A7%A3%E7%A0%81%E5%B1%82"><span class="toc-number">1.1.5.1.</span> <span class="toc-text">
+           编解码层</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E5%B1%82"><span class="toc-number">1.1.5.2.</span> <span class="toc-text">
+           协议层</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%B1%82"><span class="toc-number">1.1.5.3.</span> <span class="toc-text">
+           网络通信层</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#font-size5-face%E7%B2%97%E4%BD%93rpc-%E5%85%B3%E9%94%AE%E6%8C%87%E6%A0%87%E5%88%86%E6%9E%90%E4%B8%8E%E4%BC%81%E4%B8%9A%E5%AE%9E%E8%B7%B5font"><span class="toc-number">1.2.</span> <span class="toc-text">
+           RPC 关键指标分析与企业实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%B3%E5%AE%9A%E6%80%A7"><span class="toc-number">1.2.1.</span> <span class="toc-text">
+           稳定性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%9D%E9%9A%9C%E7%AD%96%E7%95%A5"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">
+           保障策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E6%88%90%E5%8A%9F%E7%8E%87"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">
+           请求成功率</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%95%BF%E5%B0%BE%E8%AF%B7%E6%B1%82"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">
+           长尾请求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E5%86%8C%E4%B8%AD%E9%97%B4%E4%BB%B6middleware-%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="toc-number">1.2.1.4.</span> <span class="toc-text">
+           注册中间件（middleware、拦截器…）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%93%E7%94%A8%E6%80%A7"><span class="toc-number">1.2.2.</span> <span class="toc-text">
+           易用性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%93%E5%B1%95%E6%80%A7"><span class="toc-number">1.2.3.</span> <span class="toc-text">
+           拓展性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%82%E6%B5%8B%E6%80%A7"><span class="toc-number">1.2.4.</span> <span class="toc-text">
+           观测性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E6%80%A7%E8%83%BD"><span class="toc-number">1.2.5.</span> <span class="toc-text">
+           高性能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#font-size5-face%E7%B2%97%E4%BD%93rpc%E4%BC%81%E4%B8%9A%E5%AE%9E%E8%B7%B5font"><span class="toc-number">1.3.</span> <span class="toc-text">
+           RPC企业实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84"><span class="toc-number">1.3.1.</span> <span class="toc-text">
+           架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E7%A0%94%E7%BD%91%E7%BB%9C%E5%BA%93-netpoll"><span class="toc-number">1.3.2.</span> <span class="toc-text">
+           自研网络库-Netpoll</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%93%E5%B1%95%E6%80%A7%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.3.3.</span> <span class="toc-text">
+           拓展性设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-%E7%BD%91%E7%BB%9C%E5%BA%93%E4%BC%98%E5%8C%96"><span class="toc-number">1.3.4.</span> <span class="toc-text">
+           性能优化-网络库优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-%E7%BC%96%E8%A7%A3%E7%A0%81%E4%BC%98%E5%8C%96"><span class="toc-number">1.3.5.</span> <span class="toc-text">
+           性能优化-编解码优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E9%83%A8%E7%BD%B2"><span class="toc-number">1.3.6.</span> <span class="toc-text">
+           合并部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A2%E6%9C%89http%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8rpc"><span class="toc-number">1.3.7.</span> <span class="toc-text">
+           既有HTTP,为什么用RPC？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#rpc-%E5%8F%AA%E6%98%AF%E4%B8%80%E7%A7%8D%E8%AE%BE%E8%AE%A1%E8%80%8C%E5%B7%B2"><span class="toc-number">1.3.7.1.</span> <span class="toc-text">
+           RPC 只是一种设计而已</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rpc%E6%A1%86%E6%9E%B6%E5%8A%9F%E8%83%BD%E6%9B%B4%E9%BD%90%E5%85%A8"><span class="toc-number">1.3.7.2.</span> <span class="toc-text">
+           RPC框架功能更齐全</span></a></li></ol></li></ol></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://oss.ab-in.cn/images/AB-IN.jpg" alt="avatar"></div><p class="sidebar-ov-author__text">NEFU AB-IN</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/AB-IN-lsy" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/AB_IN_liusy" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="http://wpa.qq.com/msgrd?v=3&amp;uin=1719827581&amp;site=qq&amp;menu=yes" target="_blank" rel="noopener" data-popover="QQ" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-qq"></i></span></a><a class="sidebar-ov-social-item" href="mailto:liusy200708@gmail.com" target="_blank" rel="noopener" data-popover="Gmail" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a></div><div class="sidebar-ov-feed"></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">您已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2023</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>AB-IN All Rights Reserved</span><span class="footer__devider">|</span><span><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">鲁ICP备2021035431号</a></span></div><div class="busuanzi"><span class="busuanzi-siteuv"><span class="busuanzi-siteuv__icon"><i class="fas fa-user"></i></span><span class="busuanzi-siteuv__info">访问人数</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_uv"></span></span><span class="busuanzi-sitepv"><span class="busuanzi-siteuv__icon"><i class="fas fa-eye"></i></span><span class="busuanzi-siteuv__info">浏览总量</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_pv"></span></span></div><div><script type="text/javascript" src="https://oneword.ab-in.cn/oneword/oneword.php?format=js&charset=utf-8"></script> <div id="oneword"><script>oneword()</script></div></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"></div><div class="search-btns">使用搜索：<span class="search-btns-item search-btns-item--google"><i class="fab fa-google"></i>谷歌</span><span class="search-btns-item search-btns-item--bing"><i></i>必应</span><span class="search-btns-item search-btns-item--baidu"><i></i>百度</span></div><div class="search-results"><div id="algolia-hits"></div></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><script src="//unpkg.com/jquery@v3.4.1/dist/jquery.min.js"></script><script src="//unpkg.com/velocity-animate@1.5.2/velocity.min.js"></script><script src="//unpkg.com/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script><script src="//unpkg.com/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script src="//unpkg.com/social-share.js@1.0.16/dist/js/social-share.min.js"></script><script src="//unpkg.com/instantsearch.js@2.1.1/dist/instantsearch.min.js" defer></script><script>window.addEventListener('DOMContentLoaded', function () {
+  $('.header-nav-search').on('click', function (e) {
+    e.stopPropagation();
+
+    $('body').css('overflow', 'hidden');
+    $('.search-popup')
+      .velocity('stop')
+      .velocity('transition.expandIn', {
+        duration: 300,
+        complete: function () {
+          $('.search-popup input').focus();
+        }
+      });
+    $('.search-mask')
+      .velocity('stop')
+      .velocity('transition.fadeIn', {
+        duration: 300
+      });
+  });
+
+  function closeSearch () {
+    $('body').css({ overflow: 'auto' });
+    $('.search-popup').css({ display: 'none' });
+    $('.search-mask').css({ display: 'none' });
+  }
+
+  $('.search-mask, .search-close').on('click', function () {
+    closeSearch();
+  });
+
+  $(document).on('keydown', function (e) {
+    // Escape <=> 27
+    if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+      closeSearch();
+    }
+  });
+
+  var algolia = CONFIG.algolia;
+  if (!algolia && !(algolia.appId && algolia.apiKey && algolia.indexName)) {
+    return console.error('Algolia setting is invalid.');
+  }
+
+  var search = instantsearch({
+    appId: algolia.appId,
+    apiKey: algolia.apiKey,
+    indexName: algolia.indexName,
+    searchParameters: {
+      hitsPerPage: algolia.hits.per_page || 10
+    },
+    searchFunction: function (helper) {
+      var searchInput = $('.search-input').find('input');
+
+      if (searchInput.val()) {
+        helper.search();
+      }
+    }
+  });
+
+  search.addWidget(
+    instantsearch.widgets.searchBox({
+      container: '.search-input',
+      reset: false,
+      magnifier: false,
+      placeholder: algolia.languages.inputPlaceholder
+    })
+  );
+
+  // The hits of search results.
+  search.addWidget(
+    instantsearch.widgets.hits({
+      container: '#algolia-hits',
+      templates: {
+        item: function (data) {
+          var link = data.permalink ? data.permalink : CONFIG.root + data.path;
+          return (
+            '<a href="' + link + '" class="algolia-hit-item-link">' +
+              data._highlightResult.title.value +
+            '</a>'
+          );
+        },
+        empty: function (data) {
+          return (
+            '<div id="algolia-hits-empty">' +
+              algolia.languages.hitsEmpty.replace(/\$\{query}/, data.query) +
+            '</div>'
+          );
+        }
+      },
+      cssClasses: {
+        item: 'algolia-hit-item'
+      }
+    })
+  );
+
+  // The stats of search results.
+  if ($('#algolia-stats')[0]) {
+    search.addWidget(
+      instantsearch.widgets.stats({
+        container: '#algolia-stats',
+        templates: {
+          body: function (data) {
+            var stats = algolia.languages.hitsStats
+              .replace(/\$\{hits}/, data.nbHits)
+              .replace(/\$\{time}/, data.processingTimeMS);
+            return (
+              stats +
+              '<span class="algolia-logo pull-right">' +
+                '<img src="' + CONFIG.root +
+                `${CONFIG.sourcePath.images}/algolia.svg" alt="Algolia" />` +
+              '</span>'
+            );
+          }
+        }
+      })
+    );
+  }
+
+  // The pagination of the results.
+  search.addWidget(
+    instantsearch.widgets.pagination({
+      container: '#algolia-pagination',
+      scrollTo: false,
+      showFirstLast: false,
+      labels: {
+        first: '<i class="fa fa-angle-double-left"></i>',
+        last: '<i class="fa fa-angle-double-right"></i>',
+        previous: '<i class="fa fa-angle-left"></i>',
+        next: '<i class="fa fa-angle-right"></i>'
+      },
+      cssClasses: {
+        root: 'pagination',
+        item: 'pagination-item',
+        link: 'page-number',
+        active: 'current',
+        disabled: 'disabled-item'
+      }
+    })
+  );
+
+  search.start();
+});</script><script src="//unpkg.com/pjax@latest/pjax.min.js"></script><script>window.addEventListener('DOMContentLoaded', function () {
+  var pjax = new Pjax({"selectors":["head title","#main",".pjax-reload",".header-inner"],"history":true,"scrollTo":false,"scrollRestoration":false,"cacheBust":false,"debug":false,"currentUrlFullReload":false,"timeout":0});
+  // 加载进度条的计时器
+  var loadingTimer = null;
+
+  // 重置页面 Y 方向上的滚动偏移量
+  document.addEventListener('pjax:send', function () {
+    $('.header-nav-menu').removeClass('show');
+    if (CONFIG.pjax && CONFIG.pjax.avoidBanner) {
+      $('html').velocity('scroll', {
+        duration: 500,
+        offset: $('#header').height(),
+        easing: 'easeInOutCubic'
+      });
+    }
+
+    var loadingBarWidth = 20;
+    var MAX_LOADING_WIDTH = 95;
+
+    $('.loading-bar').addClass('loading');
+    $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    clearInterval(loadingTimer);
+    loadingTimer = setInterval(function () {
+      loadingBarWidth += 3;
+      if (loadingBarWidth > MAX_LOADING_WIDTH) {
+        loadingBarWidth = MAX_LOADING_WIDTH;
+      }
+      $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    }, 500);
+  }, false);
+
+  window.addEventListener('pjax:complete', function () {
+    clearInterval(loadingTimer);
+    $('.loading-bar__progress').css('width', '100%');
+    $('.loading-bar').removeClass('loading');
+    setTimeout(function () {
+      $('.loading-bar__progress').css('width', '0');
+    }, 400);
+    $('link[rel=prefetch], script[data-pjax-rm]').each(function () {
+      $(this).remove();
+    });
+    $('script[data-pjax], #pjax-reload script').each(function () {
+      $(this).parent().append($(this).remove());
+    });
+
+    if (Stun.utils.pjaxReloadBoot) {
+      Stun.utils.pjaxReloadBoot();
+    }
+    if (Stun.utils.pjaxReloadScroll) {
+      Stun.utils.pjaxReloadScroll();
+    }
+    if (Stun.utils.pjaxReloadSidebar) {
+      Stun.utils.pjaxReloadSidebar();
+    }
+    if (true) {
+      if (Stun.utils.pjaxReloadHeader) {
+        Stun.utils.pjaxReloadHeader();
+      }
+      if (Stun.utils.pjaxReloadScrollIcon) {
+        Stun.utils.pjaxReloadScrollIcon();
+      }
+      if (Stun.utils.pjaxReloadLocalSearch) {
+        Stun.utils.pjaxReloadLocalSearch();
+      }
+    }
+  }, false);
+}, false);</script><div id="pjax-reload"><link href="https://unpkg.com/katex@0.10.2/dist/katex.min.css" rel="stylesheet" type="text/css"><link href="https://unpkg.com/katex@0.10.2/dist/contrib/copy-tex.css" rel="stylesheet" type="text/css"><script src="https://unpkg.com/katex@0.10.2/dist/contrib/copy-tex.min.js"></script><script src="//unpkg.com/quicklink@latest/dist/quicklink.umd.js"></script><script>function initQuicklink() {
+  quicklink({
+    timeout: '10000',
+    priority: true,
+    ignores: [uri => uri.includes('#'), uri => uri === 'https://hexo.ab-in.cn/2023/08/30/ByteDance2023-08-30/', /\/api\/?/,uri => uri.includes('.xml'),uri => uri.includes('.zip'),(uri, el) => el.hasAttribute('nofollow'),(uri, el) => el.hasAttribute('noprefetch')]
+  });
+}
+
+if (true || false) {
+  initQuicklink();
+} else {
+  window.addEventListener('DOMContentLoaded', initQuicklink, false);
+}</script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script></div><script data-pjax="">function loadLivere () {
+  var d = document, s = d.createElement('script');
+
+  if (!d.getElementById('lv-container')) {
+    return;
+  }
+  if (typeof LivereTower === 'function') {
+    return;
+  }
+  s.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+  if (true) {
+    s.setAttribute('data-pjax-rm', '');
+  }
+  (d.head || d.body).appendChild(s);
+}
+
+if (true) {
+  loadLivere();
+} else {
+  window.addEventListener('DOMContentLoaded', loadLivere, false);
+}</script><script src="/js/utils.js?v=2.8.0"></script><script src="/js/stun-boot.js?v=2.8.0"></script><script src="/js/scroll.js?v=2.8.0"></script><script src="/js/header.js?v=2.8.0"></script><script src="/js/sidebar.js?v=2.8.0"></script><script type="application/json" src="/search.json"></script></body></html>
