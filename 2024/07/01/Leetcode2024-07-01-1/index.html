@@ -1,0 +1,376 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="theme-color" content="#54bcff"><link rel="manifest" href="/manifest.json?v=2.8.0"><link rel="icon" href="/assets/favicon-16x16.png?v=2.8.0" type="image/png" sizes="16x16"><link rel="icon" href="/assets/favicon-32x32.png?v=2.8.0" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="/assets/android-chrome-192x192.png?v=2.8.0" sizes="180x180"><link rel="mask-icon" href="/%5Bobject%20Object%5D?v=2.8.0" color="#54bcff"><meta name="msapplication-TileImage" content="/%5Bobject%20Object%5D"><meta name="msapplication-TileColor" content="#000000"><meta name="google-site-verification" content="e4vuRgT_ouTNSxZf23XDFDixeCsDJiaAvmUQaKT_njA"><meta name="msvalidate.01" content="A2EE4D0CCD36C0B0741FA44DBF05FF0D"><meta name="baidu-site-verification" content="code-OOQCT4Wx7W"><meta name="description" content="摘要Title: 494. 目标和Categories: dp, 背包, dfs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="494. 目标和">
+<meta property="og:url" content="https://hexo.ab-in.cn/2024/07/01/Leetcode2024-07-01-1/index.html">
+<meta property="og:site_name" content="AB-IN&#39;s Blog">
+<meta property="og:description" content="摘要Title: 494. 目标和Categories: dp, 背包, dfs">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-07-01T14:20:15.000Z">
+<meta property="article:modified_time" content="2024-07-11T14:38:06.576Z">
+<meta property="article:author" content="AB-IN">
+<meta property="article:tag" content="Blog, Computer, Algorithm">
+<meta name="twitter:card" content="summary"><title>494. 目标和 | AB-IN's Blog</title><link ref="canonical" href="https://hexo.ab-in.cn/2024/07/01/Leetcode2024-07-01-1/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="//unpkg.com/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" type="text/css"><link rel="stylesheet" href="//unpkg.com/instantsearch.js@2.1.1/dist/instantsearch.min.css" type="text/css"><link rel="stylesheet" href="//unpkg.com/social-share.js@1.0.16/dist/css/share.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.8.0"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: {"appId":"TFSOR2I02I","apiKey":"c4e7e68262abaebd7acfd2eaa3832476","indexName":"hexo_BLOG","hits":{"per_page":10},"languages":{"inputPlaceholder":"搜索文章","hitsEmpty":"没有找到任何搜索结果：${query}","hitsStats":"找到 ${hits} 条搜索结果，耗时 ${time} 毫秒"}},
+  assistSearch: ["google","bing","baidu"],
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":false,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"ocean","wordWrap":true},
+  reward: true,
+  fancybox: true,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: {"avoidBanner":false},
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: {"switchPost":true},
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-newspaper"></i></span><span class="header-nav-menu-item__text">文章</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">归档</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">分类</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">标签</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="fas fa-address-card"></i></span><span class="header-nav-menu-item__text">关于</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/author"><span class="header-nav-submenu-item__icon"><i class="fas fa-at"></i></span><span class="header-nav-submenu-item__text">作者</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/friends"><span class="header-nav-submenu-item__icon"><i class="fas fa-users"></i></span><span class="header-nav-submenu-item__text">友链</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/FAQ"><span class="header-nav-submenu-item__icon"><i class="fas fa-question"></i></span><span class="header-nav-submenu-item__text">FAQ</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return false;"><span class="header-nav-menu-item__icon"><i class="far fa-window-maximize"></i></span><span class="header-nav-menu-item__text">其余站点</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://www.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fab fa-safari"></i></span><span class="header-nav-submenu-item__text">主页</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://ssh.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fas fa-terminal"></i></span><span class="header-nav-submenu-item__text">终端</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://kod.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fas fa-cloud"></i></span><span class="header-nav-submenu-item__text">云盘</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://oneword.ab-in.cn"><span class="header-nav-submenu-item__icon"><i class="fab fa-dailymotion"></i></span><span class="header-nav-submenu-item__text">一言</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" target="_blank" rel="noopener" href="https://ab-in.blog.csdn.net"><span class="header-nav-submenu-item__icon"><i class="fas fa-copyright"></i></span><span class="header-nav-submenu-item__text">CSDN</span></a></div></div></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">494. 目标和</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2024-07-01</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2024-07-11</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.6k</span></span><span class="post-meta-item post-meta-item--readtime"><span class="post-meta-item__icon"><i class="far fa-clock"></i></span><span class="post-meta-item__info">阅读时长</span><span class="post-meta-item__value">14分</span></span><span class="post-meta-item post-meta-item--visitors"><span class="post-meta-item__icon"><i class="fas fa-eye"></i></span><span class="post-meta-item__info">阅读次数</span><span class="post-meta-item__value" id="busuanzi_value_page_pv"></span></span></div></header><div class="post-body">
+    <div class="note-plugin info">
+      <span class="note-plugin__icon note-plugin__icon--info">
+              <i class="fas fa-info-circle"></i>
+            </span>
+      <p><strong>摘要</strong><br />Title: 494. 目标和<br />Categories: dp, 背包, dfs</p>
+    </div>
+  
+<span id="more"></span>
+<p><font size=3 face=楷体>Powered by:<strong>NEFU AB-IN</strong></font></p>
+<p><font color=#FFA500 size=5 face=楷体><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://leetcode.cn/problems/target-sum/" >Link</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></font></p>
+<p><ul class="markdownIt-TOC">
+<li><a href="#font-size5-face%E7%B2%97%E4%BD%93%E9%A2%98%E6%84%8Ffont"><font size=5 face=粗体>题意</font></a></li>
+<li><a href="#font-size5-face%E7%B2%97%E4%BD%93%E6%80%9D%E8%B7%AFfont"><font size=5 face=粗体>思路</font></a></li>
+<li><a href="#font-size5-face%E7%B2%97%E4%BD%93%E4%BB%A3%E7%A0%81font"><font size=5 face=粗体>代码</font></a></li>
+</ul>
+</p>
+
+        <h1 id="font-color6495ed-size6494-目标和font"   >
+          <a href="#font-color6495ed-size6494-目标和font" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#font-color6495ed-size6494-目标和font"></a> <font color=#6495ED size=6>494. 目标和</font></h1>
+      
+
+        <h2 id="font-size5-face粗体题意font"   >
+          <a href="#font-size5-face粗体题意font" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#font-size5-face粗体题意font"></a> <font size=5 face=粗体>题意</font></h2>
+      
+<p>给你一个非负整数数组 nums 和一个整数 target 。</p>
+<p>向数组中的每个整数前添加 ‘+’ 或 ‘-’ ，然后串联起所有整数，可以构造一个 表达式 ：</p>
+<p>例如，nums = [2, 1] ，可以在 2 之前添加 ‘+’ ，在 1 之前添加 ‘-’ ，然后串联起来得到表达式 “+2-1” 。<br />
+返回可以通过上述方法构造的、运算结果等于 target 的不同 表达式 的数目。</p>
+
+        <h2 id="font-size5-face粗体思路font"   >
+          <a href="#font-size5-face粗体思路font" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#font-size5-face粗体思路font"></a> <font size=5 face=粗体>思路</font></h2>
+      
+<ol>
+<li>
+<p>正常dfs</p>
+<ol>
+<li>需要注意：
+<ol>
+<li>nonlocal cnt  ，使用 nonlocal 来引用外部的 cnt，在函数嵌套是用这个。在函数和全局变量时，用global</li>
+<li>不需要像全排列一样，用个for i in range(n):，去遍历未使用的元素，<strong>用了for循环加入未被选的元素，实际上更改了相对位置，其实就相当于把顺序也考虑上了，相当于排列，而不是组合</strong>。所以在这里每个元素都有固定的位置，并且每个位置都有两种选择（+ 或 -），不需要使用 for 循环来遍历可能的选择</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>dp背包问题（复杂版）</p>
+<ol>
+<li>定义一个二维数组 dp[i][j]，其中 i 表示处理到第 i 个数字，j 表示当前的和，dp[i][j] 表示能够达到和 j 的不同表达式的数目。
+<ol>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mo stretchy="false">]</mo><mo>=</mo><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>i</mi><mtext>−</mtext><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mtext>−</mtext><mi>n</mi><mi>u</mi><mi>m</mi><mi>s</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo stretchy="false">]</mo><mo>+</mo><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>i</mi><mtext>−</mtext><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mo>+</mo><mi>n</mi><mi>u</mi><mi>m</mi><mi>s</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[i][j]=dp[i−1][j−nums[i]]+dp[i−1][j+nums[i]]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mord">−</span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mord">−</span><span class="mord mathnormal">n</span><span class="mord mathnormal">u</span><span class="mord mathnormal">m</span><span class="mord mathnormal">s</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mclose">]</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mord">−</span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">n</span><span class="mord mathnormal">u</span><span class="mord mathnormal">m</span><span class="mord mathnormal">s</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mclose">]</span><span class="mclose">]</span></span></span></span></li>
+<li>不能从大到小更新，因为涉及两个数的改变</li>
+</ol>
+</li>
+<li>优化为一维数组 dp，其中 dp[j] 表示和为 j 的表达式的个数。（因为dp[i]只和dp[i-1]有关，为<strong>滚动数组优化</strong>）
+<ol>
+<li>当前的状态只和前一个状态有关。</li>
+<li>更新当前状态时，我们可以从后向前遍历来避免覆盖问题。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>dp背包问题（简单版）递推</p>
+<ol>
+<li>简化问题：<strong>找到所有子集，使得这些子集的和等于 (sum(nums) - target) / 2 或者 (sum(nums) + target) / 2</strong>，这两个等价<br />
+具体步骤如下：</li>
+</ol>
+<ul>
+<li>计算数组 nums 的总和 sum(nums)。如果 (sum(nums) - target) 不是偶数，那么无法得到整数的目标值，直接返回 0。</li>
+<li>定义 DP 数组 dp，其中 dp[j] 表示和为 j 的不同表达式的数目。</li>
+<li>初始化 dp[0] = 1，因为和为 0 的情况是一个合法的表达式。</li>
+<li>遍历数组 nums，对于每一个数，从背包容量（即目标值）开始，向下遍历，更新 dp 数组。</li>
+<li>最终 dp[(sum(nums) - target) / 2] 的值就是所求结果。</li>
+</ul>
+</li>
+<li>
+<p>dp背包问题（简单版）dfs+记忆化搜索<br />
+其实dp递推 = dfs+记忆化搜索，将01背包写成dfs形式，非常直观好理解</p>
+ <figure class="highlight python"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@lru_cache(<span class="params"><span class="literal">None</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dfs</span>(<span class="params">i, c</span>):</span><br><span class="line">    <span class="keyword">if</span> i &lt; <span class="number">0</span>: <span class="comment"># 当i &lt; 0 时说明选完了，当 c = 0 时说明恰好用完，那就是一种方案</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">if</span> c == <span class="number">0</span> <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> c &lt; nums[i]: <span class="comment"># 如果体积不够就不选</span></span><br><span class="line">        <span class="keyword">return</span> dfs(i - <span class="number">1</span>, c)</span><br><span class="line">    <span class="keyword">return</span> dfs(i - <span class="number">1</span>, c) + dfs(i - <span class="number">1</span>, c - nums[i]) <span class="comment"># 由 i - 1的两个状态转移而来</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> dfs(n - <span class="number">1</span>, target_sum)</span><br></pre></td></tr></table></div></figure>
+</li>
+<li>
+<p>拓展：</p>
+<ul>
+<li>如果至多target_sum呢？</li>
+</ul>
+ <figure class="highlight python"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@lru_cache(<span class="params"><span class="literal">None</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dfs</span>(<span class="params">i, c</span>):</span><br><span class="line">    <span class="keyword">if</span> i &lt; <span class="number">0</span>: </span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span> <span class="comment"># 这里就不用判断了，能递归到终点说明 c&gt;=0，所以能走到这一步的都是答案</span></span><br><span class="line">    <span class="keyword">if</span> c &lt; nums[i]: </span><br><span class="line">        <span class="keyword">return</span> dfs(i - <span class="number">1</span>, c)</span><br><span class="line">    <span class="keyword">return</span> dfs(i - <span class="number">1</span>, c) + dfs(i - <span class="number">1</span>, c - nums[i]) </span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> dfs(n - <span class="number">1</span>, target_sum)</span><br></pre></td></tr></table></div></figure>
+<ul>
+<li>如果至少target_sum呢？</li>
+</ul>
+ <figure class="highlight python"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@lru_cache(<span class="params"><span class="literal">None</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dfs</span>(<span class="params">i, c</span>):</span><br><span class="line">    <span class="keyword">if</span> i &lt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">if</span> c &lt;= <span class="number">0</span> <span class="keyword">else</span> <span class="number">0</span> <span class="comment"># 这里改成小于等于0，因为c是相对于target_sum的值，而且下面的判断也不需要了，因为那是不让c小于0的判断</span></span><br><span class="line">    <span class="keyword">return</span> dfs(i - <span class="number">1</span>, c) + dfs(i - <span class="number">1</span>, c - nums[i])</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> dfs(n - <span class="number">1</span>, target_sum)</span><br></pre></td></tr></table></div></figure>
+</li>
+</ol>
+
+        <h2 id="font-size5-face粗体代码font"   >
+          <a href="#font-size5-face粗体代码font" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#font-size5-face粗体代码font"></a> <font size=5 face=粗体>代码</font></h2>
+      
+<figure class="highlight python"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">Author: NEFU AB-IN</span></span><br><span class="line"><span class="string">Date: 2024-06-30 21:25:56</span></span><br><span class="line"><span class="string">FilePath: \LeetCode\494\494.py</span></span><br><span class="line"><span class="string">LastEditTime: 2024-07-11 22:25:35</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># 3.8.19 import</span></span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Counter, defaultdict, deque</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime, timedelta</span><br><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> lru_cache</span><br><span class="line"><span class="keyword">from</span> heapq <span class="keyword">import</span> heapify, heappop, heappush, nlargest, nsmallest</span><br><span class="line"><span class="keyword">from</span> itertools <span class="keyword">import</span> combinations, compress, permutations, starmap, tee</span><br><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> ceil, comb, fabs, floor, gcd, log, perm, sqrt</span><br><span class="line"><span class="keyword">from</span> string <span class="keyword">import</span> ascii_lowercase, ascii_uppercase</span><br><span class="line"><span class="keyword">from</span> sys <span class="keyword">import</span> exit, setrecursionlimit, stdin</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">Any</span>, <span class="type">Dict</span>, <span class="type">List</span>, <span class="type">Tuple</span>, TypeVar, <span class="type">Union</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Constants</span></span><br><span class="line">TYPE = TypeVar(<span class="string">&#x27;TYPE&#x27;</span>)</span><br><span class="line">N = <span class="built_in">int</span>(<span class="number">2e5</span> + <span class="number">10</span>)  <span class="comment"># If using AR, modify accordingly</span></span><br><span class="line">M = <span class="built_in">int</span>(<span class="number">20</span>)  <span class="comment"># If using AR, modify accordingly</span></span><br><span class="line">INF = <span class="built_in">int</span>(<span class="number">2e9</span>)</span><br><span class="line">OFFSET = <span class="built_in">int</span>(<span class="number">100</span>)</span><br><span class="line">MOD = <span class="built_in">int</span>(<span class="number">1e9</span> + <span class="number">7</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set recursion limit</span></span><br><span class="line">setrecursionlimit(INF)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Arr</span>:</span><br><span class="line">    array = <span class="built_in">staticmethod</span>(<span class="keyword">lambda</span> x=<span class="number">0</span>, size=N: [x() <span class="keyword">if</span> <span class="built_in">callable</span>(x) <span class="keyword">else</span> x <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(size)])</span><br><span class="line">    array2d = <span class="built_in">staticmethod</span>(<span class="keyword">lambda</span> x=<span class="number">0</span>, rows=N, cols=M: [Arr.array(x, cols) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(rows)])</span><br><span class="line">    graph = <span class="built_in">staticmethod</span>(<span class="keyword">lambda</span> size=N: [[] <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(size)])</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">to_1_indexed</span>(<span class="params">data: <span class="type">Union</span>[<span class="type">List</span>, <span class="built_in">str</span>, <span class="type">List</span>[<span class="type">List</span>]]</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Adds a zero prefix to the data and returns the modified data and its length.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(data, <span class="built_in">list</span>):</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">all</span>(<span class="built_in">isinstance</span>(item, <span class="built_in">list</span>) <span class="keyword">for</span> item <span class="keyword">in</span> data):  <span class="comment"># Check if it&#x27;s a 2D array</span></span><br><span class="line">                new_data = [[<span class="number">0</span>] * (<span class="built_in">len</span>(data[<span class="number">0</span>]) + <span class="number">1</span>)] + [[<span class="number">0</span>] + row <span class="keyword">for</span> row <span class="keyword">in</span> data]</span><br><span class="line">                <span class="keyword">return</span> new_data, <span class="built_in">len</span>(new_data) - <span class="number">1</span>, <span class="built_in">len</span>(new_data[<span class="number">0</span>]) - <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                new_data = [<span class="number">0</span>] + data</span><br><span class="line">                <span class="keyword">return</span> new_data, <span class="built_in">len</span>(new_data) - <span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> <span class="built_in">isinstance</span>(data, <span class="built_in">str</span>):</span><br><span class="line">            new_data = <span class="string">&#x27;0&#x27;</span> + data</span><br><span class="line">            <span class="keyword">return</span> new_data, <span class="built_in">len</span>(new_data) - <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> TypeError(<span class="string">&quot;Input must be a list, a 2D list, or a string&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Math</span>:</span><br><span class="line">    <span class="built_in">max</span> = <span class="built_in">staticmethod</span>(<span class="keyword">lambda</span> a, b: a <span class="keyword">if</span> a &gt; b <span class="keyword">else</span> b)</span><br><span class="line">    <span class="built_in">min</span> = <span class="built_in">staticmethod</span>(<span class="keyword">lambda</span> a, b: a <span class="keyword">if</span> a &lt; b <span class="keyword">else</span> b)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">IO</span>:</span><br><span class="line">    <span class="built_in">input</span> = <span class="built_in">staticmethod</span>(<span class="keyword">lambda</span>: stdin.readline().rstrip(<span class="string">&quot;\r\n&quot;</span>))</span><br><span class="line">    read = <span class="built_in">staticmethod</span>(<span class="keyword">lambda</span>: <span class="built_in">map</span>(<span class="built_in">int</span>, IO.<span class="built_in">input</span>().split()))</span><br><span class="line">    read_list = <span class="built_in">staticmethod</span>(<span class="keyword">lambda</span>: <span class="built_in">list</span>(IO.read()))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Std</span>:</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ————————————————————— Division line ——————————————————————</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">findTargetSumWays</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], target: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        n = <span class="built_in">len</span>(nums)</span><br><span class="line">        cnt = <span class="number">0</span>  <span class="comment"># 计数器在外部定义</span></span><br><span class="line"></span><br><span class="line"><span class="meta">        @lru_cache(<span class="params"><span class="literal">None</span></span>)</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">dfs</span>(<span class="params">index: <span class="built_in">int</span>, current_sum: <span class="built_in">int</span></span>):</span><br><span class="line">            <span class="keyword">nonlocal</span> cnt  <span class="comment"># 使用 nonlocal 来引用外部的 cnt</span></span><br><span class="line">            <span class="keyword">if</span> index == n:</span><br><span class="line">                <span class="keyword">if</span> current_sum == target:</span><br><span class="line">                    cnt += <span class="number">1</span></span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 对当前元素进行加法和减法两种选择，并递归处理下一个元素</span></span><br><span class="line">            dfs(index + <span class="number">1</span>, current_sum + nums[index])</span><br><span class="line">            dfs(index + <span class="number">1</span>, current_sum - nums[index])</span><br><span class="line"></span><br><span class="line">        dfs(<span class="number">0</span>, <span class="number">0</span>)  <span class="comment"># 从第一个元素开始，总和初始化为0</span></span><br><span class="line">        <span class="keyword">return</span> cnt</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">findTargetSumWays</span>(<span class="params">self, nums, target</span>):</span><br><span class="line">        sum_nums = <span class="built_in">sum</span>(nums)</span><br><span class="line">        <span class="comment"># 目标和 target 必须在范围 [-sum_nums, sum_nums] 之间</span></span><br><span class="line">        <span class="keyword">if</span> target &gt; sum_nums <span class="keyword">or</span> target &lt; -sum_nums:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        dp = Arr.array(<span class="number">0</span>, <span class="number">2</span> * sum_nums + <span class="number">1</span>)</span><br><span class="line">        dp[sum_nums] = <span class="number">1</span>  <span class="comment"># 初始条件：sum 为 0 的方案数为 1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">            next_dp = Arr.array(<span class="number">0</span>, <span class="number">2</span> * sum_nums + <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">for</span> sum_ <span class="keyword">in</span> <span class="built_in">range</span>(num, <span class="number">2</span> * sum_nums - num + <span class="number">1</span>):</span><br><span class="line">                next_dp[sum_ + num] += dp[sum_]</span><br><span class="line">                next_dp[sum_ - num] += dp[sum_]</span><br><span class="line">            dp = next_dp</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> dp[sum_nums + target]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">findTargetSumWays</span>(<span class="params">self, nums, target</span>):</span><br><span class="line">        total_sum = <span class="built_in">sum</span>(nums)</span><br><span class="line">        <span class="keyword">if</span> (total_sum - target) % <span class="number">2</span> != <span class="number">0</span> <span class="keyword">or</span> total_sum &lt; target:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        target_sum = (total_sum - target) // <span class="number">2</span></span><br><span class="line"></span><br><span class="line">        dp = [<span class="number">0</span>] * (target_sum + <span class="number">1</span>)</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(target_sum, num - <span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">                dp[j] += dp[j - num]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> dp[target_sum]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">findTargetSumWays</span>(<span class="params">self, nums, target</span>):</span><br><span class="line">        n = <span class="built_in">len</span>(nums)</span><br><span class="line">        total_sum = <span class="built_in">sum</span>(nums)</span><br><span class="line">        <span class="keyword">if</span> (total_sum - target) % <span class="number">2</span> != <span class="number">0</span> <span class="keyword">or</span> total_sum &lt; target:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        target_sum = (total_sum - target) // <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="meta">        @lru_cache(<span class="params"><span class="literal">None</span></span>)</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">dfs</span>(<span class="params">i, c</span>):</span><br><span class="line">            <span class="keyword">if</span> i &lt; <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">if</span> c == <span class="number">0</span> <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">            <span class="keyword">if</span> c &lt; nums[i]:</span><br><span class="line">                <span class="keyword">return</span> dfs(i - <span class="number">1</span>, c)</span><br><span class="line">            <span class="keyword">return</span> dfs(i - <span class="number">1</span>, c) + dfs(i - <span class="number">1</span>, c - nums[i])</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> dfs(n - <span class="number">1</span>, target_sum)</span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://hexo.ab-in.cn">AB-IN</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://hexo.ab-in.cn/2024/07/01/Leetcode2024-07-01-1/">https://hexo.ab-in.cn/2024/07/01/Leetcode2024-07-01-1/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-share"><div class="social-share" data-sites="qzone, qq, weibo, wechat, douban, linkedin, facebook, twitter, google">Share to: </div></div><div class="post-reward reward"><div class="reward-button">请我喝杯咖啡~</div><div class="reward-qrcode"><span class="reward-qrcode-alipay"><img class="reward-qrcode-alipay__img" src="https://oss.ab-in.cn/Pay/alipay.png"><div class="reward-qrcode-alipay__text">支付宝打赏</div></span><span class="reward-qrcode-wechat"><img class="reward-qrcode-wechat__img" src="https://oss.ab-in.cn/Pay/weixin.png"><div class="reward-qrcode-wechat__text">微信打赏</div></span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2024/07/02/Leetcode2024-07-02/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">3115. 质数的最大距离</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2024/07/01/Leetcode2024-07-01/"><span class="paginator-prev__text">3201. 找出有效子序列的最大长度 I</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div><div class="comments" id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC81NTEzNS8zMTYwMw"></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#font-color6495ed-size6494-%E7%9B%AE%E6%A0%87%E5%92%8Cfont"><span class="toc-number">1.</span> <span class="toc-text">
+           494. 目标和</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#font-size5-face%E7%B2%97%E4%BD%93%E9%A2%98%E6%84%8Ffont"><span class="toc-number">1.1.</span> <span class="toc-text">
+           题意</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#font-size5-face%E7%B2%97%E4%BD%93%E6%80%9D%E8%B7%AFfont"><span class="toc-number">1.2.</span> <span class="toc-text">
+           思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#font-size5-face%E7%B2%97%E4%BD%93%E4%BB%A3%E7%A0%81font"><span class="toc-number">1.3.</span> <span class="toc-text">
+           代码</span></a></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://oss.ab-in.cn/images/AB-IN.jpg" alt="avatar"></div><p class="sidebar-ov-author__text">NEFU AB-IN</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/AB-IN-lsy" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/AB_IN_liusy" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="http://wpa.qq.com/msgrd?v=3&amp;uin=1719827581&amp;site=qq&amp;menu=yes" target="_blank" rel="noopener" data-popover="QQ" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-qq"></i></span></a><a class="sidebar-ov-social-item" href="mailto:liusy200708@gmail.com" target="_blank" rel="noopener" data-popover="Gmail" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a></div><div class="sidebar-ov-feed"></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">您已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2024</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>AB-IN All Rights Reserved</span><span class="footer__devider">|</span><span><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">鲁ICP备2021035431号</a></span></div><div class="busuanzi"><span class="busuanzi-siteuv"><span class="busuanzi-siteuv__icon"><i class="fas fa-user"></i></span><span class="busuanzi-siteuv__info">访问人数</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_uv"></span></span><span class="busuanzi-sitepv"><span class="busuanzi-siteuv__icon"><i class="fas fa-eye"></i></span><span class="busuanzi-siteuv__info">浏览总量</span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_pv"></span></span></div><div><script type="text/javascript" src="https://oneword.ab-in.cn/oneword/oneword.php?format=js&charset=utf-8"></script> <div id="oneword"><script>oneword()</script></div></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"></div><div class="search-btns">使用搜索：<span class="search-btns-item search-btns-item--google"><i class="fab fa-google"></i>谷歌</span><span class="search-btns-item search-btns-item--bing"><i></i>必应</span><span class="search-btns-item search-btns-item--baidu"><i></i>百度</span></div><div class="search-results"><div id="algolia-hits"></div></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><script src="//unpkg.com/jquery@v3.4.1/dist/jquery.min.js"></script><script src="//unpkg.com/velocity-animate@1.5.2/velocity.min.js"></script><script src="//unpkg.com/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script><script src="//unpkg.com/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script src="//unpkg.com/social-share.js@1.0.16/dist/js/social-share.min.js"></script><script src="//unpkg.com/instantsearch.js@2.1.1/dist/instantsearch.min.js" defer></script><script>window.addEventListener('DOMContentLoaded', function () {
+  $('.header-nav-search').on('click', function (e) {
+    e.stopPropagation();
+
+    $('body').css('overflow', 'hidden');
+    $('.search-popup')
+      .velocity('stop')
+      .velocity('transition.expandIn', {
+        duration: 300,
+        complete: function () {
+          $('.search-popup input').focus();
+        }
+      });
+    $('.search-mask')
+      .velocity('stop')
+      .velocity('transition.fadeIn', {
+        duration: 300
+      });
+  });
+
+  function closeSearch () {
+    $('body').css({ overflow: 'auto' });
+    $('.search-popup').css({ display: 'none' });
+    $('.search-mask').css({ display: 'none' });
+  }
+
+  $('.search-mask, .search-close').on('click', function () {
+    closeSearch();
+  });
+
+  $(document).on('keydown', function (e) {
+    // Escape <=> 27
+    if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+      closeSearch();
+    }
+  });
+
+  var algolia = CONFIG.algolia;
+  if (!algolia && !(algolia.appId && algolia.apiKey && algolia.indexName)) {
+    return console.error('Algolia setting is invalid.');
+  }
+
+  var search = instantsearch({
+    appId: algolia.appId,
+    apiKey: algolia.apiKey,
+    indexName: algolia.indexName,
+    searchParameters: {
+      hitsPerPage: algolia.hits.per_page || 10
+    },
+    searchFunction: function (helper) {
+      var searchInput = $('.search-input').find('input');
+
+      if (searchInput.val()) {
+        helper.search();
+      }
+    }
+  });
+
+  search.addWidget(
+    instantsearch.widgets.searchBox({
+      container: '.search-input',
+      reset: false,
+      magnifier: false,
+      placeholder: algolia.languages.inputPlaceholder
+    })
+  );
+
+  // The hits of search results.
+  search.addWidget(
+    instantsearch.widgets.hits({
+      container: '#algolia-hits',
+      templates: {
+        item: function (data) {
+          var link = data.permalink ? data.permalink : CONFIG.root + data.path;
+          return (
+            '<a href="' + link + '" class="algolia-hit-item-link">' +
+              data._highlightResult.title.value +
+            '</a>'
+          );
+        },
+        empty: function (data) {
+          return (
+            '<div id="algolia-hits-empty">' +
+              algolia.languages.hitsEmpty.replace(/\$\{query}/, data.query) +
+            '</div>'
+          );
+        }
+      },
+      cssClasses: {
+        item: 'algolia-hit-item'
+      }
+    })
+  );
+
+  // The stats of search results.
+  if ($('#algolia-stats')[0]) {
+    search.addWidget(
+      instantsearch.widgets.stats({
+        container: '#algolia-stats',
+        templates: {
+          body: function (data) {
+            var stats = algolia.languages.hitsStats
+              .replace(/\$\{hits}/, data.nbHits)
+              .replace(/\$\{time}/, data.processingTimeMS);
+            return (
+              stats +
+              '<span class="algolia-logo pull-right">' +
+                '<img src="' + CONFIG.root +
+                `${CONFIG.sourcePath.images}/algolia.svg" alt="Algolia" />` +
+              '</span>'
+            );
+          }
+        }
+      })
+    );
+  }
+
+  // The pagination of the results.
+  search.addWidget(
+    instantsearch.widgets.pagination({
+      container: '#algolia-pagination',
+      scrollTo: false,
+      showFirstLast: false,
+      labels: {
+        first: '<i class="fa fa-angle-double-left"></i>',
+        last: '<i class="fa fa-angle-double-right"></i>',
+        previous: '<i class="fa fa-angle-left"></i>',
+        next: '<i class="fa fa-angle-right"></i>'
+      },
+      cssClasses: {
+        root: 'pagination',
+        item: 'pagination-item',
+        link: 'page-number',
+        active: 'current',
+        disabled: 'disabled-item'
+      }
+    })
+  );
+
+  search.start();
+});</script><script src="//unpkg.com/pjax@latest/pjax.min.js"></script><script>window.addEventListener('DOMContentLoaded', function () {
+  var pjax = new Pjax({"selectors":["head title","#main",".pjax-reload",".header-inner"],"history":true,"scrollTo":false,"scrollRestoration":false,"cacheBust":false,"debug":false,"currentUrlFullReload":false,"timeout":0});
+  // 加载进度条的计时器
+  var loadingTimer = null;
+
+  // 重置页面 Y 方向上的滚动偏移量
+  document.addEventListener('pjax:send', function () {
+    $('.header-nav-menu').removeClass('show');
+    if (CONFIG.pjax && CONFIG.pjax.avoidBanner) {
+      $('html').velocity('scroll', {
+        duration: 500,
+        offset: $('#header').height(),
+        easing: 'easeInOutCubic'
+      });
+    }
+
+    var loadingBarWidth = 20;
+    var MAX_LOADING_WIDTH = 95;
+
+    $('.loading-bar').addClass('loading');
+    $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    clearInterval(loadingTimer);
+    loadingTimer = setInterval(function () {
+      loadingBarWidth += 3;
+      if (loadingBarWidth > MAX_LOADING_WIDTH) {
+        loadingBarWidth = MAX_LOADING_WIDTH;
+      }
+      $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    }, 500);
+  }, false);
+
+  window.addEventListener('pjax:complete', function () {
+    clearInterval(loadingTimer);
+    $('.loading-bar__progress').css('width', '100%');
+    $('.loading-bar').removeClass('loading');
+    setTimeout(function () {
+      $('.loading-bar__progress').css('width', '0');
+    }, 400);
+    $('link[rel=prefetch], script[data-pjax-rm]').each(function () {
+      $(this).remove();
+    });
+    $('script[data-pjax], #pjax-reload script').each(function () {
+      $(this).parent().append($(this).remove());
+    });
+
+    if (Stun.utils.pjaxReloadBoot) {
+      Stun.utils.pjaxReloadBoot();
+    }
+    if (Stun.utils.pjaxReloadScroll) {
+      Stun.utils.pjaxReloadScroll();
+    }
+    if (Stun.utils.pjaxReloadSidebar) {
+      Stun.utils.pjaxReloadSidebar();
+    }
+    if (true) {
+      if (Stun.utils.pjaxReloadHeader) {
+        Stun.utils.pjaxReloadHeader();
+      }
+      if (Stun.utils.pjaxReloadScrollIcon) {
+        Stun.utils.pjaxReloadScrollIcon();
+      }
+      if (Stun.utils.pjaxReloadLocalSearch) {
+        Stun.utils.pjaxReloadLocalSearch();
+      }
+    }
+  }, false);
+}, false);</script><div id="pjax-reload"><link href="https://unpkg.com/katex@0.10.2/dist/katex.min.css" rel="stylesheet" type="text/css"><link href="https://unpkg.com/katex@0.10.2/dist/contrib/copy-tex.css" rel="stylesheet" type="text/css"><script src="https://unpkg.com/katex@0.10.2/dist/contrib/copy-tex.min.js"></script><script src="//unpkg.com/quicklink@latest/dist/quicklink.umd.js"></script><script>function initQuicklink() {
+  quicklink({
+    timeout: '10000',
+    priority: true,
+    ignores: [uri => uri.includes('#'), uri => uri === 'https://hexo.ab-in.cn/2024/07/01/Leetcode2024-07-01-1/', /\/api\/?/,uri => uri.includes('.xml'),uri => uri.includes('.zip'),(uri, el) => el.hasAttribute('nofollow'),(uri, el) => el.hasAttribute('noprefetch')]
+  });
+}
+
+if (true || false) {
+  initQuicklink();
+} else {
+  window.addEventListener('DOMContentLoaded', initQuicklink, false);
+}</script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script></div><script data-pjax="">function loadLivere () {
+  var d = document, s = d.createElement('script');
+
+  if (!d.getElementById('lv-container')) {
+    return;
+  }
+  if (typeof LivereTower === 'function') {
+    return;
+  }
+  s.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+  if (true) {
+    s.setAttribute('data-pjax-rm', '');
+  }
+  (d.head || d.body).appendChild(s);
+}
+
+if (true) {
+  loadLivere();
+} else {
+  window.addEventListener('DOMContentLoaded', loadLivere, false);
+}</script><script src="/js/utils.js?v=2.8.0"></script><script src="/js/stun-boot.js?v=2.8.0"></script><script src="/js/scroll.js?v=2.8.0"></script><script src="/js/header.js?v=2.8.0"></script><script src="/js/sidebar.js?v=2.8.0"></script><script type="application/json" src="/search.json"></script></body></html>
